@@ -72,6 +72,6 @@ app.post("/register", async (req, res) => {
   }
 });
 
-app.listen(4000, () => {
+app.listen(4001, () => {
   console.log("Server is connected and running");
 });
