@@ -140,7 +140,9 @@ function Signup() {
                 className="mb-1"
                 style={{ color: "#262626", fontWeight: "550" }}
               >
-                <label htmlFor="name">Name</label>
+                <label className="formLabel" htmlFor="name">
+                  Name
+                </label>
               </div>
               <input
                 type="text"
@@ -155,10 +157,11 @@ function Signup() {
             <div className="mb-3">
               <div className="mb-1">
                 <label
+                  className="formLabel"
                   htmlFor="email"
                   style={{ color: "#262626", fontWeight: "550" }}
                 >
-                  EMail
+                  Email
                 </label>
               </div>
               <input
@@ -174,6 +177,7 @@ function Signup() {
             <div className="mb-3">
               <div className="mb-1">
                 <label
+                  className="formLabel"
                   htmlFor="password"
                   style={{ color: "#262626", fontWeight: "550" }}
                 >
@@ -197,6 +201,7 @@ function Signup() {
             <div className="mb-3">
               <div className="mb-1">
                 <label
+                  className="formLabel"
                   htmlFor="confirmp"
                   style={{ color: "#262626", fontWeight: "550" }}
                 >
@@ -234,7 +239,7 @@ function Signup() {
                   className="btn rounded-pill"
                   style={{
                     width: "65%",
-                    backgroundColor: "#67BBD3",
+                    backgroundColor: "#007697",
                     color: "#FFF",
                   }}
                 >
@@ -245,12 +250,12 @@ function Signup() {
           </form>
           <p
             className="d-flex justify-content-center align-items-center mt-3"
-            style={{ color: "#ededee" }}
+            style={{ color: "#01648e" }}
           >
             Already have an account?&nbsp;
             <Link
               to="/login"
-              style={{ color: "#01648e", textDecoration: "none" }}
+              style={{ color: " #FFF", textDecoration: "none" }}
             >
               Login
             </Link>

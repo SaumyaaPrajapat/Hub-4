@@ -188,7 +188,7 @@ function Login() {
                 type="submit"
                 className="btn w-50 rounded-pill"
                 style={{
-                  backgroundColor: "#67BBD3",
+                  backgroundColor: "#007697",
                   color: "#FFF",
                   marginTop: "5%",
                 }}
@@ -200,7 +200,7 @@ function Login() {
           <p className="d-flex justify-content-center align-items-center mt-3">
             <Link
               to="/forgotpass"
-              style={{ color: "#DCDADB", textDecoration: "none" }}
+              style={{ color: "#FFF", textDecoration: "none" }}
             >
               Forgot Password
             </Link>

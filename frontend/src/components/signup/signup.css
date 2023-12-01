@@ -88,11 +88,30 @@
     display: none;
   }
   .blurredCardStyle {
-    margin-top: 10% !important;
+    margin-top: 2% !important;
     padding-left: 8%;
     padding-right: 8%;
   }
   .inputStyle {
-    width: 10% !important;
+    width: 130% !important;
+    margin-left: -15%;
+  }
+  .formLabel {
+    margin-left: -15%;
+  }
+  .buttonStyle {
+    font-size: 85% !important;
+  }
+  .navbar-brand {
+    margin-right: 0;
+  }
+  .signimg {
+    display: none;
+  }
+  .showpass {
+    display: none;
+  }
+  .showpass button {
+    display: none;
   }
 }

@@ -56,13 +56,13 @@
   position: relative;
   background: none;
   border: none;
-  color: #6e6d6d8c;
+  color: #3131314e;
 }
 .eyeicon {
   display: flex;
   align-items: center;
 }
-@media screen and (max-width: 600px) {
+@media (max-width: 600px) {
   .art {
     display: none;
   }
