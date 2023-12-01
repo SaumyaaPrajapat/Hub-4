@@ -6,7 +6,13 @@ const bcrypt = require("bcryptjs");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://hub4.vercel.app"],
+    methods: ["POST", "GET"],
+    credentials: true,
+  })
+);
 
 mongoose.connect(
   "mongodb+srv://saumyaa:soma2029@cluster0.w38dndu.mongodb.net/admindata?retryWrites=true&w=majority"

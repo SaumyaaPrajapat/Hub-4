@@ -48,7 +48,7 @@
   padding: 8px 10px !important;
   border-radius: 5px !important;
   border: 0px !important;
-  color: #dcdadb !important;
+  color: rgb(0, 0, 0) !important;
 }
 .showpass {
   display: flex;
