@@ -19,7 +19,7 @@ function Forgot() {
 
     try {
       const response = await axios.post(
-        "https://hub4backend.vercel.app/forgotpass",
+        "https://hub4-back.vercel.app/forgotpass",
         {
           email,
         }

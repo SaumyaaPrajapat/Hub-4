@@ -38,7 +38,7 @@ function Signup() {
     }
     setError("");
     axios
-      .post("https://hub4backend.vercel.app/register", {
+      .post("https://hub4-back.vercel.app/register", {
         name,
         email,
         password,

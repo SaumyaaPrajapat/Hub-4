@@ -26,13 +26,10 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "https://hub4backend.vercel.app/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post("https://hub4-back.vercel.app/login", {
+        email,
+        password,
+      });
 
       const data = response.data;
 
