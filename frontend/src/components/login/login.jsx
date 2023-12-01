@@ -27,7 +27,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "https://hub4-backend.vercel.app/login",
+        "https://hub4backend.vercel.app/login",
         {
           email,
           password,
