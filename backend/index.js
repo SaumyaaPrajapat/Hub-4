@@ -45,7 +45,7 @@ app.post("/login", async (req, res) => {
       const token = jwt.sign({ email: user.email }, "jwt-secrete-key", {
         expiresIn: "1d",
       });
-      res.cookie("token", token);
+      res.cookie("token", token, { sameSite: "None", secure: true });
       return res.status(200).json({ others });
     } else {
       return res
