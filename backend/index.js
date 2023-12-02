@@ -15,7 +15,7 @@ mongoose.connect(
   "mongodb+srv://saumyaa:soma2029@cluster0.w38dndu.mongodb.net/admindata?retryWrites=true&w=majority"
 );
 
-const varifyUser = (req, res, next) => {
+const verifyUser = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
     return res.json("The token was not available");
