@@ -5,8 +5,11 @@ import imageArt from "../img/back1.png";
 import Logo from "../img/Logo.png";
 import { Link } from "react-router-dom";
 import "./login.css";
+import { useDispatch } from "react-redux/es/exports";
+import { authActions } from "../../store";
 
 function Forgot() {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const [error, setError] = useState("");
@@ -14,7 +17,7 @@ function Forgot() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-      .post(`https://hub4-back.vercel.app/forgotpass`, {
+      .post("https://hub4-back.vercel.app/forgotpass", {
         email,
       })
       .then((res) => {

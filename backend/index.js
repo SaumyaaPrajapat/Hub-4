@@ -3,14 +3,10 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const userModel = require("./model/signups");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-
-const JWT_SECRET = "gshkdjlkuewgj[]hiijhvu4dru6789vt67hfvx?{[]jh8yuhh76ijhbnh";
 
 mongoose.connect(
   "mongodb+srv://saumyaa:soma2029@cluster0.w38dndu.mongodb.net/admindata?retryWrites=true&w=majority"
