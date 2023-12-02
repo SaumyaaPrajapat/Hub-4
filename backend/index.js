@@ -34,7 +34,7 @@ app.get("/home", verifyUser, (req, res) => {
 //login
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
-  UserModel.findOne({ email: email }).then((user) => {
+  userModel.findOne({ email: email }).then((user) => {
     if (user) {
       bcrypt.compare(password, user.password, (err, response) => {
         if (response) {
