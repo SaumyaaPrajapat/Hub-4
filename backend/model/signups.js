@@ -4,12 +4,10 @@ const signupSchema = new mongoose.Schema({
   name: String,
   email: String,
   password: String,
-  list: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "List",
-    },
-  ],
+  role: {
+    type: String,
+    default: "visitor",
+  },
 });
 
 const userModel = mongoose.model("signups", signupSchema);
