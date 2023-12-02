@@ -5,46 +5,29 @@ import imageArt from "../img/back1.png";
 import Logo from "../img/Logo.png";
 import { Link } from "react-router-dom";
 import "./login.css";
-import { useDispatch } from "react-redux/es/exports";
-import { authActions } from "../../store";
 
 function Forgot() {
-  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post(
-        "https://hub4-back.vercel.app/forgotpass",
-        {
-          email,
+    axios
+      .post(`https://hub4-back.vercel.app/forgotpass`, {
+        email,
+      })
+      .then((res) => {
+        console.log("login:" + res.data);
+        if (res.data.Status == "Success") {
+          if (res.data.role == "admin") {
+            navigate("/home");
+          } else {
+            navigate("/");
+          }
         }
-      );
-      const data = response.data;
-      console.log("Login response:", data);
-      // Check for success or any specific criteria in your response
-      if (data && data.others && data.others._id) {
-        console.log("Logged in Successfully");
-        sessionStorage.setItem("id", data.others._id);
-        sessionStorage.setItem("name", data.others.name);
-        dispatch(authActions.login());
-        navigate("/login");
-        window.location.reload();
-      } else {
-        setError("Login failed. Please try again.");
-      }
-    } catch (err) {
-      if (err.response && err.response.data) {
-        setError(err.response.data.error);
-      } else {
-        setError("Login failed. Please try again.");
-      }
-      console.error(err);
-    }
+      })
+      .catch((err) => console.log(err));
   };
 
   const [isHoveredSignUp, setIsHoveredSignUp] = useState(false);

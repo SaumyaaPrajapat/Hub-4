@@ -1,59 +1,28 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import imageArt from "../img/back1.png";
 import Logo from "../img/Logo.png";
 import { Link } from "react-router-dom";
 import "./login.css";
-import { useDispatch } from "react-redux/es/exports";
-import { authActions } from "../../store";
-import { FiEye, FiEyeOff } from "react-icons/fi";
 
-function Login() {
-  const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
+function Reset() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const { id, token } = useParams();
 
-  const handleShowPassword = (event) => {
-    event.preventDefault();
-    setShowPassword(!showPassword);
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post("https://hub4-back.vercel.app/login", {
-        email,
+    axios
+      .post(`https://hub4-back.vercel.app/resetpass/${id}/${token}`, {
         password,
-      });
-
-      const data = response.data;
-
-      console.log("Login response:", data);
-
-      // Check for success or any specific criteria in your response
-      if (data && data.others && data.others._id) {
-        console.log("Logged in Successfully");
-        sessionStorage.setItem("id", data.others._id);
-        sessionStorage.setItem("name", data.others.name);
-        dispatch(authActions.login());
-        navigate("/home");
-        window.location.reload();
-      } else {
-        setError("Login failed. Please try again.");
-      }
-    } catch (err) {
-      if (err.response && err.response.data) {
-        setError(err.response.data.error);
-      } else {
-        setError("Login failed. Please try again.");
-      }
-      console.error(err);
-    }
+      })
+      .then((res) => {
+        if (res.data.Status == "Success") {
+          navigate("/login");
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   const [isHoveredSignUp, setIsHoveredSignUp] = useState(false);
@@ -133,7 +102,7 @@ function Login() {
             className="d-flex justify-content-center align-items-center"
             style={{ color: "#262626", fontWeight: "550" }}
           >
-            Login
+            Reset Password
           </h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
@@ -142,47 +111,20 @@ function Login() {
                 style={{ color: "#262626", fontWeight: "550" }}
               >
                 <label className="formLabel" htmlFor="email">
-                  Email
+                  New Password
                 </label>
               </div>
               <div>
                 <input
-                  type="email"
+                  type="password"
                   autoComplete="off"
-                  name="email"
-                  className="inputStyle form-control rounded-3"
-                  required
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="mb-3">
-              <div
-                className="mb-1"
-                style={{ color: "#262626", fontWeight: "550" }}
-              >
-                <label className="formLabel" htmlFor="email">
-                  Password
-                </label>
-              </div>
-              <div className="showpass">
-                <input
-                  type={showPassword ? "text" : "password"}
                   name="password"
                   className="inputStyle form-control rounded-3"
+                  required
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <div className="eyeicon">
-                  <button
-                    className="passbut"
-                    onClick={(event) => handleShowPassword(event)}
-                  >
-                    {showPassword ? <FiEye /> : <FiEyeOff />}
-                  </button>
-                </div>
               </div>
             </div>
-            {error && <p className="text-white">{error}</p>}
             <div className="d-flex justify-content-center">
               <button
                 type="submit"
@@ -193,22 +135,14 @@ function Login() {
                   marginTop: "5%",
                 }}
               >
-                Login
+                Update
               </button>
             </div>
           </form>
-          <p className="d-flex justify-content-center align-items-center mt-3">
-            <Link
-              to="/forgotpass"
-              style={{ color: "#FFF", textDecoration: "none" }}
-            >
-              Forgot Password
-            </Link>
-          </p>
         </div>
       </div>
     </div>
   );
 }
 
-export default Login;
+export default Reset;

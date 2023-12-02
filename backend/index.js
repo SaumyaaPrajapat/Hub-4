@@ -3,10 +3,14 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const userModel = require("./model/signups");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+const JWT_SECRET = "gshkdjlkuewgj[]hiijhvu4dru6789vt67hfvx?{[]jh8yuhh76ijhbnh";
 
 mongoose.connect(
   "mongodb+srv://saumyaa:soma2029@cluster0.w38dndu.mongodb.net/admindata?retryWrites=true&w=majority"
@@ -74,4 +78,59 @@ app.post("/register", async (req, res) => {
 
 app.listen(4001, () => {
   console.log("Server is connected and running");
+});
+
+app.post("/forgotpass", async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      return res.send("User Not Exists!!");
+    }
+    const secret = JWT_SECRET + user.password;
+    const token = jwt.sign({ email: user.email, id: user._id }, secret, {
+      expiresIn: "1d",
+    });
+    const link = `https://doer-sigma.vercel.app/resetpass/${user._id}/${token}`;
+    var transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "projects.p112000@gmail.com",
+        pass: "project_112000#asweb",
+      },
+    });
+
+    var mailOptions = {
+      from: "projects.p112000@gmail.com",
+      to: "saumyaa.prajapat@gmail.com",
+      subject: "Password Reset",
+      text: `https://hub4-back.vercel.app/resetpass/${user._id}/${token}`,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        return res.send({ Status: "Success" });
+      }
+    });
+    console.log(link);
+  } catch (error) {}
+});
+
+app.get("/reset-password/:id/:token", async (req, res) => {
+  const { id, token } = req.params;
+  console.log(req.params);
+  const user = await userModel.findOne({ _id: id });
+  if (!user) {
+    return res.json({ status: "User Not Exists!!" });
+  }
+  const secret = JWT_SECRET + user.password;
+  try {
+    const verify = jwt.verify(token, secret);
+    res.render("index", { email: verify.email, status: "Not Verified" });
+  } catch (error) {
+    console.log(error);
+    res.send("Not Verified");
+  }
 });

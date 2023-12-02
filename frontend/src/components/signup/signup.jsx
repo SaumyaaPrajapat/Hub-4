@@ -44,7 +44,7 @@ function Signup() {
         password,
       })
       .then((result) => {
-        setSuccessMessage("Registered successfully. Login to Start!");
+        setSuccessMessage("Registered successfully.");
         console.log(result);
       })
       .catch((err) => {
@@ -171,6 +171,7 @@ function Signup() {
                 name="email"
                 className="inputStyle form-control rounded-3"
                 required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
@@ -224,12 +225,12 @@ function Signup() {
             </div>
             <div className="mb-3">
               {error && (
-                <p className="text-danger fw-bold d-flex justify-content-center">
+                <p className="text-white fw-bold d-flex justify-content-center">
                   {error}
                 </p>
               )}
               {successMessage && (
-                <p className="text-success fw-bold d-flex justify-content-center">
+                <p className="text-white fw-bold d-flex justify-content-center">
                   {successMessage}
                 </p>
               )}
