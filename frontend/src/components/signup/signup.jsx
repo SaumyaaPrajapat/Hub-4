@@ -171,7 +171,6 @@ function Signup() {
                 name="email"
                 className="inputStyle form-control rounded-3"
                 required
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
