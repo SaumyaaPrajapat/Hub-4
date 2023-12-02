@@ -129,6 +129,7 @@ function Forgot() {
                   name="email"
                   className="inputStyle form-control rounded-3"
                   required
+                  style={{ fontWeight: "520" }}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>

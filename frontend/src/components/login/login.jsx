@@ -30,11 +30,8 @@ function Login() {
         email,
         password,
       });
-
       const data = response.data;
-
       console.log("Login response:", data);
-
       // Check for success or any specific criteria in your response
       if (data && data.others && data.others._id) {
         console.log("Logged in Successfully");
@@ -152,6 +149,7 @@ function Login() {
                   name="email"
                   className="inputStyle form-control rounded-3"
                   required
+                  style={{ fontWeight: "520" }}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>

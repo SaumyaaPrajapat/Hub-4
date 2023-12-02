@@ -151,6 +151,7 @@ function Signup() {
                 name="name"
                 className="inputStyle form-control rounded-3"
                 required
+                style={{ fontWeight: "520" }}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
@@ -171,6 +172,7 @@ function Signup() {
                 name="email"
                 className="inputStyle form-control rounded-3"
                 required
+                style={{ fontWeight: "520" }}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>

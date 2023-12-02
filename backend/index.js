@@ -3,30 +3,49 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const userModel = require("./model/signups");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 mongoose.connect(
   "mongodb+srv://saumyaa:soma2029@cluster0.w38dndu.mongodb.net/admindata?retryWrites=true&w=majority"
 );
 
+const varifyUser = (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.json("The token was not available");
+  } else {
+    jwt.verify(token, "jwt-secrete-key", (err, decoded) => {
+      if (err) return res.json("Token is wrong");
+      next();
+    });
+  }
+};
+
+app.get("/home", verifyUser, (req, res) => {
+  return res.json("Success");
+});
+
 //login
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const user = await userModel.findOne({ email });
-
     if (!user) {
       return res.status(401).json({ error: "User Does Not Exist" });
     }
-
     const passwordMatch = await bcrypt.compare(password, user.password);
-
     if (passwordMatch) {
       const { password, ...others } = user._doc;
+      const token = jwt.sign({ email: user.email }, "jwt-secrete-key", {
+        expiresIn: "1d",
+      });
+      res.cookie("token", token);
       return res.status(200).json({ others });
     } else {
       return res
