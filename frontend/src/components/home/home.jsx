@@ -11,7 +11,7 @@ const App = () => {
       .then((result) => {
         console.log(result);
         if (result.data !== "Success") {
-          //navigate("/login");
+          navigate("/login");
         }
       })
       .catch((err) => console.log(err));

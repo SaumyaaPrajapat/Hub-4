@@ -32,25 +32,29 @@ app.get("/home", verifyUser, (req, res) => {
 });
 
 //login
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  userModel.findOne({ email: email }).then((user) => {
-    if (user) {
-      bcrypt.compare(password, user.password, (err, response) => {
-        if (response) {
-          const token = jwt.sign({ email: user.email }, "jwt-secret-key", {
-            expiresIn: "1d",
-          });
-          res.cookie("token", token);
-          return res.json({ Status: "Success" });
-        } else {
-          return res.json("The password is incorrect");
-        }
-      });
-    } else {
-      return res.json("No record existed");
+  try {
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ error: "User Does Not Exist" });
     }
-  });
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (passwordMatch) {
+      const { password, ...others } = user._doc;
+      const token = jwt.sign({ email: user.email }, "jwt-secrete-key", {
+        expiresIn: "1d",
+      });
+      res.cookie("token", token);
+      return res.status(200).json({ others });
+    } else {
+      return res
+        .status(401)
+        .json({ error: "The password is incorrect. Try Again!" });
+    }
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 //register
