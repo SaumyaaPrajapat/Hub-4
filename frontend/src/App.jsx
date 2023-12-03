@@ -6,6 +6,9 @@ import Login from "./components/login/login";
 import Forgot from "./components/login/forgotpass";
 import Reset from "./components/login/resetpass";
 import Home from "./components/home/home";
+import Employees from "./components/employees/employees";
+import Category from "./components/category/category";
+import Profile from "./components/profile/profile";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux/es/exports";
 import { authActions } from "./store";
@@ -24,7 +27,10 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/forgotpass" element={<Forgot />}></Route>
         <Route path="/resetpass/:id/:token" element={<Reset />}></Route>
-        <Route path="/home" element={<Home />}></Route>
+        <Route path="/home" element={<Home />} />
+        <Route path="/home/employees" element={<Employees />} />
+        <Route path="/home/category" element={<Category />} />
+        <Route path="/home/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
