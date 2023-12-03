@@ -10,7 +10,7 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get("https://hub4-back.vercel.app/home", { withCredentials: true })
+      .get("https://hub4-back.vercel.app/home")
       .then((result) => {
         console.log(result);
         if (result.data !== "Success") {

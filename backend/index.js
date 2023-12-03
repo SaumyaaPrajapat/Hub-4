@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: "https://hub4.vercel.app", credentials: true }));
+app.use(cors());
 app.use(cookieParser());
 
 mongoose.connect(
@@ -45,7 +45,7 @@ app.post("/login", async (req, res) => {
       const token = jwt.sign({ email: user.email }, "jwt-secrete-key", {
         expiresIn: "1d",
       });
-      res.cookie("token", token, { sameSite: "None", secure: true });
+      res.cookie("token", token);
       return res.status(200).json({ others });
     } else {
       return res
