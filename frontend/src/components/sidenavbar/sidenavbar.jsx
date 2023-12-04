@@ -29,8 +29,8 @@ const SideNavbar = () => {
 
   const adminCount = () => {
     axios.get("https://hub4-back.vercel.app/admin_count").then((result) => {
-      if (Array.isArray(result.data.Result) && result.data.Result.length > 0) {
-        setAdminTotal(result.data.Result[0].admin);
+      if (result.data.Status) {
+        setAdminTotal(result.data.Result);
       } else {
         console.error("Unexpected API response", result.data);
       }
