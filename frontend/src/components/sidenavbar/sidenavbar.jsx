@@ -113,12 +113,14 @@ const SideNavbar = () => {
             <table className="table">
               <thead>
                 <tr>
+                  <th>Name</th>
                   <th>Email</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
+                  <td>name</td>
                   <td>email</td>
                   <td>
                     <button className="btn btn-info btn-sm me-2">Edit</button>

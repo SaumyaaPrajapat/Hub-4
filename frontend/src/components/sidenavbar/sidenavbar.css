@@ -128,8 +128,8 @@ main {
 
 @media screen and (min-width: 768px) {
   main {
-    margin: calc(var(--header-height) + 1rem) 0 0 0;
-    padding: 0 1rem 0 calc(var(--nav-width) + 2rem);
+    margin: calc(var(--header-height) + 2.5rem) 0 0 0;
+    padding: 0 2rem 0 calc(var(--nav-width) + 2rem);
   }
 
   .header {
@@ -139,7 +139,7 @@ main {
 
   .sidebar {
     left: 0;
-    padding: 1rem 0 0 0;
+    padding: 0 0 0 0;
   }
 
   .show {
@@ -162,6 +162,9 @@ main {
 /*dashboard styling*/
 .container {
   padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 
 .flex-container {
@@ -170,7 +173,7 @@ main {
 }
 
 .custom-box {
-  background: #fff;
+  background: #ffffff;
   box-shadow: 5px 5px 12px #d3d3d3, -5px -5px 12px #f2f2f2;
   border-radius: 10px;
   width: 30%;
@@ -202,6 +205,7 @@ main {
 .table th,
 .table td {
   padding: 8px;
+  background-color: #f0f0f0;
   text-align: left;
 }
 
