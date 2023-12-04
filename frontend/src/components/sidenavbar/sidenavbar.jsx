@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   MdPeople,
   MdDashboard,
@@ -18,6 +19,21 @@ import "./sidenavbar.css";
 
 const SideNavbar = () => {
   const [show, setShow] = useState(true);
+
+  const [adminTotal, setAdminTotal] = useState(0);
+  const [admins, setAdmins] = useState([]);
+
+  useEffect(() => {
+    adminCount();
+  }, []);
+
+  const adminCount = () => {
+    axios.get("https://hub4-back.vercel.app/admin_count").then((result) => {
+      if (result.data.Status) {
+        setAdminTotal(result.data.Result[0].admin);
+      }
+    });
+  };
 
   return (
     <main className={show ? "space-toggle" : null}>

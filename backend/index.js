@@ -91,6 +91,20 @@ app.post("/register", async (req, res) => {
   }
 });
 
+//admin
+//Admin count
+app.get("/admin_count", async (req, res) => {
+  try {
+    const adminCount = await userModel.countDocuments({ role: "admin" });
+    return res.json({ Status: true, Result: adminCount });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ Status: false, Error: "Internal Server Error" });
+  }
+});
+
 app.listen(4001, () => {
   console.log("Server is connected and running");
 });
