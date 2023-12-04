@@ -97,7 +97,7 @@ const SideNavbar = () => {
               <hr />
               <div className="flex-row">
                 <h5>Total:</h5>
-                <h5>admin total</h5>
+                <h5>{adminTotal}</h5>
               </div>
             </div>
 
