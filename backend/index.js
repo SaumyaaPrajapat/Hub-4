@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-const adminRouter = require("./route/adminroute");
+const adminRouter = require("./route/adminroute.js");
 
 const app = express();
 app.use(express.json());
