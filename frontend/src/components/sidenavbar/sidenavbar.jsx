@@ -25,7 +25,18 @@ const SideNavbar = () => {
 
   useEffect(() => {
     adminCount();
+    AdminRecords();
   }, []);
+
+  const AdminRecords = () => {
+    axios.get("https://hub4-back.vercel.app/admin_records").then((result) => {
+      if (result.data.Status) {
+        setAdmins(result.data.Result);
+      } else {
+        alert(result.data.Error);
+      }
+    });
+  };
 
   const adminCount = () => {
     axios.get("https://hub4-back.vercel.app/admin_count").then((result) => {
@@ -137,14 +148,16 @@ const SideNavbar = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>name</td>
-                  <td>email</td>
-                  <td>
-                    <button className="btn btn-info btn-sm me-2">Edit</button>
-                    <button className="btn btn-warning btn-sm">Delete</button>
-                  </td>
-                </tr>
+                {admins.map((a) => (
+                  <tr>
+                    <td>{a.name}</td>
+                    <td>{a.email}</td>
+                    <td>
+                      <button className="btn btn-info btn-sm me-2">Edit</button>
+                      <button className="btn btn-warning btn-sm">Delete</button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

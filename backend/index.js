@@ -104,6 +104,18 @@ app.get("/admin_count", async (req, res) => {
       .json({ Status: false, Error: "Internal Server Error" });
   }
 });
+//Admin records
+app.get("/admin_records", async (req, res) => {
+  try {
+    const adminRecords = await userModel.find({ role: "admin" });
+    return res.json({ Status: true, Result: adminRecords });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ Status: false, Error: "Internal Server Error" });
+  }
+});
 
 app.listen(4001, () => {
   console.log("Server is connected and running");

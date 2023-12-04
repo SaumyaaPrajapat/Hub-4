@@ -60,7 +60,7 @@ main {
   height: 100vh;
   width: var(--nav-width);
   background-color: var(--first-color);
-  padding-top: 1rem;
+
   transition: 0.5s;
 }
 
