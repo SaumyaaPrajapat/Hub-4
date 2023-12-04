@@ -15,6 +15,7 @@ import {
 import { Link } from "react-router-dom";
 import Logo from "../img/Logo.png";
 import "../sidenavbar/sidenavbar.css";
+import "./employee.css";
 
 const Employees = () => {
   const [show, setShow] = useState(true);
@@ -71,7 +72,50 @@ const Employees = () => {
         </nav>
       </aside>
 
-      <h3>Manage Employees</h3>
+      <div className="empcontainer">
+        <div className="empheader">
+          <h3>Employee List</h3>
+        </div>
+        <div className="empcenter">
+          <div class="empcustom-content">
+            <div className="emptask">
+              <button className="emp-btn btn-9">Add Employee</button>
+            </div>
+          </div>
+        </div>
+        <div className="emptable-container">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Salary</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>name</td>
+                <td>
+                  <img
+                    src={`http://localhost:3000/Images/`}
+                    className="employee_image"
+                  />
+                </td>
+                <td>email</td>
+                <td>address</td>
+                <td>salary</td>
+                <td>
+                  <button className="btn btn-info btn-sm me-2">Edit</button>
+                  <button className="btn btn-warning btn-sm">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </main>
   );
 };

@@ -1,0 +1,82 @@
+.empcontainer {
+  padding: 0 10px; /* Adjust padding as needed */
+}
+
+.empheader {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Button styles */
+.empcustom-btn {
+  display: inline-block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/*add employee button starts*/
+.empcenter {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.empcustom-content {
+  width: 20%;
+}
+
+.emp-btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #03a6d8;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.emp-btn:hover {
+  background-color: #0185ad;
+}
+
+@media screen and (max-width: 768px) {
+  .empcustom-content {
+    width: 40%;
+  }
+}
+/*add employee button ends*/
+
+.info {
+  background-color: #17a2b8;
+}
+
+.warning {
+  background-color: #ffc107;
+}
+
+/* Table styles */
+.emptable-container {
+  margin-top: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  background-color: #f0f0f0;
+  text-align: left;
+}
+
+.employee-image {
+  max-width: 100px;
+  height: auto;
+}

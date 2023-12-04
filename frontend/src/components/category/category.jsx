@@ -15,6 +15,7 @@ import {
 import { Link } from "react-router-dom";
 import Logo from "../img/Logo.png";
 import "../sidenavbar/sidenavbar.css";
+import "./category.css";
 
 const Category = () => {
   const [show, setShow] = useState(true);
@@ -71,7 +72,15 @@ const Category = () => {
         </nav>
       </aside>
 
-      <h3>Category</h3>
+      <div>
+        <div class="custom-container">
+          <div class="custom-content">
+            <div className="categorytask">
+              <button className="custom-btn btn-9">Add Category</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   );
 };

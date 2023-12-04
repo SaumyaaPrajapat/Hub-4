@@ -1,0 +1,32 @@
+.custom-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align items to the top */
+  height: 100vh;
+}
+
+.custom-content {
+  width: 25%;
+}
+
+.custom-btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #03a6d8; /* Choose your preferred background color */
+  color: #ffffff; /* Choose your preferred text color */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-btn:hover {
+  background-color: #0185ad; /* Adjust hover background color */
+}
+
+@media screen and (max-width: 768px) {
+  .custom-content {
+    width: 45%;
+  }
+}
