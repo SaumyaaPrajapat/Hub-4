@@ -7,6 +7,7 @@ import Forgot from "./components/login/forgotpass";
 import Reset from "./components/login/resetpass";
 import Home from "./components/home/home";
 import Employees from "./components/employees/employees";
+import AddEmployee from "./components/employees/addemployee";
 import Category from "./components/category/category";
 import Profile from "./components/profile/profile";
 import React, { useEffect } from "react";
@@ -29,6 +30,7 @@ function App() {
         <Route path="/resetpass/:id/:token" element={<Reset />}></Route>
         <Route path="/home" element={<Home />} />
         <Route path="/home/employees" element={<Employees />} />
+        <Route path="/home/employees/add" element={<AddEmployee />} />
         <Route path="/home/category" element={<Category />} />
         <Route path="/home/profile" element={<Profile />} />
       </Routes>

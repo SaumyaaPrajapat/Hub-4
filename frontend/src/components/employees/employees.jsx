@@ -79,7 +79,9 @@ const Employees = () => {
         <div className="empcenter">
           <div class="empcustom-content">
             <div className="emptask">
-              <button className="emp-btn btn-9">Add Employee</button>
+              <Link to="/home/employees/add" className="emp-btn btn-9">
+                <span>Add Employee</span>
+              </Link>
             </div>
           </div>
         </div>
