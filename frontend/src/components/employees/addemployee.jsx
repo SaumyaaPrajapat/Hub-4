@@ -72,69 +72,69 @@ const AddEmployee = () => {
         </nav>
       </aside>
 
-      <div className="form-container">
-        <div className="form-content rounded border">
+      <div className="addempcontainer">
+        <div className="addempcontent rounded border">
           <h3 className="text-center">Add Employee</h3>
-          <form className="form">
-            <div className="form-group">
+          <form className="addempform">
+            <div className="addempgroup">
               <label htmlFor="inputName" className="form-label">
                 Name
               </label>
               <input
                 type="text"
-                className="form-control"
+                className="addemp form-control"
                 id="inputName"
                 placeholder="Enter Name"
               />
             </div>
-            <div className="form-group">
+            <div className="addempgroup">
               <label htmlFor="inputEmail4" className="form-label">
                 Email
               </label>
               <input
                 type="email"
-                className="form-control"
+                className="addemp form-control"
                 id="inputEmail4"
                 placeholder="Enter Email"
                 autoComplete="off"
               />
             </div>
-            <div className="form-group">
+            <div className="addempgroup">
               <label htmlFor="inputPassword4" className="form-label">
                 Password
               </label>
               <input
                 type="password"
-                className="form-control"
+                className="addemp form-control"
                 id="inputPassword4"
                 placeholder="Enter Password"
               />
             </div>
-            <div className="form-group">
+            <div className="addempgroup">
               <label htmlFor="inputSalary" className="form-label">
                 Salary
               </label>
               <input
                 type="text"
-                className="form-control"
+                className="addemp form-control"
                 id="inputSalary"
                 placeholder="Enter Salary"
                 autoComplete="off"
               />
             </div>
-            <div className="form-group">
+            <div className="addempgroup">
               <label htmlFor="inputAddress" className="form-label">
                 Address
               </label>
               <input
                 type="text"
-                className="form-control"
+                className="addemp form-control"
                 id="inputAddress"
                 placeholder="1234 Main St"
                 autoComplete="off"
               />
             </div>
-            <div className="form-group">
+            <div className="addempgroup">
               <label htmlFor="category" className="form-label">
                 Category
               </label>
@@ -142,18 +142,18 @@ const AddEmployee = () => {
                 <option>name</option>
               </select>
             </div>
-            <div className="form-group mb-3">
+            <div className="addempgroup mb-3">
               <label className="form-label" htmlFor="inputGroupFile01">
                 Select Image
               </label>
               <input
                 type="file"
-                className="form-control"
+                className="addemp form-control"
                 id="inputGroupFile01"
                 name="image"
               />
             </div>
-            <div className="form-group">
+            <div className="addempgroup">
               <button type="submit" className="addemp-btn">
                 Add Employee
               </button>
