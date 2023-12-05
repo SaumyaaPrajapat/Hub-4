@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   MdPeople,
   MdDashboard,
@@ -19,6 +21,35 @@ import "./addemployee.css";
 
 const AddEmployee = () => {
   const [show, setShow] = useState(true);
+  const [employee, setEmployee] = useState({
+    name: "",
+    email: "",
+    password: "",
+    salary: "",
+    address: "",
+  });
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", employee.name);
+    formData.append("email", employee.email);
+    formData.append("password", employee.password);
+    formData.append("address", employee.address);
+    formData.append("salary", employee.salary);
+
+    axios
+      .post("https://hub4-back.vercel.app/add_employee", formData)
+      .then((result) => {
+        if (result.data.Status) {
+          navigate("/home/employees");
+        } else {
+          alert(result.data.Error);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <main className={show ? "space-toggle" : null}>
@@ -75,7 +106,7 @@ const AddEmployee = () => {
       <div className="addempcontainer">
         <div className="addempcontent rounded border">
           <h3 className="text-center">Add Employee</h3>
-          <form className="addempform">
+          <form className="addempform" onSubmit={handleSubmit}>
             <div className="addempgroup">
               <label htmlFor="inputName" className="form-label">
                 Name
@@ -85,6 +116,9 @@ const AddEmployee = () => {
                 className="addemp form-control"
                 id="inputName"
                 placeholder="Enter Name"
+                onChange={(e) =>
+                  setEmployee({ ...employee, name: e.target.value })
+                }
               />
             </div>
             <div className="addempgroup">
@@ -97,6 +131,9 @@ const AddEmployee = () => {
                 id="inputEmail4"
                 placeholder="Enter Email"
                 autoComplete="off"
+                onChange={(e) =>
+                  setEmployee({ ...employee, email: e.target.value })
+                }
               />
             </div>
             <div className="addempgroup">
@@ -108,6 +145,9 @@ const AddEmployee = () => {
                 className="addemp form-control"
                 id="inputPassword4"
                 placeholder="Enter Password"
+                onChange={(e) =>
+                  setEmployee({ ...employee, password: e.target.value })
+                }
               />
             </div>
             <div className="addempgroup">
@@ -120,6 +160,9 @@ const AddEmployee = () => {
                 id="inputSalary"
                 placeholder="Enter Salary"
                 autoComplete="off"
+                onChange={(e) =>
+                  setEmployee({ ...employee, salary: e.target.value })
+                }
               />
             </div>
             <div className="addempgroup">
@@ -132,6 +175,9 @@ const AddEmployee = () => {
                 id="inputAddress"
                 placeholder="1234 Main St"
                 autoComplete="off"
+                onChange={(e) =>
+                  setEmployee({ ...employee, address: e.target.value })
+                }
               />
             </div>
             <div className="addempgroup">

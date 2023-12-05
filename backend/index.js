@@ -5,6 +5,7 @@ const userModel = require("./model/signups");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const employee = require("./model/employee");
 
 const app = express();
 app.use(express.json());
@@ -111,6 +112,28 @@ app.get("/admin_records", async (req, res) => {
     return res.json({ Status: true, Result: adminRecords });
   } catch (error) {
     console.error(error);
+    return res
+      .status(500)
+      .json({ Status: false, Error: "Internal Server Error" });
+  }
+});
+
+//employee
+app.post("/add_employee", async (req, res) => {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const newEmployee = new employee({
+      name: req.body.name,
+      email: req.body.email,
+      password: hashedPassword,
+      address: req.body.address,
+      salary: req.body.salary,
+      category_id: req.body.category_id,
+    });
+    const savedEmployee = await newEmployee.save();
+    return res.json({ Status: true, Result: savedEmployee });
+  } catch (err) {
+    console.error(err);
     return res
       .status(500)
       .json({ Status: false, Error: "Internal Server Error" });
