@@ -8,6 +8,12 @@ const signupSchema = new mongoose.Schema({
     type: String,
     default: "admin",
   },
+  list: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "List",
+    },
+  ],
 });
 
 const userModel = mongoose.model("signups", signupSchema);

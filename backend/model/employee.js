@@ -15,6 +15,10 @@ const employeeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "category",
   },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "signups",
+  },
 });
 
 const employee = mongoose.model("employee", employeeSchema);
