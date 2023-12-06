@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   MdPeople,
   MdDashboard,
@@ -12,13 +13,28 @@ import {
   FaHome,
   FaSignOutAlt,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../img/Logo.png";
 import "../sidenavbar/sidenavbar.css";
 import "./employee.css";
 
 const Employees = () => {
   const [show, setShow] = useState(true);
+  const [employee, setEmployee] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get("https://hub4-back.vercel.app/employee")
+      .then((result) => {
+        if (result.data.Status) {
+          setEmployee(result.data.Result);
+        } else {
+          alert(result.data.Error);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <main className={show ? "space-toggle" : null}>
@@ -94,26 +110,24 @@ const Employees = () => {
                 <th>Email</th>
                 <th>Address</th>
                 <th>Salary</th>
+                <th>Category</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>name</td>
-                <td>
-                  <img
-                    src={`http://localhost:3000/Images/`}
-                    className="employee_image"
-                  />
-                </td>
-                <td>email</td>
-                <td>address</td>
-                <td>salary</td>
-                <td>
-                  <button className="btn btn-info btn-sm me-2">Edit</button>
-                  <button className="btn btn-warning btn-sm">Delete</button>
-                </td>
-              </tr>
+              {employee.map((e) => (
+                <tr>
+                  <td>{e.name}</td>
+                  <td>{e.email}</td>
+                  <td>{e.address}</td>
+                  <td>{e.salary}</td>
+                  <td>{e.category}</td>
+                  <td>
+                    <button className="btn btn-info btn-sm me-2">Edit</button>
+                    <button className="btn btn-warning btn-sm">Delete</button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

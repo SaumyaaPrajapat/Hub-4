@@ -52,6 +52,7 @@ const AddEmployee = () => {
     formData.append("password", employee.password);
     formData.append("address", employee.address);
     formData.append("salary", employee.salary);
+    formData.append("category_id", employee.category_id);
 
     axios
       .post("https://hub4-back.vercel.app/add_employee", formData)

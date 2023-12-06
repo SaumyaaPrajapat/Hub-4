@@ -120,6 +120,7 @@ app.get("/admin_records", async (req, res) => {
 });
 
 //employee
+//add employee
 app.post("/add_employee", async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -135,6 +136,42 @@ app.post("/add_employee", async (req, res) => {
     return res.json({ Status: true, Result: savedEmployee });
   } catch (err) {
     console.error(err);
+    return res
+      .status(500)
+      .json({ Status: false, Error: "Internal Server Error" });
+  }
+});
+
+// get all employees
+app.get("/employee", async (req, res) => {
+  try {
+    const employees = await employee.find({});
+    return res.json({ Status: true, Result: employees });
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ Status: false, Error: "Internal Server Error" });
+  }
+});
+
+// get a single employee by id
+app.get("/employee/:id", async (req, res) => {
+  try {
+    const emp = await employee.findById(req.params.id);
+    if (!emp) {
+      return res
+        .status(404)
+        .json({ Status: false, Error: "Employee Not Found" });
+    }
+    return res.json({ Status: true, Result: emp });
+  } catch (err) {
+    console.error(err);
+    if (err.name === "CastError") {
+      return res
+        .status(400)
+        .json({ Status: false, Error: "Invalid ID format" });
+    }
     return res
       .status(500)
       .json({ Status: false, Error: "Internal Server Error" });
