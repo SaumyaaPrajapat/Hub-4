@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import Logo from "../img/Logo.png";
 import "../sidenavbar/sidenavbar.css";
 import "./category.css";
+import "./addcategory.css";
 
 const AddCategory = () => {
   const [show, setShow] = useState(true);
@@ -95,41 +96,41 @@ const AddCategory = () => {
         </nav>
       </aside>
 
-      <div className="d-flex justify-content-center align-items-center h-75">
-        <div className="p-3 rounded w-25 border">
-          <h2>Add Category</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="name">
+      <div className="addcatcontainer">
+        <div className="addcatcontent rounded border">
+          <h3 className="text-center">Add Category</h3>
+          <form className="addcatform" onSubmit={handleSubmit}>
+            <div className="addcatgroup">
+              <label htmlFor="name" className="form-label">
                 <strong>Name:</strong>
               </label>
               <input
                 type="text"
+                className="addcat form-control"
                 id="name"
-                placeholder="Enter Category Name"
+                placeholder="Name"
                 value={categoryName}
                 onChange={(e) => setCategoryName(e.target.value)}
-                className="form-control rounded-0"
               />
             </div>
-            <div className="mb-3">
-              <label htmlFor="description">
+            <div className="addcatgroup">
+              <label htmlFor="description" className="form-label">
                 <strong>Description:</strong>
               </label>
               <textarea
                 id="description"
-                placeholder="Enter Category Description"
+                className="addcat form-control"
+                placeholder="Category Description"
                 value={categoryDescription}
                 onChange={(e) => setCategoryDescription(e.target.value)}
-                className="form-control rounded-0"
+                style={{ resize: "none" }}
               />
             </div>
-            <button
-              type="submit"
-              className="btn btn-success w-100 rounded-0 mb-2"
-            >
-              Add Category
-            </button>
+            <div className="addcatgroup">
+              <button type="submit" className="addcat-btn">
+                Add Category
+              </button>
+            </div>
           </form>
         </div>
       </div>

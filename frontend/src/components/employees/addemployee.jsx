@@ -21,16 +21,16 @@ import "./addemployee.css";
 
 const AddEmployee = () => {
   const [show, setShow] = useState(true);
-  const navigate = useNavigate();
-  const [category, setCategory] = useState([]);
   const [employee, setEmployee] = useState({
     name: "",
     email: "",
     password: "",
-    address: "",
     salary: "",
+    address: "",
     category_id: "",
   });
+  const navigate = useNavigate();
+  const [category, setCategory] = useState([]);
   useEffect(() => {
     axios
       .get("https://hub4-back.vercel.app/category")
@@ -44,33 +44,26 @@ const AddEmployee = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", employee.name);
+    formData.append("email", employee.email);
+    formData.append("password", employee.password);
+    formData.append("address", employee.address);
+    formData.append("salary", employee.salary);
+    formData.append("category_id", employee.category_id);
 
-    try {
-      const formData = {
-        name: employee.name,
-        email: employee.email,
-        password: employee.password,
-        address: employee.address,
-        salary: employee.salary,
-        category_id: employee.category_id,
-      };
-
-      const response = await axios.post(
-        "https://hub4-back.vercel.app/add_employee",
-        formData
-      );
-
-      if (response.data.Status) {
-        navigate("/home/employees");
-      } else {
-        alert(response.data.Error);
-      }
-    } catch (error) {
-      console.error(error);
-      alert("An error occurred while processing your request.");
-    }
+    axios
+      .post("https://hub4-back.vercel.app/add_employee", formData)
+      .then((result) => {
+        if (result.data.Status) {
+          navigate("/home/employees");
+        } else {
+          alert(result.data.Error);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -138,7 +131,6 @@ const AddEmployee = () => {
                 className="addemp form-control"
                 id="inputName"
                 placeholder="Enter Name"
-                value={employee.name}
                 onChange={(e) =>
                   setEmployee({ ...employee, name: e.target.value })
                 }
@@ -154,7 +146,6 @@ const AddEmployee = () => {
                 id="inputEmail4"
                 placeholder="Enter Email"
                 autoComplete="off"
-                value={employee.email}
                 onChange={(e) =>
                   setEmployee({ ...employee, email: e.target.value })
                 }
@@ -169,7 +160,6 @@ const AddEmployee = () => {
                 className="addemp form-control"
                 id="inputPassword4"
                 placeholder="Enter Password"
-                value={employee.password}
                 onChange={(e) =>
                   setEmployee({ ...employee, password: e.target.value })
                 }
@@ -185,7 +175,6 @@ const AddEmployee = () => {
                 id="inputSalary"
                 placeholder="Enter Salary"
                 autoComplete="off"
-                value={employee.salary}
                 onChange={(e) =>
                   setEmployee({ ...employee, salary: e.target.value })
                 }
@@ -201,7 +190,6 @@ const AddEmployee = () => {
                 id="inputAddress"
                 placeholder="1234 Main St"
                 autoComplete="off"
-                value={employee.address}
                 onChange={(e) =>
                   setEmployee({ ...employee, address: e.target.value })
                 }
@@ -215,7 +203,6 @@ const AddEmployee = () => {
                 name="category"
                 id="category"
                 className="form-select"
-                value={employee.category_id}
                 onChange={(e) =>
                   setEmployee({ ...employee, category_id: e.target.value })
                 }
