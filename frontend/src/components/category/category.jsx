@@ -21,7 +21,7 @@ import "./category.css";
 const Category = () => {
   const [show, setShow] = useState(true);
 
-  const [category, setCategory] = useState([]);
+  const [category, setCategory] = useState({ name: "" });
 
   useEffect(() => {
     CategoryData();

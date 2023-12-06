@@ -22,13 +22,13 @@ import "./category.css";
 const AddCategory = () => {
   const [show, setShow] = useState(true);
 
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState({ name: "" });
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("https://hub4-back.vercel.app/add_category", { category })
+      .post("https://hub4-back.vercel.app/add_category", category)
       .then((result) => {
         if (result.data.Status) {
           navigate("/home/category");
