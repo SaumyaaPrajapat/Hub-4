@@ -13,10 +13,9 @@ const employeeSchema = new Schema({
   salary: Number,
   category_id: {
     type: Schema.Types.ObjectId,
-    ref: "Category",
+    ref: "category",
   },
 });
 
 const employee = mongoose.model("employee", employeeSchema);
-
 module.exports = employee;

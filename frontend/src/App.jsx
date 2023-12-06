@@ -9,6 +9,7 @@ import Home from "./components/home/home";
 import Employees from "./components/employees/employees";
 import AddEmployee from "./components/employees/addemployee";
 import Category from "./components/category/category";
+import AddCategory from "./components/category/addcategory";
 import Profile from "./components/profile/profile";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux/es/exports";
@@ -32,6 +33,7 @@ function App() {
         <Route path="/home/employees" element={<Employees />} />
         <Route path="/home/employees/add" element={<AddEmployee />} />
         <Route path="/home/category" element={<Category />} />
+        <Route path="/home/category/add" element={<AddCategory />} />
         <Route path="/home/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>

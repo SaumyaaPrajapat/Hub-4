@@ -1,12 +1,20 @@
 .custom-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* Align items to the top */
-  height: 100vh;
+  padding: 0 10px;
 }
 
 .custom-content {
-  width: 25%;
+  width: 20%;
+}
+
+.catheader {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.catcenter {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .custom-btn {
@@ -19,6 +27,7 @@
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  text-align: center;
 }
 
 .custom-btn:hover {
@@ -27,6 +36,6 @@
 
 @media screen and (max-width: 768px) {
   .custom-content {
-    width: 45%;
+    width: 40%;
   }
 }

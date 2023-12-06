@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const employee = require("./model/employee");
+const category = require("./model/category");
 
 const app = express();
 app.use(express.json());
@@ -137,6 +138,29 @@ app.post("/add_employee", async (req, res) => {
     return res
       .status(500)
       .json({ Status: false, Error: "Internal Server Error" });
+  }
+});
+
+//category
+//get category
+app.get("/category", async (req, res) => {
+  try {
+    const categories = await category.find({});
+    res.json({ Status: true, Result: categories });
+  } catch (err) {
+    res.json({ Status: false, Error: "Query Error" });
+  }
+});
+
+//add category
+add.post("/add_category", async (req, res) => {
+  try {
+    const { name, description } = req.body;
+    const newCategory = new category({ name, description });
+    await newCategory.save();
+    res.json({ Status: true });
+  } catch (err) {
+    res.json({ Status: false, Error: "Query Error" });
   }
 });
 

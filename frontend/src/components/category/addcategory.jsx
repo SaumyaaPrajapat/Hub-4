@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   MdPeople,
   MdDashboard,
@@ -18,23 +19,25 @@ import Logo from "../img/Logo.png";
 import "../sidenavbar/sidenavbar.css";
 import "./category.css";
 
-const Category = () => {
+const AddCategory = () => {
   const [show, setShow] = useState(true);
 
-  const [category, setCategory] = useState([]);
+  const [category, setCategory] = useState({ name: "", description: "" });
+  const navigate = useNavigate();
 
-  useEffect(() => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     axios
-      .get("https://hub4-back.vercel.app/category")
+      .post("https://hub4-back.vercel.app/add_category", category)
       .then((result) => {
         if (result.data.Status) {
-          setCategory(result.data.Result);
+          navigate("/home/category");
         } else {
           alert(result.data.Error);
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  };
 
   return (
     <main className={show ? "space-toggle" : null}>
@@ -88,42 +91,47 @@ const Category = () => {
         </nav>
       </aside>
 
-      <div>
-        <div class="custom-container">
-          <div className="catheader">
-            <h3>Category List</h3>
-          </div>
-          <div className="catcenter">
-            <div class="custom-content">
-              <div className="categorytask">
-                <Link to="/home/category/add" className="custom-btn btn-9">
-                  Add Category
-                </Link>
-              </div>
+      <div className="d-flex justify-content-center align-items-center h-75">
+        <div className="p-3 rounded w-25 border">
+          <h2>Add Category</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="name">
+                <strong>Name:</strong>
+              </label>
+              <input
+                type="text"
+                id="name"
+                placeholder="Enter Category Name"
+                value={category.name}
+                onChange={(e) =>
+                  setCategory({ ...category, name: e.target.value })
+                }
+                className="form-control rounded-0"
+              />
             </div>
-          </div>
-          <div className="mt-3">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                {category.map((c) => (
-                  <tr>
-                    <td>{c.name}</td>
-                    <td>{c.description}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+            <div className="mb-3">
+              <label htmlFor="description">
+                <strong>Description:</strong>
+              </label>
+              <textarea
+                id="description"
+                placeholder="Enter Category Description"
+                value={category.description}
+                onChange={(e) =>
+                  setCategory({ ...category, description: e.target.value })
+                }
+                className="form-control rounded-0"
+              />
+            </div>
+            <button className="btn btn-success w-100 rounded-0 mb-2">
+              Add Category
+            </button>
+          </form>
         </div>
       </div>
     </main>
   );
 };
 
-export default Category;
+export default AddCategory;
