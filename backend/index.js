@@ -155,11 +155,28 @@ app.get("/category", async (req, res) => {
 //add category
 app.post("/add_category", async (req, res) => {
   try {
-    const { name } = req.body;
-    const newCategory = new category({ name });
-    await newCategory.save();
-    res.status(200).json({ Status: true });
+    // Check if the category name is already in use
+    const existingCategory = await categoryModel.findOne({
+      name: req.body.name,
+    });
+
+    if (existingCategory) {
+      return res
+        .status(400)
+        .json({ Status: false, Error: "Category name is already in use." });
+    } else {
+      // Create a new category
+      const newCategory = new categoryModel({ name: req.body.name });
+
+      // Save the category to the database
+      await newCategory.save();
+
+      // Respond with the created category
+      res.status(200).json({ Status: true, Result: newCategory });
+    }
   } catch (err) {
+    // Handle errors
+    console.error(err);
     res.status(500).json({ Status: false, Error: "Server Error" });
   }
 });
