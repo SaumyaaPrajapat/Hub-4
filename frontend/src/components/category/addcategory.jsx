@@ -21,22 +21,25 @@ import "./category.css";
 
 const AddCategory = () => {
   const [show, setShow] = useState(true);
-
-  const [category, setCategory] = useState({ name: "" });
   const navigate = useNavigate();
+  const [categoryName, setCategoryName] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios
-      .post("https://hub4-back.vercel.app/add_category", category)
-      .then((result) => {
-        if (result.data.Status) {
-          navigate("/home/category");
-        } else {
-          alert(result.data.Error);
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+
+    try {
+      const response = await axios.post(
+        "https://hub4-back.vercel.app/add_category",
+        {
+          name: categoryName,
         }
-      })
-      .catch((err) => console.log(err));
+      );
+      console.log(response.data); // Log the response if needed
+      // Redirect to the category page or update the category list
+      navigate("/home/category");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -103,12 +106,15 @@ const AddCategory = () => {
                 type="text"
                 id="name"
                 placeholder="Enter Category Name"
-                value={category.name}
-                onChange={(e) => setCategory(e.target.value)}
+                value={categoryName}
+                onChange={(e) => setCategoryName(e.target.value)}
                 className="form-control rounded-0"
               />
             </div>
-            <button className="btn btn-success w-100 rounded-0 mb-2">
+            <button
+              type="submit"
+              className="btn btn-success w-100 rounded-0 mb-2"
+            >
               Add Category
             </button>
           </form>

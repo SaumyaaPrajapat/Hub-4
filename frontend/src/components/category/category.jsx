@@ -21,24 +21,22 @@ import "./category.css";
 const Category = () => {
   const [show, setShow] = useState(true);
 
-  const [category, setCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    CategoryData();
-  }, []);
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          "https://hub4-back.vercel.app/category"
+        );
+        setCategories(response.data.Result);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  const CategoryData = () => {
-    axios
-      .get("https://hub4-back.vercel.app/category")
-      .then((result) => {
-        if (result.data.Status) {
-          setCategory(result.data.Result);
-        } else {
-          alert(result.data.Error);
-        }
-      })
-      .catch((err) => console.log(err));
-  };
+    fetchCategories();
+  }, []);
 
   return (
     <main className={show ? "space-toggle" : null}>
@@ -114,9 +112,9 @@ const Category = () => {
                 </tr>
               </thead>
               <tbody>
-                {category.map((c) => (
-                  <tr>
-                    <td>{c.name}</td>
+                {categories.map((category) => (
+                  <tr key={category._id}>
+                    <td>{category.name}</td>
                   </tr>
                 ))}
               </tbody>
