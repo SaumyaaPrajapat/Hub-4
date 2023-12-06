@@ -14,7 +14,6 @@
 .catcenter {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
 }
 
 .custom-btn {
@@ -34,8 +33,48 @@
   background-color: #0185ad; /* Adjust hover background color */
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 800px) {
   .custom-content {
     width: 40%;
   }
+  .task-cards {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+}
+
+.task-cards-container {
+  display: flex;
+  justify-content: center;
+  justify-content: center;
+  align-items: center;
+
+  margin: auto;
+  position: relative;
+  padding-bottom: 20px;
+}
+.task-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.task-card {
+  padding: 10px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+  height: fit-content;
+  background: #fff;
+  box-shadow: 5px 5px 12px #d3d3d3, -5px -5px 12px #f2f2f2;
+  overflow: auto;
+}
+
+.task-card h3 {
+  margin-bottom: 15px;
+}
+
+.task-card p {
+  margin: 0;
 }

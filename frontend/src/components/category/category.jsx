@@ -101,25 +101,17 @@ const Category = () => {
                   Add Category
                 </Link>
               </div>
+              <div className="task-cards-container">
+                <div className="task-cards">
+                  {categories.map((category) => (
+                    <div className="task-card" key={category._id}>
+                      <h3>{category.name}</h3>
+                      <p>{category.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="mt-3">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                {categories.map((category) => (
-                  <tr key={category._id}>
-                    <td>{category.name}</td>
-                    <td>{category.description}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
           </div>
         </div>
       </div>
