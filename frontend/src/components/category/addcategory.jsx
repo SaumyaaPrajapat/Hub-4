@@ -23,19 +23,20 @@ const AddCategory = () => {
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
   const [categoryName, setCategoryName] = useState("");
+  const [categoryDescription, setCategoryDescription] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault();
 
     try {
       const response = await axios.post(
         "https://hub4-back.vercel.app/add_category",
         {
           name: categoryName,
+          description: categoryDescription,
         }
       );
-      console.log(response.data); // Log the response if needed
-      // Redirect to the category page or update the category list
+      console.log(response.data);
       navigate("/home/category");
     } catch (error) {
       console.error(error);
@@ -108,6 +109,18 @@ const AddCategory = () => {
                 placeholder="Enter Category Name"
                 value={categoryName}
                 onChange={(e) => setCategoryName(e.target.value)}
+                className="form-control rounded-0"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="description">
+                <strong>Description:</strong>
+              </label>
+              <textarea
+                id="description"
+                placeholder="Enter Category Description"
+                value={categoryDescription}
+                onChange={(e) => setCategoryDescription(e.target.value)}
                 className="form-control rounded-0"
               />
             </div>

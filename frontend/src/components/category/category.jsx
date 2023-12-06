@@ -20,7 +20,6 @@ import "./category.css";
 
 const Category = () => {
   const [show, setShow] = useState(true);
-
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -109,12 +108,14 @@ const Category = () => {
               <thead>
                 <tr>
                   <th>Name</th>
+                  <th>Description</th>
                 </tr>
               </thead>
               <tbody>
                 {categories.map((category) => (
                   <tr key={category._id}>
                     <td>{category.name}</td>
+                    <td>{category.description}</td>
                   </tr>
                 ))}
               </tbody>

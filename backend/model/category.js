@@ -1,8 +1,11 @@
 const mongoose = require("mongoose");
 
-// MongoDB category schema (assuming you have a 'category' model)
 const categorySchema = new mongoose.Schema({
   name: {
+    type: String,
+    required: true,
+  },
+  description: {
     type: String,
     required: true,
   },
