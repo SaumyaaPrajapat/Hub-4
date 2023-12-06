@@ -24,6 +24,10 @@ const Category = () => {
   const [category, setCategory] = useState([]);
 
   useEffect(() => {
+    CategoryData();
+  }, []);
+
+  const CategoryData = () => {
     axios
       .get("https://hub4-back.vercel.app/category")
       .then((result) => {
@@ -34,7 +38,7 @@ const Category = () => {
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  };
 
   return (
     <main className={show ? "space-toggle" : null}>
@@ -107,14 +111,12 @@ const Category = () => {
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Description</th>
                 </tr>
               </thead>
               <tbody>
                 {category.map((c) => (
                   <tr>
                     <td>{c.name}</td>
-                    <td>{c.description}</td>
                   </tr>
                 ))}
               </tbody>
