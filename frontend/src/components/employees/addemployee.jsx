@@ -26,9 +26,23 @@ const AddEmployee = () => {
     email: "",
     password: "",
     salary: "",
+    category_id: "",
     address: "",
   });
   const navigate = useNavigate();
+  const [category, setCategory] = useState([]);
+  useEffect(() => {
+    axios
+      .get("https://hub4-back.vercel.app/category")
+      .then((result) => {
+        if (result.data.Status) {
+          setCategory(result.data.Result);
+        } else {
+          alert(result.data.Error);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -184,20 +198,18 @@ const AddEmployee = () => {
               <label htmlFor="category" className="form-label">
                 Category
               </label>
-              <select name="category" id="category" className="form-select">
-                <option>name</option>
+              <select
+                name="category"
+                id="category"
+                className="form-select"
+                onChange={(e) =>
+                  setEmployee({ ...employee, category_id: e.target.value })
+                }
+              >
+                {category.map((c) => {
+                  return <option value={c.id}>{c.name}</option>;
+                })}
               </select>
-            </div>
-            <div className="addempgroup mb-3">
-              <label className="form-label" htmlFor="inputGroupFile01">
-                Select Image
-              </label>
-              <input
-                type="file"
-                className="addemp form-control"
-                id="inputGroupFile01"
-                name="image"
-              />
             </div>
             <div className="addempgroup">
               <button type="submit" className="addemp-btn">
