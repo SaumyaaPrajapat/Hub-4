@@ -152,18 +152,6 @@ app.get("/category", async (req, res) => {
   }
 });
 
-//add category
-add.post("/add_category", async (req, res) => {
-  try {
-    const { name, description } = req.body;
-    const newCategory = new category({ name, description });
-    await newCategory.save();
-    res.json({ Status: true });
-  } catch (err) {
-    res.json({ Status: false, Error: "Query Error" });
-  }
-});
-
 app.listen(4001, () => {
   console.log("Server is connected and running");
 });
