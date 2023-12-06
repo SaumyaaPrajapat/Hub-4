@@ -146,22 +146,28 @@ app.post("/add_employee", async (req, res) => {
 app.get("/category", async (req, res) => {
   try {
     const categories = await category.find({});
-    res.json({ Status: true, Result: categories });
+    return res.json({ Status: true, Result: categories });
   } catch (err) {
-    res.json({ Status: false, Error: "Query Error" });
+    console.error(err);
+    return res
+      .status(500)
+      .json({ Status: false, Error: "Internal Server Error" });
   }
 });
 
 //add category
 app.post("/add_category", async (req, res) => {
   try {
-    const { name } = req.body;
-    const newCategory = new category({ name });
-    await newCategory.save();
-    res.status(200).json({ Status: true });
+    const newCategory = new category({
+      name: req.body.name,
+    });
+    const savedCategory = await newCategory.save();
+    return res.json({ Status: true, Result: savedCategory });
   } catch (err) {
-    console.error(err); // Log the error to the console
-    res.status(500).json({ Status: false, Error: err.message }); // Send the error message to the client
+    console.error(err);
+    return res
+      .status(500)
+      .json({ Status: false, Error: "Internal Server Error" });
   }
 });
 
