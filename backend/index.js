@@ -158,7 +158,7 @@ app.get("/category", async (req, res) => {
 //add category
 app.post("/add_category", async (req, res) => {
   try {
-    const newCategory = new Category({
+    const newCategory = new category({
       name: req.body.name,
       description: req.body.description,
     });
