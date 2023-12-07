@@ -1,0 +1,93 @@
+.procontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75vh;
+}
+
+.procontent {
+  width: 70%;
+  padding: 20px;
+  box-shadow: 5px 5px 12px #d3d3d3, -5px -5px 12px #f2f2f2;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.circle-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #049fcf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #fff;
+}
+
+.proform {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.progroup {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pro {
+  padding: 0.15rem 0.75rem;
+  font-size: 1.1rem;
+  color: #438fb5;
+  background-color: #fff;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.progroup {
+  margin-bottom: 1rem;
+}
+
+.pro-btn {
+  display: block;
+  margin: auto;
+  width: 25%;
+  padding: 0.75rem;
+  background-color: #03a6d8;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pro-btn:hover {
+  background-color: #0185ad;
+}
+
+@media (max-width: 800px) {
+  .procontainer {
+    padding-top: 1rem;
+  }
+  .procontent {
+    width: 80%;
+  }
+  .pro-btn {
+    width: 40%;
+  }
+}
+@media (max-width: 600px) {
+  .procontent {
+    width: 90%;
+  }
+}

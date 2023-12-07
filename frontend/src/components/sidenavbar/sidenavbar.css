@@ -235,3 +235,10 @@ main {
     padding: 30px;
   }
 }
+
+@media (max-width: 600px) {
+  .table th:nth-child(2),
+  .table td:nth-child(2) {
+    display: none;
+  }
+}

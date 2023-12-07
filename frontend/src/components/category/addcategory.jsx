@@ -19,6 +19,8 @@ import Logo from "../img/Logo.png";
 import "../sidenavbar/sidenavbar.css";
 import "./category.css";
 import "./addcategory.css";
+import { useDispatch } from "react-redux/es/exports";
+import { authActions } from "../../store";
 
 const AddCategory = () => {
   const [show, setShow] = useState(true);
@@ -42,6 +44,12 @@ const AddCategory = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const dispatch = useDispatch();
+  const logout = () => {
+    sessionStorage.clear("id");
+    dispatch(authActions.logout());
   };
 
   return (
@@ -89,7 +97,7 @@ const AddCategory = () => {
               </Link>
             </div>
           </div>
-          <Link to="/login" className="snav-link">
+          <Link to="/" onClick={logout} className="snav-link">
             <FaSignOutAlt className="react-icon" />
             <span className="nav-link-name">Logout</span>
           </Link>

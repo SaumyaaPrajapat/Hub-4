@@ -77,7 +77,15 @@
   text-align: left;
 }
 
-.employee-image {
-  max-width: 100px;
-  height: auto;
+/* Add this CSS in your existing stylesheet or create a new one */
+@media (max-width: 600px) {
+  /* Hide the Email, Address, Salary, and Category columns on screens with a width of 768px or less */
+  .table th:nth-child(2),
+  .table td:nth-child(2),
+  .table th:nth-child(4),
+  .table td:nth-child(4),
+  .table th:nth-child(5),
+  .table td:nth-child(5) {
+    display: none;
+  }
 }

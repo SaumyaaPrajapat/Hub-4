@@ -16,6 +16,8 @@ import {
 import { Link } from "react-router-dom";
 import Logo from "../img/Logo.png";
 import "./sidenavbar.css";
+import { useDispatch } from "react-redux/es/exports";
+import { authActions } from "../../store";
 
 const SideNavbar = () => {
   const [show, setShow] = useState(true);
@@ -68,6 +70,12 @@ const SideNavbar = () => {
     });
   };
 
+  const dispatch = useDispatch();
+  const logout = () => {
+    sessionStorage.clear("id");
+    dispatch(authActions.logout());
+  };
+
   return (
     <main className={show ? "space-toggle" : null}>
       <header className={`header ${show ? "space-toggle" : null}`}>
@@ -113,7 +121,7 @@ const SideNavbar = () => {
               </Link>
             </div>
           </div>
-          <Link to="/login" className="snav-link">
+          <Link to="/" onClick={logout} className="snav-link">
             <FaSignOutAlt className="react-icon" />
             <span className="nav-link-name">Logout</span>
           </Link>
@@ -173,7 +181,12 @@ const SideNavbar = () => {
                     <td>{a.name}</td>
                     <td>{a.email}</td>
                     <td>
-                      <button className="btn btn-info btn-sm me-2">Edit</button>
+                      <Link
+                        to="/home/profile"
+                        className="btn btn-info btn-sm me-2"
+                      >
+                        Edit
+                      </Link>
                       <button
                         className="btn btn-warning btn-sm"
                         onClick={() => deleteAdmin(a._id)}

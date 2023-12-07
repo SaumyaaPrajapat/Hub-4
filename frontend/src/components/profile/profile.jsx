@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   MdPeople,
   MdDashboard,
@@ -11,13 +12,48 @@ import {
   FaUserCircle,
   FaHome,
   FaSignOutAlt,
+  FaRegEdit,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Logo from "../img/Logo.png";
 import "../sidenavbar/sidenavbar.css";
+import "./profile.css";
+import { useDispatch } from "react-redux/es/exports";
+import { authActions } from "../../store";
 
 const Profile = () => {
   const [show, setShow] = useState(true);
+  const [name, setUserName] = useState("");
+  const [email, setUserEmail] = useState("");
+
+  useEffect(() => {
+    const storedName = sessionStorage.getItem("name");
+    const storedEmail = sessionStorage.getItem("email");
+    console.log("Stored Email:", storedEmail);
+
+    if (storedName) {
+      setUserName(capitalizeFirstLetter(storedName));
+    }
+    if (storedEmail) {
+      setUserEmail(storedEmail);
+    }
+  }, []);
+
+  // Function to capitalize the first letter of a string
+  const capitalizeFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  // Function to get the first letter of the name
+  const getFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase();
+  };
+
+  const dispatch = useDispatch();
+  const logout = () => {
+    sessionStorage.clear("id");
+    dispatch(authActions.logout());
+  };
 
   return (
     <main className={show ? "space-toggle" : null}>
@@ -46,7 +82,7 @@ const Profile = () => {
                 <MdDashboard className="react-icon" />
                 <span className="nav-link-name">Dashboard</span>
               </Link>
-              <Link to="/home/employees" className="snav-link">
+              <Link to="/home/employee" className="snav-link">
                 <MdPeople className="react-icon" />
                 <span className="nav-link-name">Employees</span>
               </Link>
@@ -64,14 +100,43 @@ const Profile = () => {
               </Link>
             </div>
           </div>
-          <Link to="/login" className="snav-link">
+          <Link to="/" onClick={logout} className="snav-link">
             <FaSignOutAlt className="react-icon" />
             <span className="nav-link-name">Logout</span>
           </Link>
         </nav>
       </aside>
 
-      <h3>Profile</h3>
+      <div className="procontainer">
+        <div className="procontent rounded border">
+          <h3 className="text-center">Profile</h3>
+          <form className="proform">
+            <div className="circle-container">
+              <div className="circle">
+                <span>{getFirstLetter(name) || "."}</span>
+              </div>
+            </div>
+            <div className="progroup">
+              <label htmlFor="name" className="form-label">
+                <strong>Name:</strong>
+              </label>
+              <h3 className="pro">{name || "user"}</h3>
+            </div>
+            <div className="progroup">
+              <label htmlFor="description" className="form-label">
+                <strong>Email:</strong>
+              </label>
+              <h3 className="pro">{email || "userEmail"}</h3>
+            </div>
+            <div className="progroup">
+              <button type="button" className="pro-btn">
+                <FaRegEdit style={{ marginRight: "15px" }} />
+                Edit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </main>
   );
 };

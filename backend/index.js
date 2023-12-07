@@ -93,6 +93,28 @@ app.post("/register", async (req, res) => {
   }
 });
 
+//get user profile
+app.get("/profile/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    // Fetch user information from the database based on userId
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Exclude sensitive information like password before sending the response
+    const { password, ...userData } = user._doc;
+
+    return res.status(200).json(userData);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 //admin
 //Admin count
 app.get("/admin_count", async (req, res) => {
@@ -149,45 +171,36 @@ app.get("/employee", async (req, res) => {
   }
 });
 //add employee
-// Add employee
 app.post("/add_employee", async (req, res) => {
   try {
-    const { name, email, password, salary, address, category_id, user_id } =
-      req.body;
+    console.log("Received user_id:", req.body.id);
+    const existingUser = await userModel.findById(req.body.id);
 
-    // Find the user based on the provided user_id
-    const existingUser = await userModel.findById(user_id);
-
-    if (existingUser) {
-      // Hash the password before storing it
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      // Create a new employee
-      const newEmployee = new employee({
-        name,
-        email,
-        password: hashedPassword,
-        salary,
-        address,
-        category_id,
-        user: existingUser._id, // Set the user reference for the employee
-      });
-
-      // Save the employee
-      await newEmployee.save();
-
-      // Optionally, update the user's employee list with the newly created employee
-      existingUser.employees.push(newEmployee._id);
-      await existingUser.save();
-
-      // Send the response
-      res.status(201).json({ employee: newEmployee });
-    } else {
-      res.status(404).json({ error: "User not found" });
+    if (!existingUser) {
+      return res.status(404).json({ Status: false, Error: "User not found" });
     }
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+    // Create a new employee document with the user_id
+    const newEmployee = new employee({
+      name: req.body.name,
+      email: req.body.email,
+      password: hashedPassword,
+      address: req.body.address,
+      salary: req.body.salary,
+      category_id: req.body.category_id,
+      user: req.body.id, // Include the user_id from the request body
+    });
+
+    // Save the employee document to MongoDB
+    const savedEmployee = await newEmployee.save();
+
+    // Send the response
+    res.status(201).json({ Status: true, Result: savedEmployee });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ Status: false, Error: "Internal Server Error" });
   }
 });
 

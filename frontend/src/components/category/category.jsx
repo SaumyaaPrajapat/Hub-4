@@ -17,6 +17,8 @@ import { Link } from "react-router-dom";
 import Logo from "../img/Logo.png";
 import "../sidenavbar/sidenavbar.css";
 import "./category.css";
+import { useDispatch } from "react-redux/es/exports";
+import { authActions } from "../../store";
 
 const Category = () => {
   const [show, setShow] = useState(true);
@@ -36,6 +38,12 @@ const Category = () => {
 
     fetchCategories();
   }, []);
+
+  const dispatch = useDispatch();
+  const logout = () => {
+    sessionStorage.clear("id");
+    dispatch(authActions.logout());
+  };
 
   return (
     <main className={show ? "space-toggle" : null}>
@@ -82,7 +90,7 @@ const Category = () => {
               </Link>
             </div>
           </div>
-          <Link to="/login" className="snav-link">
+          <Link to="/" onClick={logout} className="snav-link">
             <FaSignOutAlt className="react-icon" />
             <span className="nav-link-name">Logout</span>
           </Link>

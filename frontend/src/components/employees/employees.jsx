@@ -17,6 +17,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "../img/Logo.png";
 import "../sidenavbar/sidenavbar.css";
 import "./employee.css";
+import { useDispatch } from "react-redux/es/exports";
+import { authActions } from "../../store";
 
 const Employees = () => {
   const [show, setShow] = useState(true);
@@ -36,6 +38,12 @@ const Employees = () => {
 
     fetchEmployee();
   }, []);
+
+  const dispatch = useDispatch();
+  const logout = () => {
+    sessionStorage.clear("id");
+    dispatch(authActions.logout());
+  };
 
   return (
     <main className={show ? "space-toggle" : null}>
@@ -82,7 +90,7 @@ const Employees = () => {
               </Link>
             </div>
           </div>
-          <Link to="/login" className="snav-link">
+          <Link to="/" onClick={logout} className="snav-link">
             <FaSignOutAlt className="react-icon" />
             <span className="nav-link-name">Logout</span>
           </Link>
@@ -107,10 +115,9 @@ const Employees = () => {
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Image</th>
                 <th>Email</th>
-                <th>Address</th>
                 <th>Salary</th>
+                <th>Address</th>
                 <th>Category</th>
                 <th>Action</th>
               </tr>
@@ -120,8 +127,8 @@ const Employees = () => {
                 <tr>
                   <td>{e.name}</td>
                   <td>{e.email}</td>
-                  <td>{e.address}</td>
                   <td>{e.salary}</td>
+                  <td>{e.address}</td>
                   <td>{e.category}</td>
                   <td>
                     <button className="btn btn-info btn-sm me-2">Edit</button>
