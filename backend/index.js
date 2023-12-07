@@ -150,23 +150,23 @@ app.get("/employee", async (req, res) => {
 });
 //add employee
 app.post("/add_employee", async (req, res) => {
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const newEmployee = new employee({
-      name: req.body.name,
-      email: req.body.email,
+    const { name, email, password, salary, address, category_id } = req.body;
+    const newEmployee = new Employee({
+      name,
+      email,
       password: hashedPassword,
-      address: req.body.address,
-      salary: req.body.salary,
-      category_id: req.body.category_id,
+      salary,
+      address,
+      category_id,
     });
+
     const savedEmployee = await newEmployee.save();
-    return res.json({ Status: true, Result: savedEmployee });
-  } catch (err) {
-    console.error(err);
-    return res
-      .status(500)
-      .json({ Status: false, Error: "Internal Server Error" });
+    res.status(201).json({ Status: true, Result: savedEmployee });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ Status: false, Error: "Internal Server Error" });
   }
 });
 
