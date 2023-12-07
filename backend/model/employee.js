@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 
-const employeeSchema = new Schema({
+const employeeSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -24,12 +23,12 @@ const employeeSchema = new Schema({
     required: true,
   },
   category_id: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "category",
     required: true,
   },
   user: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "signups",
     required: true,
   },
