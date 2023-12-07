@@ -115,13 +115,13 @@ const SideNavbar = () => {
                 <FaUserCircle className="react-icon" />
                 <span className="nav-link-name">Profile</span>
               </Link>
-              <Link to="/" className="snav-link">
+              <Link to="/" onClick={logout} className="snav-link">
                 <FaHome className="react-icon" />
                 <span className="nav-link-name">Homepage</span>
               </Link>
             </div>
           </div>
-          <Link to="/" onClick={logout} className="snav-link">
+          <Link to="/login" onClick={logout} className="snav-link">
             <FaSignOutAlt className="react-icon" />
             <span className="nav-link-name">Logout</span>
           </Link>
