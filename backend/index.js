@@ -159,7 +159,6 @@ app.post("/add_employee", async (req, res) => {
       salary: req.body.salary,
       address: req.body.address,
       category_id: req.body.category_id,
-      user: req.body.user,
     });
     const savedEmployee = await newEmployee.save();
     res.status(201).json({ Status: true, Result: savedEmployee });
