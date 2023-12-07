@@ -29,8 +29,9 @@ const employeeSchema = new Schema({
     required: true,
   },
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "signups",
+    required: true,
   },
 });
 
