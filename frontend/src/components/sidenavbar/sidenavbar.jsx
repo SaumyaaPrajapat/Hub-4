@@ -47,6 +47,8 @@ const SideNavbar = () => {
         if (data.Status) {
           // Remove the deleted admin from the state
           setAdmins(admins.filter((admin) => admin._id !== id));
+          // Decrement the adminTotal by one
+          setAdminTotal((prevTotal) => prevTotal - 1);
         } else {
           console.error("Failed to delete the admin:", data.Error);
         }
