@@ -21,15 +21,14 @@ import "./addemployee.css";
 
 const AddEmployee = () => {
   const [show, setShow] = useState(true);
-  const [employee, setEmployee] = useState({
-    name: "",
-    email: "",
-    password: "",
-    salary: "",
-    address: "",
-    category_id: "",
-  });
   const navigate = useNavigate();
+  const [empname, setName] = useState("");
+  const [empemail, setEmail] = useState("");
+  const [emppassword, setPassword] = useState("");
+  const [empsalary, setSalary] = useState("");
+  const [empaddress, setAddress] = useState("");
+  const [empcategoryid, setCategoryid] = useState("");
+
   const [category, setCategory] = useState([]);
   useEffect(() => {
     axios
@@ -49,12 +48,19 @@ const AddEmployee = () => {
     try {
       const response = await axios.post(
         "https://hub4-back.vercel.app/add_employee",
-        employee
+        {
+          name: empname,
+          email: empemail,
+          password: emppassword,
+          salary: empsalary,
+          address: empaddress,
+          categoryid: empcategoryid,
+        }
       );
       console.log(response.data);
       navigate("/home/employees");
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -123,9 +129,8 @@ const AddEmployee = () => {
                 className="addemp form-control"
                 id="inputName"
                 placeholder="Enter Name"
-                onChange={(e) =>
-                  setEmployee({ ...employee, name: e.target.value })
-                }
+                value={empname}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div className="addempgroup">
@@ -138,9 +143,8 @@ const AddEmployee = () => {
                 id="inputEmail4"
                 placeholder="Enter Email"
                 autoComplete="off"
-                onChange={(e) =>
-                  setEmployee({ ...employee, email: e.target.value })
-                }
+                value={empemail}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="addempgroup">
@@ -152,9 +156,8 @@ const AddEmployee = () => {
                 className="addemp form-control"
                 id="inputPassword4"
                 placeholder="Enter Password"
-                onChange={(e) =>
-                  setEmployee({ ...employee, password: e.target.value })
-                }
+                value={emppassword}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className="addempgroup">
@@ -167,9 +170,8 @@ const AddEmployee = () => {
                 id="inputSalary"
                 placeholder="Enter Salary"
                 autoComplete="off"
-                onChange={(e) =>
-                  setEmployee({ ...employee, salary: e.target.value })
-                }
+                value={empsalary}
+                onChange={(e) => setSalary(e.target.value)}
               />
             </div>
             <div className="addempgroup">
@@ -182,9 +184,8 @@ const AddEmployee = () => {
                 id="inputAddress"
                 placeholder="1234 Main St"
                 autoComplete="off"
-                onChange={(e) =>
-                  setEmployee({ ...employee, address: e.target.value })
-                }
+                value={empaddress}
+                onChange={(e) => setAddress(e.target.value)}
               />
             </div>
             <div className="addempgroup">
@@ -195,9 +196,8 @@ const AddEmployee = () => {
                 name="category"
                 id="category"
                 className="form-select"
-                onChange={(e) =>
-                  setEmployee({ ...employee, category_id: e.target.value })
-                }
+                value={empcategoryid}
+                onChange={(e) => setCategoryid(e.target.value)}
               >
                 {category.map((c) => {
                   return <option value={c.id}>{c.name}</option>;

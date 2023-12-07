@@ -120,12 +120,11 @@ app.get("/admin_records", async (req, res) => {
 });
 
 //employee
-// Add employee
-app.post("/add_employee", async (req, res) => {
+// get employees
+app.get("/employee", async (req, res) => {
   try {
-    const newEmployee = new employee(req.body);
-    const savedEmployee = await newEmployee.save();
-    return res.json({ Status: true, Result: savedEmployee });
+    const employees = await employee.find({});
+    return res.json({ Status: true, Result: employees });
   } catch (err) {
     console.error(err);
     return res
@@ -133,12 +132,20 @@ app.post("/add_employee", async (req, res) => {
       .json({ Status: false, Error: "Internal Server Error" });
   }
 });
-
-// get employees
-app.get("/employee", async (req, res) => {
+//add employee
+app.post("/add_employee", async (req, res) => {
   try {
-    const employees = await employee.find({});
-    return res.json({ Status: true, Result: employees });
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const newEmployee = new employee({
+      name: req.body.name,
+      email: req.body.email,
+      password: hashedPassword,
+      address: req.body.address,
+      salary: req.body.salary,
+      category_id: req.body.category_id,
+    });
+    const savedEmployee = await newEmployee.save();
+    return res.json({ Status: true, Result: savedEmployee });
   } catch (err) {
     console.error(err);
     return res
