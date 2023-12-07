@@ -38,6 +38,24 @@ const SideNavbar = () => {
     });
   };
 
+  function deleteAdmin(id) {
+    fetch(`https://hub4-back.vercel.app/admin/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.Status) {
+          // Remove the deleted admin from the state
+          setAdmins(admins.filter((admin) => admin._id !== id));
+        } else {
+          console.error("Failed to delete the admin:", data.Error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
   const adminCount = () => {
     axios.get("https://hub4-back.vercel.app/admin_count").then((result) => {
       if (result.data.Status) {
@@ -154,7 +172,12 @@ const SideNavbar = () => {
                     <td>{a.email}</td>
                     <td>
                       <button className="btn btn-info btn-sm me-2">Edit</button>
-                      <button className="btn btn-warning btn-sm">Delete</button>
+                      <button
+                        className="btn btn-warning btn-sm"
+                        onClick={() => deleteAdmin(a._id)}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}

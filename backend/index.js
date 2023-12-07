@@ -118,6 +118,22 @@ app.get("/admin_records", async (req, res) => {
       .json({ Status: false, Error: "Internal Server Error" });
   }
 });
+// Delete admin
+app.delete("/admin/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedAdmin = await userModel.findByIdAndDelete(id);
+    if (!deletedAdmin) {
+      return res.status(404).json({ Status: false, Error: "Admin not found" });
+    }
+    return res.json({ Status: true, Result: "Admin deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ Status: false, Error: "Internal Server Error" });
+  }
+});
 
 //employee
 // get employees
