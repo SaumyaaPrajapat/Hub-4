@@ -20,7 +20,7 @@ import "./employee.css";
 
 const Employees = () => {
   const [show, setShow] = useState(true);
-  const [employee, setEmployee] = useState([]);
+  const [employees, setEmployee] = useState([]);
 
   useEffect(() => {
     const fetchEmployee = async () => {
@@ -64,7 +64,7 @@ const Employees = () => {
                 <MdDashboard className="react-icon" />
                 <span className="nav-link-name">Dashboard</span>
               </Link>
-              <Link to="/home/employees" className="snav-link">
+              <Link to="/home/employee" className="snav-link">
                 <MdPeople className="react-icon" />
                 <span className="nav-link-name">Employees</span>
               </Link>
@@ -96,7 +96,7 @@ const Employees = () => {
         <div className="empcenter">
           <div class="empcustom-content">
             <div className="emptask">
-              <Link to="/home/employees/add" className="emp-btn btn-9">
+              <Link to="/home/employee/add" className="emp-btn btn-9">
                 <span>Add Employee</span>
               </Link>
             </div>
@@ -116,7 +116,7 @@ const Employees = () => {
               </tr>
             </thead>
             <tbody>
-              {employee.map((e) => (
+              {employees.map((e) => (
                 <tr>
                   <td>{e.name}</td>
                   <td>{e.email}</td>

@@ -30,8 +30,8 @@ function App() {
         <Route path="/forgotpass" element={<Forgot />}></Route>
         <Route path="/resetpass/:id/:token" element={<Reset />}></Route>
         <Route path="/home" element={<Home />} />
-        <Route path="/home/employees" element={<Employees />} />
-        <Route path="/home/employees/add" element={<AddEmployee />} />
+        <Route path="/home/employee" element={<Employees />} />
+        <Route path="/home/employee/add" element={<AddEmployee />} />
         <Route path="/home/category" element={<Category />} />
         <Route path="/home/category/add" element={<AddCategory />} />
         <Route path="/home/profile" element={<Profile />} />

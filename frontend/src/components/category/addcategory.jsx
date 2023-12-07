@@ -71,7 +71,7 @@ const AddCategory = () => {
                 <MdDashboard className="react-icon" />
                 <span className="nav-link-name">Dashboard</span>
               </Link>
-              <Link to="/home/employees" className="snav-link">
+              <Link to="/home/employee" className="snav-link">
                 <MdPeople className="react-icon" />
                 <span className="nav-link-name">Employees</span>
               </Link>
