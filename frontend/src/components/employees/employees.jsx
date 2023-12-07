@@ -21,19 +21,20 @@ import "./employee.css";
 const Employees = () => {
   const [show, setShow] = useState(true);
   const [employee, setEmployee] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get("https://hub4-back.vercel.app/employee")
-      .then((result) => {
-        if (result.data.Status) {
-          setEmployee(result.data.Result);
-        } else {
-          alert(result.data.Error);
-        }
-      })
-      .catch((err) => console.log(err));
+    const fetchEmployee = async () => {
+      try {
+        const response = await axios.get(
+          "https://hub4-back.vercel.app/employee"
+        );
+        setEmployee(response.data.Result);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchEmployee();
   }, []);
 
   return (

@@ -44,26 +44,18 @@ const AddEmployee = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("name", employee.name);
-    formData.append("email", employee.email);
-    formData.append("password", employee.password);
-    formData.append("address", employee.address);
-    formData.append("salary", employee.salary);
-    formData.append("category_id", employee.category_id);
-
-    axios
-      .post("https://hub4-back.vercel.app/add_employee", formData)
-      .then((result) => {
-        if (result.data.Status) {
-          navigate("/home/employees");
-        } else {
-          alert(result.data.Error);
-        }
-      })
-      .catch((err) => console.log(err));
+    try {
+      const response = await axios.post(
+        "https://hub4-back.vercel.app/add_employee",
+        employee
+      );
+      console.log(response.data);
+      navigate("/home/employees");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
