@@ -150,18 +150,17 @@ app.get("/employee", async (req, res) => {
 });
 //add employee
 app.post("/add_employee", async (req, res) => {
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
   try {
-    const { name, email, password, salary, address, category_id } = req.body;
-    const newEmployee = new Employee({
-      name,
-      email,
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const newEmployee = new employee({
+      name: req.body.name,
+      email: req.body.email,
       password: hashedPassword,
-      salary,
-      address,
-      category_id,
+      salary: req.body.salary,
+      address: req.body.address,
+      category_id: req.body.category_id,
+      user: req.body.user,
     });
-
     const savedEmployee = await newEmployee.save();
     res.status(201).json({ Status: true, Result: savedEmployee });
   } catch (error) {

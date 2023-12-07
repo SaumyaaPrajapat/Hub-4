@@ -48,26 +48,29 @@ const AddEmployee = () => {
     const employeeData = {
       name: empname,
       email: empemail,
-      password: emppassword, // Ensure you have proper security measures for handling passwords
+      password: emppassword,
       salary: empsalary,
       address: empaddress,
       category_id: empcategoryid,
+      // user: user, // Include this if you want to associate the employee with a user
     };
 
-    fetch("https://hub4-back.vercel.app/add_employee", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(employeeData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.Status) {
-          console.log("Employee added:", data.Result);
+    axios
+      .post("https://hub4-back.vercel.app/add_employee", employeeData)
+      .then((response) => {
+        if (response.data.Status) {
+          console.log("Employee added:", response.data.Result);
+          // Reset form fields
+          setName("");
+          setEmail("");
+          setPassword("");
+          setSalary("");
+          setAddress("");
+          setCategoryid("");
+          // Optionally, navigate to another page or display a success message
           navigate("/home/employee");
         } else {
-          console.error("Failed to add the employee:", data.Error);
+          console.error("Failed to add the employee:", response.data.Error);
         }
       })
       .catch((error) => {
