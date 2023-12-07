@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import imageArt from "../img/back1.png";
@@ -16,6 +16,17 @@ function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    // Check if the user is already logged in
+    const token = document.cookie
+      .split(";")
+      .find((item) => item.trim().startsWith("token="));
+    if (token) {
+      // If a token is found, redirect to the home page
+      navigate("/home");
+    }
+  }, [navigate]);
 
   const handleShowPassword = (event) => {
     event.preventDefault();
