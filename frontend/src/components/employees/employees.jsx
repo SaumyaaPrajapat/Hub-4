@@ -25,7 +25,7 @@ const Employees = () => {
 
   useEffect(() => {
     axios
-      .get("https://hub4-back.vercel.app/employees")
+      .get("https://hub4-back.vercel.app/employee")
       .then((result) => {
         if (result.data.Status) {
           setEmployee(result.data.Result);
