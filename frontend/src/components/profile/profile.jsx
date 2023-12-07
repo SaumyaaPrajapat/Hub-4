@@ -29,7 +29,6 @@ const Profile = () => {
   useEffect(() => {
     const storedName = sessionStorage.getItem("name");
     const storedEmail = sessionStorage.getItem("email");
-    console.log("Stored Email:", storedEmail);
 
     if (storedName) {
       setUserName(capitalizeFirstLetter(storedName));
