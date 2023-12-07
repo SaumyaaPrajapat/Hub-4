@@ -149,22 +149,45 @@ app.get("/employee", async (req, res) => {
   }
 });
 //add employee
+// Add employee
 app.post("/add_employee", async (req, res) => {
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const newEmployee = new employee({
-      name: req.body.name,
-      email: req.body.email,
-      password: hashedPassword,
-      salary: req.body.salary,
-      address: req.body.address,
-      category_id: req.body.category_id,
-    });
-    const savedEmployee = await newEmployee.save();
-    res.status(201).json({ Status: true, Result: savedEmployee });
+    const { name, email, password, salary, address, category_id, user_id } =
+      req.body;
+
+    // Find the user based on the provided user_id
+    const existingUser = await userModel.findById(user_id);
+
+    if (existingUser) {
+      // Hash the password before storing it
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      // Create a new employee
+      const newEmployee = new employee({
+        name,
+        email,
+        password: hashedPassword,
+        salary,
+        address,
+        category_id,
+        user: existingUser._id, // Set the user reference for the employee
+      });
+
+      // Save the employee
+      await newEmployee.save();
+
+      // Optionally, update the user's employee list with the newly created employee
+      existingUser.employees.push(newEmployee._id);
+      await existingUser.save();
+
+      // Send the response
+      res.status(201).json({ employee: newEmployee });
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ Status: false, Error: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
