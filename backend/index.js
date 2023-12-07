@@ -120,6 +120,19 @@ app.get("/admin_records", async (req, res) => {
 });
 
 //employee
+// get all employees
+app.get("/employees", async (req, res) => {
+  try {
+    const employees = await employee.find({});
+    return res.json({ Status: true, Result: employees });
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ Status: false, Error: "Internal Server Error" });
+  }
+});
+
 //add employee
 app.post("/add_employee", async (req, res) => {
   try {
@@ -142,21 +155,8 @@ app.post("/add_employee", async (req, res) => {
   }
 });
 
-// get all employees
-app.get("/employee", async (req, res) => {
-  try {
-    const employees = await employee.find({});
-    return res.json({ Status: true, Result: employees });
-  } catch (err) {
-    console.error(err);
-    return res
-      .status(500)
-      .json({ Status: false, Error: "Internal Server Error" });
-  }
-});
-
 // get a single employee by id
-app.get("/employee/:id", async (req, res) => {
+app.get("/employees/:id", async (req, res) => {
   try {
     const emp = await employee.findById(req.params.id);
     if (!emp) {

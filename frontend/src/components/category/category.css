@@ -40,6 +40,9 @@
   .task-cards {
     grid-template-columns: repeat(1, 1fr) !important;
   }
+  .task-card {
+    width: 270px;
+  }
 }
 
 .task-cards-container {
@@ -50,7 +53,7 @@
 
   margin: auto;
   position: relative;
-  padding-bottom: 20px;
+  padding-bottom: 30px;
 }
 .task-cards {
   display: grid;
@@ -61,7 +64,7 @@
 }
 
 .task-card {
-  padding: 10px;
+  padding: 20px;
   border-radius: 10px;
   width: 300px;
   text-align: center;
