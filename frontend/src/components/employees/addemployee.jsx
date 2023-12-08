@@ -21,15 +21,10 @@ import "./addemployee.css";
 import { useDispatch } from "react-redux/es/exports";
 import { authActions } from "../../store";
 
+let id = sessionStorage.getItem("id");
 const AddEmployee = () => {
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
-  const [empname, setName] = useState("");
-  const [empemail, setEmail] = useState("");
-  const [emppassword, setPassword] = useState("");
-  const [empsalary, setSalary] = useState("");
-  const [empaddress, setAddress] = useState("");
-  const [empcategoryid, setCategoryid] = useState("");
   const [name, setUserName] = useState("");
 
   useEffect(() => {
@@ -63,57 +58,33 @@ const AddEmployee = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleSubmit = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
-    const user_id = sessionStorage.getItem("id");
-
-    console.log("User ID:", user_id);
-
-    const employeeData = {
-      name: empname,
-      email: empemail,
-      password: emppassword,
-      salary: empsalary,
-      address: empaddress,
-      category_id: empcategoryid,
-      id: user_id, //to associate the employee with a user
+    const name = document.getElementById("inputName").value;
+    const email = document.getElementById("inputEmail4").value;
+    const password = document.getElementById("inputPassword4").value;
+    const address = document.getElementById("inputAddress").value;
+    const salary = document.getElementById("inputSalary").value;
+    const formData = {
+      name,
+      email,
+      password,
+      address,
+      salary,
+      id: id,
     };
 
-    axios
-      .post("https://hub4-back.vercel.app/add_employee", employeeData)
-      .then((response) => {
-        if (response.data.Status) {
-          console.log("Employee added:", response.data.Result);
-          // Reset form fields
-          setName("");
-          setEmail("");
-          setPassword("");
-          setSalary("");
-          setAddress("");
-          setCategoryid("");
-          // Optionally, navigate to another page or display a success message
-          navigate("/home/employee");
-        } else {
-          alert("Failed to add the employee: " + response.data.Error);
-        }
-      })
-      .catch((error) => {
-        alert("An error occurred while adding the employee.");
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.error("Error data:", error.response.data);
-          console.error("Error status:", error.response.status);
-          console.error("Error headers:", error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          console.error("Error request:", error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.error("Error message:", error.message);
-        }
-        console.error("Error config:", error.config);
-      });
+    try {
+      const response = await axios.post(
+        "https://hub4-back.vercel.app/add_employee",
+        formData
+      );
+      console.log(response.data); // Log the response from the server
+      // Optionally, you can navigate to a different page or update the UI based on the response.
+      navigate("/home/employee");
+    } catch (error) {
+      console.error("Error adding employee:", error);
+    }
   };
 
   const dispatch = useDispatch();
@@ -183,7 +154,7 @@ const AddEmployee = () => {
       <div className="addempcontainer">
         <div className="addempcontent rounded border">
           <h3 className="text-center">Add Employee</h3>
-          <form className="addempform" onSubmit={handleSubmit}>
+          <form className="addempform" onSubmit={submitForm}>
             <div className="addempgroup">
               <label htmlFor="inputName" className="form-label">
                 Name
@@ -193,8 +164,6 @@ const AddEmployee = () => {
                 className="addemp form-control"
                 id="inputName"
                 placeholder="Enter Name"
-                value={empname}
-                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div className="addempgroup">
@@ -207,8 +176,6 @@ const AddEmployee = () => {
                 id="inputEmail4"
                 placeholder="Enter Email"
                 autoComplete="off"
-                value={empemail}
-                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="addempgroup">
@@ -220,8 +187,6 @@ const AddEmployee = () => {
                 className="addemp form-control"
                 id="inputPassword4"
                 placeholder="Enter Password"
-                value={emppassword}
-                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className="addempgroup">
@@ -234,8 +199,6 @@ const AddEmployee = () => {
                 id="inputSalary"
                 placeholder="Enter Salary"
                 autoComplete="off"
-                value={empsalary}
-                onChange={(e) => setSalary(e.target.value)}
               />
             </div>
             <div className="addempgroup">
@@ -248,21 +211,13 @@ const AddEmployee = () => {
                 id="inputAddress"
                 placeholder="1234 Main St"
                 autoComplete="off"
-                value={empaddress}
-                onChange={(e) => setAddress(e.target.value)}
               />
             </div>
             <div className="addempgroup">
               <label htmlFor="category" className="form-label">
                 Category
               </label>
-              <select
-                name="category"
-                id="category"
-                className="form-select"
-                value={empcategoryid}
-                onChange={(e) => setCategoryid(e.target.value)}
-              >
+              <select name="category" id="category" className="form-select">
                 {category.map((c) => {
                   return <option value={c.id}>{c.name}</option>;
                 })}

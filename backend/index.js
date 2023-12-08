@@ -170,37 +170,31 @@ app.get("/employee", async (req, res) => {
       .json({ Status: false, Error: "Internal Server Error" });
   }
 });
+
 //add employee
 app.post("/add_employee", async (req, res) => {
   try {
-    console.log("Received user_id:", req.body.id);
-    const existingUser = await userModel.findById(req.body.id);
-
-    if (!existingUser) {
-      return res.status(404).json({ Status: false, Error: "User not found" });
+    const { name, email, password, address, salary, id } = req.body;
+    const existingUser = await userModel.findById(id);
+    if (existingUser) {
+      const newEmp = new employee({
+        name,
+        email,
+        password,
+        address,
+        salary,
+      });
+      newEmp.user = existingUser._id;
+      await newEmp.save();
+      existingUser.employee.push(newEmp._id);
+      await existingUser.save();
+      res.status(200).json({ employee: newEmp });
+    } else {
+      res.status(404).json({ error: "User not found" });
     }
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
-    // Create a new employee document with the user_id
-    const newEmployee = new employee({
-      name: req.body.name,
-      email: req.body.email,
-      password: hashedPassword,
-      address: req.body.address,
-      salary: req.body.salary,
-      category_id: req.body.category_id,
-      user: req.body.id, // Include the user_id from the request body
-    });
-
-    // Save the employee document to MongoDB
-    const savedEmployee = await newEmployee.save();
-
-    // Send the response
-    res.status(201).json({ Status: true, Result: savedEmployee });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ Status: false, Error: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
