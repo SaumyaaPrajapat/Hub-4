@@ -25,6 +25,7 @@ const Employees = () => {
   const [show, setShow] = useState(true);
   const [employees, setEmployee] = useState([]);
   const [name, setUserName] = useState("");
+  const [allEmployees, setAllEmployees] = useState(null);
 
   useEffect(() => {
     const storedName = sessionStorage.getItem("name");
@@ -43,21 +44,27 @@ const Employees = () => {
     return str.charAt(0).toUpperCase();
   };
 
-  useEffect(() => {
-    const fetchEmployee = async () => {
-      try {
-        console.log("ID:", id);
-        const response = await axios.get(
-          `https://hub4-back.vercel.app/employee/${id}`
-        );
-        setEmployee(response.data.Result);
-      } catch (error) {
-        console.error(error);
+  const fetchEmployee = async () => {
+    try {
+      console.log("Fetching employee data for ID:", id);
+      const response = await axios.get(
+        `https://hub4-back.vercel.app/employee/${id}`
+      );
+      console.log("Response data:", response.data);
+      if (response.data.employees && response.data.employees.length > 0) {
+        setAllEmployees(response.data.employees);
+        setEmployee(response.data.employees);
+      } else {
+        console.log("No employees found or empty response.");
       }
-    };
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchEmployee();
-  }, []);
+  }, [allEmployees]);
 
   const dispatch = useDispatch();
   const logout = () => {
