@@ -29,9 +29,13 @@ const Employees = () => {
     const storedName = sessionStorage.getItem("name");
 
     if (storedName) {
-      setUserName(getFirstLetter(storedName));
+      setUserName(capitalizeFirstLetter(storedName));
     }
   }, []);
+
+  const capitalizeFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
 
   // Function to get the first letter of the name
   const getFirstLetter = (str) => {
