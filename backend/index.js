@@ -93,28 +93,6 @@ app.post("/register", async (req, res) => {
   }
 });
 
-//get user profile
-app.get("/profile/:userId", async (req, res) => {
-  const { userId } = req.params;
-
-  try {
-    // Fetch user information from the database based on userId
-    const user = await userModel.findById(userId);
-
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    // Exclude sensitive information like password before sending the response
-    const { password, ...userData } = user._doc;
-
-    return res.status(200).json(userData);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
 //admin
 //Admin count
 app.get("/admin_count", async (req, res) => {
@@ -168,6 +146,25 @@ app.get("/employee", async (req, res) => {
     return res
       .status(500)
       .json({ Status: false, Error: "Internal Server Error" });
+  }
+});
+//get employees for same user
+app.get("/employee/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId; // Get the user ID from the request parameters
+    const userWithEmployees = await userModel
+      .findById(userId)
+      .populate("employee");
+    if (userWithEmployees && userWithEmployees.employee) {
+      res.status(200).json({ employee: userWithEmployees.employee });
+    } else {
+      res
+        .status(404)
+        .json({ error: "Employee not found for the given user ID" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

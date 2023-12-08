@@ -42,11 +42,11 @@ const Employees = () => {
     return str.charAt(0).toUpperCase();
   };
 
-  useEffect(() => {
+  useEffect((userId) => {
     const fetchEmployee = async () => {
       try {
         const response = await axios.get(
-          "https://hub4-back.vercel.app/employee"
+          `https://hub4-back.vercel.app/employee/${userId}`
         );
         setEmployee(response.data.Result);
       } catch (error) {
