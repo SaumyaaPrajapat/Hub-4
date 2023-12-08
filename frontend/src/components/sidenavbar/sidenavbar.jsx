@@ -21,17 +21,37 @@ import { authActions } from "../../store";
 
 const SideNavbar = () => {
   const [show, setShow] = useState(true);
-
+  const [userId, setUserId] = useState(null); // Declare userId state
   const [adminTotal, setAdminTotal] = useState(0);
   const [admins, setAdmins] = useState([]);
   const [name, setUserName] = useState("");
   const [employeeTotal, setEmployeeTotal] = useState(0);
 
+  const employeeCount = (id) => {
+    axios
+      .get(`https://hub4-back.vercel.app/employee_count/${id}`)
+      .then((response) => {
+        if (response.data) {
+          setEmployeeTotal(response.data.employeeCount);
+        } else {
+          console.error("Failed to fetch employee count:", response.data.Error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching employee count:", error);
+      });
+  };
+
   useEffect(() => {
+    const storedUserId = sessionStorage.getItem("id");
     const storedName = sessionStorage.getItem("name");
 
     if (storedName) {
       setUserName(capitalizeFirstLetter(storedName));
+    }
+    if (storedUserId) {
+      setUserId(storedUserId);
+      employeeCount(storedUserId);
     }
   }, []);
 
@@ -88,21 +108,6 @@ const SideNavbar = () => {
         console.error("Unexpected API response", result.data);
       }
     });
-  };
-
-  const employeeCount = () => {
-    axios
-      .get("https://hub4-back.vercel.app/employee_count")
-      .then((response) => {
-        if (response.data.Status) {
-          setEmployeeTotal(response.data.employeeCount); // Set the employee count
-        } else {
-          console.error("Failed to fetch employee count:", response.data.Error);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching employee count:", error);
-      });
   };
 
   const dispatch = useDispatch();

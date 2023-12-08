@@ -201,18 +201,17 @@ app.delete("/delete_employee/:id", async (req, res) => {
   }
 });
 //employee count
-// Count employees for a specific user
-app.get("/employee_count/:userId", async (req, res) => {
+app.get("/employee_count/:id", async (req, res) => {
   try {
-    const userId = req.params.userId; // Get the user ID from the request parameters
+    const userId = req.params.id;
     if (!userId) {
-      return res.status(400).json({ error: "Invalid user ID" });
+      return res.status(400).json({ Status: false, Error: "Invalid user ID" });
     }
-    const count = await employee.countDocuments({ user: userId });
-    res.status(200).json({ employeeCount: count });
+    const employeeCount = await employee.countDocuments({ user: userId });
+    res.json({ Status: true, Result: employeeCount });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ Status: false, Error: "Internal Server Error" });
   }
 });
 
