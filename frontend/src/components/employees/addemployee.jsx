@@ -83,7 +83,8 @@ const AddEmployee = () => {
       // Optionally, you can navigate to a different page or update the UI based on the response.
       navigate("/home/employee");
     } catch (error) {
-      console.error("Error adding employee:", error);
+      console.error("Error");
+      navigate("/home/employee");
     }
   };
 

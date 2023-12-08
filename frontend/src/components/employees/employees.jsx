@@ -20,6 +20,7 @@ import "./employee.css";
 import { useDispatch } from "react-redux/es/exports";
 import { authActions } from "../../store";
 
+let id = sessionStorage.getItem("id");
 const Employees = () => {
   const [show, setShow] = useState(true);
   const [employees, setEmployee] = useState([]);
@@ -42,11 +43,12 @@ const Employees = () => {
     return str.charAt(0).toUpperCase();
   };
 
-  useEffect((userId) => {
+  useEffect(() => {
     const fetchEmployee = async () => {
       try {
+        console.log("ID:", id);
         const response = await axios.get(
-          `https://hub4-back.vercel.app/employee/${userId}`
+          `https://hub4-back.vercel.app/employee/${id}`
         );
         setEmployee(response.data.Result);
       } catch (error) {

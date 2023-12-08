@@ -149,18 +149,17 @@ app.get("/employee", async (req, res) => {
   }
 });
 //get employees for same user
-app.get("/employee/:userId", async (req, res) => {
+app.get("/employee/:id", async (req, res) => {
   try {
-    const userId = req.params.userId; // Get the user ID from the request parameters
-    const userWithEmployees = await userModel
-      .findById(userId)
-      .populate("employee");
-    if (userWithEmployees && userWithEmployees.employee) {
-      res.status(200).json({ employee: userWithEmployees.employee });
+    const userId = req.params.id; // Get the user ID from the request parameters
+    if (!userId) {
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
+    const employees = await employee.find({ user: userId });
+    if (employees.length > 0) {
+      res.status(200).json({ employees });
     } else {
-      res
-        .status(404)
-        .json({ error: "Employee not found for the given user ID" });
+      res.status(404).json({ message: "No employees found for this user" });
     }
   } catch (error) {
     console.error(error);
