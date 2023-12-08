@@ -65,6 +65,9 @@ const Employees = () => {
     dispatch(authActions.logout());
   };
 
+  // Check if employees is defined before mapping
+  const employeesList = employees || [];
+
   return (
     <main className={show ? "space-toggle" : null}>
       <header className={`header ${show ? "space-toggle" : null}`}>
@@ -149,8 +152,8 @@ const Employees = () => {
               </tr>
             </thead>
             <tbody>
-              {employees.map((e) => (
-                <tr>
+              {employeesList.map((e) => (
+                <tr key={e._id}>
                   <td>{e.name}</td>
                   <td>{e.email}</td>
                   <td>{e.salary}</td>
