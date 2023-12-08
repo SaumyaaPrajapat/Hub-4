@@ -70,6 +70,7 @@ const Employees = () => {
           )}
         </div>
         <div className="usercontainer">
+          <h3 className="proname">{name || "user"}</h3>
           <div className="userc">
             <span>{getFirstLetter(name) || "."}</span>
           </div>

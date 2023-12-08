@@ -68,19 +68,6 @@
   margin-bottom: 1rem;
 }
 
-.pro-btn {
-  display: block;
-  margin: auto;
-  width: 25%;
-  padding: 0.75rem;
-  background-color: #03a6d8;
-  color: #ffffff;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
 .pro-btn:hover {
   background-color: #0185ad;
 }
@@ -91,9 +78,6 @@
   }
   .procontent {
     width: 80%;
-  }
-  .pro-btn {
-    width: 40%;
   }
 }
 @media (max-width: 600px) {

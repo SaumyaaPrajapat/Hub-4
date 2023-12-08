@@ -101,6 +101,7 @@ const SideNavbar = () => {
           )}
         </div>
         <div className="usercontainer">
+          <h3 className="proname">{name || "user"}</h3>
           <div className="userc">
             <span>{getFirstLetter(name) || "."}</span>
           </div>
@@ -204,7 +205,7 @@ const SideNavbar = () => {
                         to="/home/profile"
                         className="btn btn-info btn-sm me-2"
                       >
-                        Edit
+                        View
                       </Link>
                       <button
                         className="btn btn-warning btn-sm"

@@ -248,6 +248,14 @@ main {
   display: flex;
   justify-content: center;
   transition: 0.3s;
+  gap: 20px;
+}
+.proname {
+  font-size: 1.3rem;
+  color: #438fb5;
+  max-width: 100%;
+  transition: 0.3s;
+  margin-top: 7px;
 }
 
 .userc {

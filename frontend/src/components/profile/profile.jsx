@@ -64,7 +64,9 @@ const Profile = () => {
             <FaAngleRight className="react-icon" />
           )}
         </div>
+
         <div className="usercontainer">
+          <h3 className="proname">{name || "user"}</h3>
           <div className="userc">
             <span>{getFirstLetter(name) || "."}</span>
           </div>
@@ -131,12 +133,6 @@ const Profile = () => {
                 <strong>Email:</strong>
               </label>
               <h3 className="pro">{email || "userEmail"}</h3>
-            </div>
-            <div className="progroup">
-              <button type="button" className="pro-btn">
-                <FaRegEdit style={{ marginRight: "15px" }} />
-                Edit
-              </button>
             </div>
           </form>
         </div>
