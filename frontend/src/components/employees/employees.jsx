@@ -44,13 +44,12 @@ const Employees = () => {
     return str.charAt(0).toUpperCase();
   };
 
+  //get employee
   const fetchEmployee = async () => {
     try {
-      console.log("Fetching employee data for ID:", id);
       const response = await axios.get(
         `https://hub4-back.vercel.app/employee/${id}`
       );
-      console.log("Response data:", response.data);
       if (response.data.employees && response.data.employees.length > 0) {
         setAllEmployees(response.data.employees);
         setEmployee(response.data.employees);
@@ -58,13 +57,33 @@ const Employees = () => {
         console.log("No employees found or empty response.");
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error");
     }
   };
 
   useEffect(() => {
     fetchEmployee();
   }, [allEmployees]);
+
+  //delete employee
+  const deleteEmployee = async (employeeId) => {
+    try {
+      // Send a delete request to the backend
+      const response = await axios.delete(
+        `https://hub4-back.vercel.app/delete_employee/${employeeId}`
+      );
+
+      if (response.data.Status) {
+        // If the delete operation is successful, update the employee list
+        const updatedEmployees = employees.filter((e) => e._id !== employeeId);
+        setEmployee(updatedEmployees);
+      } else {
+        alert(response.data.Error);
+      }
+    } catch (error) {
+      console.error("Error deleting employee:", error);
+    }
+  };
 
   const dispatch = useDispatch();
   const logout = () => {
@@ -168,7 +187,12 @@ const Employees = () => {
                   <td>{e.category}</td>
                   <td>
                     <button className="btn btn-info btn-sm me-2">Edit</button>
-                    <button className="btn btn-warning btn-sm">Delete</button>
+                    <button
+                      className="btn btn-warning btn-sm"
+                      onClick={() => deleteEmployee(e._id)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}

@@ -58,6 +58,7 @@ const AddEmployee = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  //add employee
   const submitForm = async (e) => {
     e.preventDefault();
     const name = document.getElementById("inputName").value;

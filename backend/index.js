@@ -166,7 +166,6 @@ app.get("/employee/:id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 //add employee
 app.post("/add_employee", async (req, res) => {
   try {
@@ -191,6 +190,26 @@ app.post("/add_employee", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+//delete employee
+app.delete("/delete_employee/:id", async (req, res) => {
+  try {
+    const employeeId = req.params.id;
+    if (!employeeId) {
+      return res.status(400).json({ error: "Invalid employee ID" });
+    }
+    const result = await employee.findByIdAndDelete(employeeId);
+    if (result) {
+      res
+        .status(200)
+        .json({ Status: true, Message: "Employee deleted successfully" });
+    } else {
+      res.status(404).json({ Status: false, Error: "Employee not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ Status: false, Error: "Internal Server Error" });
   }
 });
 
