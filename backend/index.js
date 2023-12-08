@@ -136,18 +136,6 @@ app.delete("/admin/:id", async (req, res) => {
 });
 
 //employee
-// get employees
-app.get("/employee", async (req, res) => {
-  try {
-    const employees = await employee.find({});
-    return res.json({ Status: true, Result: employees });
-  } catch (err) {
-    console.error(err);
-    return res
-      .status(500)
-      .json({ Status: false, Error: "Internal Server Error" });
-  }
-});
 //get employees for same user
 app.get("/employee/:id", async (req, res) => {
   try {
@@ -210,6 +198,21 @@ app.delete("/delete_employee/:id", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ Status: false, Error: "Internal Server Error" });
+  }
+});
+//employee count
+// Count employees for a specific user
+app.get("/employee_count/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId; // Get the user ID from the request parameters
+    if (!userId) {
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
+    const count = await employee.countDocuments({ user: userId });
+    res.status(200).json({ employeeCount: count });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

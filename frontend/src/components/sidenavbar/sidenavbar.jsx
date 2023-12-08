@@ -25,6 +25,7 @@ const SideNavbar = () => {
   const [adminTotal, setAdminTotal] = useState(0);
   const [admins, setAdmins] = useState([]);
   const [name, setUserName] = useState("");
+  const [employeeTotal, setEmployeeTotal] = useState(0);
 
   useEffect(() => {
     const storedName = sessionStorage.getItem("name");
@@ -45,6 +46,7 @@ const SideNavbar = () => {
 
   useEffect(() => {
     adminCount();
+    employeeCount();
     AdminRecords();
   }, []);
 
@@ -86,6 +88,21 @@ const SideNavbar = () => {
         console.error("Unexpected API response", result.data);
       }
     });
+  };
+
+  const employeeCount = () => {
+    axios
+      .get("https://hub4-back.vercel.app/employee_count")
+      .then((response) => {
+        if (response.data.Status) {
+          setEmployeeTotal(response.data.employeeCount); // Set the employee count
+        } else {
+          console.error("Failed to fetch employee count:", response.data.Error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching employee count:", error);
+      });
   };
 
   const dispatch = useDispatch();
@@ -173,7 +190,7 @@ const SideNavbar = () => {
               <hr />
               <div className="flex-row">
                 <h5>Total:</h5>
-                <h5>employee total</h5>
+                <h5>{employeeTotal}</h5>
               </div>
             </div>
 
