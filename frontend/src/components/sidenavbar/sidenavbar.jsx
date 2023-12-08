@@ -31,8 +31,8 @@ const SideNavbar = () => {
     axios
       .get(`https://hub4-back.vercel.app/employee_count/${id}`)
       .then((response) => {
-        if (response.data) {
-          setEmployeeTotal(response.data.employeeCount);
+        if (response.data.Status) {
+          setEmployeeTotal(response.data.Result);
         } else {
           console.error("Failed to fetch employee count:", response.data.Error);
         }
