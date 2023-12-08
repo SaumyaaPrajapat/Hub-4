@@ -38,7 +38,7 @@ const SideNavbar = () => {
         }
       })
       .catch((error) => {
-        console.error("Error fetching employee count:", error);
+        console.error("Error");
       });
   };
 
