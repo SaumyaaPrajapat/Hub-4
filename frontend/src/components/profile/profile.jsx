@@ -64,6 +64,11 @@ const Profile = () => {
             <FaAngleRight className="react-icon" />
           )}
         </div>
+        <div className="usercontainer">
+          <div className="userc">
+            <span>{getFirstLetter(name) || "."}</span>
+          </div>
+        </div>
       </header>
       <aside className={`sidebar ${show ? "show" : null}`}>
         <nav className="nav">
@@ -112,7 +117,7 @@ const Profile = () => {
           <form className="proform">
             <div className="circle-container">
               <div className="circle">
-                <span>{getFirstLetter(name) || "."}</span>
+                <FaUserCircle className="profile" />
               </div>
             </div>
             <div className="progroup">

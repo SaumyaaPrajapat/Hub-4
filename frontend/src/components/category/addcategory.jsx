@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
@@ -27,6 +27,20 @@ const AddCategory = () => {
   const navigate = useNavigate();
   const [categoryName, setCategoryName] = useState("");
   const [categoryDescription, setCategoryDescription] = useState("");
+  const [name, setUserName] = useState("");
+
+  useEffect(() => {
+    const storedName = sessionStorage.getItem("name");
+
+    if (storedName) {
+      setUserName(getFirstLetter(storedName));
+    }
+  }, []);
+
+  // Function to get the first letter of the name
+  const getFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase();
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,6 +75,11 @@ const AddCategory = () => {
           ) : (
             <FaAngleRight className="react-icon" />
           )}
+        </div>
+        <div className="usercontainer">
+          <div className="userc">
+            <span>{getFirstLetter(name) || "."}</span>
+          </div>
         </div>
       </header>
       <aside className={`sidebar ${show ? "show" : null}`}>

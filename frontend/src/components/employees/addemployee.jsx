@@ -30,6 +30,20 @@ const AddEmployee = () => {
   const [empsalary, setSalary] = useState("");
   const [empaddress, setAddress] = useState("");
   const [empcategoryid, setCategoryid] = useState("");
+  const [name, setUserName] = useState("");
+
+  useEffect(() => {
+    const storedName = sessionStorage.getItem("name");
+
+    if (storedName) {
+      setUserName(getFirstLetter(storedName));
+    }
+  }, []);
+
+  // Function to get the first letter of the name
+  const getFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase();
+  };
 
   const [category, setCategory] = useState([]);
   useEffect(() => {
@@ -113,6 +127,11 @@ const AddEmployee = () => {
           ) : (
             <FaAngleRight className="react-icon" />
           )}
+        </div>
+        <div className="usercontainer">
+          <div className="userc">
+            <span>{getFirstLetter(name) || "."}</span>
+          </div>
         </div>
       </header>
       <aside className={`sidebar ${show ? "show" : null}`}>
