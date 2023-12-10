@@ -186,7 +186,12 @@ const Employees = () => {
                   <td>{e.address}</td>
                   <td>{e.category}</td>
                   <td>
-                    <button className="btn btn-info btn-sm me-2">Edit</button>
+                    <Link
+                      to={`/home/employee/edit/` + e._id}
+                      className="btn btn-info btn-sm me-2"
+                    >
+                      Edit
+                    </Link>
                     <button
                       className="btn btn-warning btn-sm"
                       onClick={() => deleteEmployee(e._id)}

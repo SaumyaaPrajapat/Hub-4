@@ -8,6 +8,7 @@ import Reset from "./components/login/resetpass";
 import Home from "./components/home/home";
 import Employees from "./components/employees/employees";
 import AddEmployee from "./components/employees/addemployee";
+import EditEmployee from "./components/employees/editemployee";
 import Category from "./components/category/category";
 import AddCategory from "./components/category/addcategory";
 import Profile from "./components/profile/profile";
@@ -32,6 +33,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/home/employee" element={<Employees />} />
         <Route path="/home/employee/add" element={<AddEmployee />} />
+        <Route path="/home/employee/edit/:id" element={<EditEmployee />} />
         <Route path="/home/category" element={<Category />} />
         <Route path="/home/category/add" element={<AddCategory />} />
         <Route path="/home/profile" element={<Profile />} />

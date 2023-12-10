@@ -238,6 +238,50 @@ app.get("/total_salary/:id", async (req, res) => {
     res.status(500).json({ Status: false, Error: "Internal Server Error" });
   }
 });
+// Edit employee
+app.put("/edit_employee/:id", async (req, res) => {
+  try {
+    const employeeId = req.params.id;
+    if (!employeeId) {
+      return res
+        .status(400)
+        .json({ Status: false, Error: "Invalid employee ID" });
+    }
+
+    const {
+      name,
+      email,
+      password,
+      address,
+      salary,
+      id, // Assuming this is the user ID
+    } = req.body;
+
+    // Find the employee by ID
+    const existingEmployee = await employee.findById(employeeId);
+
+    if (!existingEmployee) {
+      return res
+        .status(404)
+        .json({ Status: false, Error: "Employee not found" });
+    }
+
+    // Update employee fields
+    existingEmployee.name = name || existingEmployee.name;
+    existingEmployee.email = email || existingEmployee.email;
+    existingEmployee.password = password || existingEmployee.password;
+    existingEmployee.address = address || existingEmployee.address;
+    existingEmployee.salary = salary || existingEmployee.salary;
+
+    // Save the updated employee
+    await existingEmployee.save();
+
+    res.status(200).json({ Status: true, Result: existingEmployee });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ Status: false, Error: "Internal Server Error" });
+  }
+});
 
 //category
 //get category
@@ -252,7 +296,6 @@ app.get("/category", async (req, res) => {
       .json({ Status: false, Error: "Internal Server Error" });
   }
 });
-
 //add category
 app.post("/add_category", async (req, res) => {
   try {
