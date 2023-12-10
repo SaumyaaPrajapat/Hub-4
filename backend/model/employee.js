@@ -7,7 +7,7 @@ const employeeSchema = new mongoose.Schema({
     unique: true,
   },
   password: String,
-  salary: String,
+  salary: Number,
   address: String,
   category_id: {
     type: mongoose.Schema.Types.ObjectId,

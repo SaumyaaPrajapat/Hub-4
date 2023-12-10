@@ -48,7 +48,7 @@ const SideNavbar = () => {
       .get(`https://hub4-back.vercel.app/total_salary/${id}`)
       .then((response) => {
         if (response.data.Status) {
-          setSalaryTotal(response.data.Result);
+          setSalaryTotal(Number(response.data.Result));
         } else {
           console.error("Failed to fetch salary total:", response.data.Error);
         }
