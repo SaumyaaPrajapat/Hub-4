@@ -43,9 +43,9 @@ const SideNavbar = () => {
       });
   };
 
-  const fetchSalaryTotal = () => {
+  const fetchSalaryTotal = (id) => {
     axios
-      .get("https://hub4-back.vercel.app/salary_count")
+      .get(`https://hub4-back.vercel.app/total_salary/${id}`)
       .then((response) => {
         if (response.data.Status) {
           setSalaryTotal(response.data.Result);
