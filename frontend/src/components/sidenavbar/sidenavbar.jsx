@@ -26,6 +26,7 @@ const SideNavbar = () => {
   const [admins, setAdmins] = useState([]);
   const [name, setUserName] = useState("");
   const [employeeTotal, setEmployeeTotal] = useState(0);
+  const [salaryTotal, setSalaryTotal] = useState(0);
 
   const employeeCount = (id) => {
     axios
@@ -42,6 +43,21 @@ const SideNavbar = () => {
       });
   };
 
+  const fetchSalaryTotal = () => {
+    axios
+      .get("https://hub4-back.vercel.app/salary_count")
+      .then((response) => {
+        if (response.data.Status) {
+          setSalaryTotal(response.data.Result);
+        } else {
+          console.error("Failed to fetch salary total:", response.data.Error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching salary total:", error);
+      });
+  };
+
   useEffect(() => {
     const storedUserId = sessionStorage.getItem("id");
     const storedName = sessionStorage.getItem("name");
@@ -52,6 +68,7 @@ const SideNavbar = () => {
     if (storedUserId) {
       setUserId(storedUserId);
       employeeCount(storedUserId);
+      fetchSalaryTotal(storedUserId);
     }
   }, []);
 
@@ -68,6 +85,7 @@ const SideNavbar = () => {
     adminCount();
     employeeCount();
     AdminRecords();
+    fetchSalaryTotal();
   }, []);
 
   const AdminRecords = () => {
@@ -206,7 +224,7 @@ const SideNavbar = () => {
               <hr />
               <div className="flex-row">
                 <h5>Total:</h5>
-                <h5>$ salary total</h5>
+                <h5>${salaryTotal}</h5>
               </div>
             </div>
           </div>

@@ -214,6 +214,27 @@ app.get("/employee_count/:id", async (req, res) => {
     res.status(500).json({ Status: false, Error: "Internal Server Error" });
   }
 });
+//salary count
+app.get("/salary_count", async (req, res) => {
+  try {
+    const salarySum = await employee.aggregate([
+      {
+        $group: {
+          _id: null, // Grouping by null means grouping all documents
+          totalSalary: { $sum: "$salary" }, // Summing up all the salaries
+        },
+      },
+    ]);
+    if (salarySum.length > 0) {
+      res.json({ Status: true, Result: salarySum[0].totalSalary });
+    } else {
+      res.status(404).json({ Status: false, Error: "No employees found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ Status: false, Error: "Internal Server Error" });
+  }
+});
 
 //category
 //get category
