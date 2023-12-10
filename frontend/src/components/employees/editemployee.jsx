@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   MdPeople,
   MdDashboard,
@@ -25,6 +25,7 @@ let id = sessionStorage.getItem("id");
 const EditEmployee = () => {
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
+  const { id } = useParams(); // Get the employee ID from the URL parameter
   const [name, setUserName] = useState("");
   const [employee, setEmployee] = useState({
     name: "",
@@ -63,26 +64,33 @@ const EditEmployee = () => {
         }
       })
       .catch((err) => console.log(err));
-    axios
-      .get("https://hub4-back.vercel.app/edit_employee/" + id)
-      .then((result) => {
-        console.log(result.data.Result[0].name);
-        setEmployee({
-          ...employee,
-          name: result.data.Result[0].name,
-          email: result.data.Result[0].email,
-          address: result.data.Result[0].address,
-          salary: result.data.Result[0].salary,
-          category_id: result.data.Result[0].category_id,
-        });
-      })
-      .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(`https://hub4-back.vercel.app/employee/${id}`)
+      .then((result) => {
+        if (result.data.employees && result.data.employees.length > 0) {
+          const empData = result.data.employees[0];
+          setEmployee({
+            name: empData.name,
+            email: empData.email,
+            salary: empData.salary,
+            address: empData.address,
+            category_id: empData.category_id,
+          });
+        } else {
+          // Handle case when no employee is found with the given ID
+          console.error("Employee not found");
+        }
+      })
+      .catch((err) => console.error(err));
+  }, [id]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put("https://hub4-back.vercel.app/edit_employee/" + id, employee)
+      .put("https://hub4-back.vercel.app/edit_employee/" + id)
       .then((result) => {
         if (result.data.Status) {
           navigate("/home/employee");
