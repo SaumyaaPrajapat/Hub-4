@@ -139,7 +139,7 @@ app.delete("/admin/:id", async (req, res) => {
 //get employees for same user
 app.get("/employee/:id", async (req, res) => {
   try {
-    const userId = req.params.id; // Get the user ID from the request parameters
+    const userId = req.params.id;
     if (!userId) {
       return res.status(400).json({ error: "Invalid user ID" });
     }
@@ -241,24 +241,16 @@ app.get("/total_salary/:id", async (req, res) => {
 // Edit employee
 app.put("/edit_employee/:id", async (req, res) => {
   try {
-    const employeeId = req.params.id;
-    if (!employeeId) {
+    const userId = req.params.id;
+    if (!userId) {
       return res
         .status(400)
         .json({ Status: false, Error: "Invalid employee ID" });
     }
-
-    const {
-      name,
-      email,
-      password,
-      address,
-      salary,
-      id, // Assuming this is the user ID
-    } = req.body;
+    const { name, email, password, address, salary } = req.body;
 
     // Find the employee by ID
-    const existingEmployee = await employee.findById(employeeId);
+    const existingEmployee = await employee.findById(userId);
 
     if (!existingEmployee) {
       return res

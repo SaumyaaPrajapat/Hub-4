@@ -71,6 +71,7 @@ const EditEmployee = () => {
       .get(`https://hub4-back.vercel.app/employee/${id}`)
       .then((result) => {
         if (result.data.employees && result.data.employees.length > 0) {
+          console.log(result.data.employees);
           const empData = result.data.employees[0];
           setEmployee({
             name: empData.name,
@@ -178,6 +179,10 @@ const EditEmployee = () => {
                 className="addemp form-control"
                 id="inputName"
                 placeholder="Enter Name"
+                value={employee.name}
+                onChange={(e) =>
+                  setEmployee({ ...employee, name: e.target.value })
+                }
               />
             </div>
             <div className="addempgroup">
@@ -190,6 +195,10 @@ const EditEmployee = () => {
                 id="inputEmail4"
                 placeholder="Enter Email"
                 autoComplete="off"
+                value={employee.email}
+                onChange={(e) =>
+                  setEmployee({ ...employee, email: e.target.value })
+                }
               />
             </div>
             <div className="addempgroup">
@@ -201,6 +210,10 @@ const EditEmployee = () => {
                 className="addemp form-control"
                 id="inputPassword4"
                 placeholder="Enter Password"
+                value={employee.password}
+                onChange={(e) =>
+                  setEmployee({ ...employee, password: e.target.value })
+                }
               />
             </div>
             <div className="addempgroup">
@@ -213,6 +226,10 @@ const EditEmployee = () => {
                 id="inputSalary"
                 placeholder="Enter Salary"
                 autoComplete="off"
+                value={employee.salary}
+                onChange={(e) =>
+                  setEmployee({ ...employee, salary: e.target.value })
+                }
               />
             </div>
             <div className="addempgroup">
@@ -225,6 +242,10 @@ const EditEmployee = () => {
                 id="inputAddress"
                 placeholder="1234 Main St"
                 autoComplete="off"
+                value={employee.address}
+                onChange={(e) =>
+                  setEmployee({ ...employee, address: e.target.value })
+                }
               />
             </div>
             <div className="addempgroup">
