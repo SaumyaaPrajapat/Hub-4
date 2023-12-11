@@ -171,7 +171,6 @@ app.get("/employee_s/:id", async (req, res) => {
       .json({ error: "Internal Server Error", details: error.message });
   }
 });
-
 //add employee
 app.post("/add_employee", async (req, res) => {
   try {
