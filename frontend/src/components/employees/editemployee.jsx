@@ -71,13 +71,9 @@ const EditEmployee = () => {
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `https://hub4-back.vercel.app/employee/${employeeId}`
+          `https://hub4-back.vercel.app/employee_s/${employeeId}`
         );
-        if (response.data) {
-          setEmployeeData(response.data);
-        } else {
-          console.error("Employee not found");
-        }
+        setEmployeeData(response.data);
       } catch (error) {
         console.error("Error fetching employee data:", error);
       }
@@ -104,6 +100,7 @@ const EditEmployee = () => {
       navigate("/home/employee");
     } catch (error) {
       console.error("Error updating employee:", error);
+      navigate("/home/employee");
     }
   };
 

@@ -154,6 +154,24 @@ app.get("/employee/:id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+// Endpoint to get a single employee by ID
+app.get("/employee_s/:id", async (req, res) => {
+  try {
+    const employeeId = req.params.id;
+    if (!employeeId) {
+      return res.status(400).json({ error: "Invalid or missing employee ID" });
+    }
+    const employee = await Employee.findById(employeeId);
+    if (employee) {
+      res.status(200).json(employee); // Return the single employee object
+    } else {
+      res.status(404).json({ message: "Employee not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 //add employee
 app.post("/add_employee", async (req, res) => {
   try {
