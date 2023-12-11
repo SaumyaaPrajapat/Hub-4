@@ -139,36 +139,21 @@ app.delete("/admin/:id", async (req, res) => {
 //get employees for same user
 app.get("/employee/:id", async (req, res) => {
   try {
-    const employeeId = req.params.id;
-    const employees = await employee.findById(employeeId);
-    if (employees) {
-      res.status(200).json(employees);
+    const userId = req.params.id;
+    if (!userId) {
+      return res.status(400).json({ error: "Invalid or missing user ID" });
+    }
+    const employees = await employee.find({ user: userId });
+    if (employees.length > 0) {
+      res.status(200).json({ employees });
     } else {
-      res.status(404).json({ message: "Employee not found" });
+      res.status(404).json({ message: "No employees found for this user" });
     }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-// app.get("/employee/:id", async (req, res) => {
-//   try {
-//     const userId = req.params.id;
-//     if (!userId) {
-//       return res.status(400).json({ error: "Invalid or missing user ID" });
-//     }
-//     const employees = await employee.find({ user: userId });
-//     if (employees.length > 0) {
-//       res.status(200).json({ employees });
-//     } else {
-//       res.status(404).json({ message: "No employees found for this user" });
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
 //add employee
 app.post("/add_employee", async (req, res) => {
   try {
