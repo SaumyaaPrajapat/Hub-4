@@ -9,6 +9,7 @@ const employeeSchema = new mongoose.Schema({
   password: String,
   salary: Number,
   address: String,
+  categorys: String,
   category_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "category",

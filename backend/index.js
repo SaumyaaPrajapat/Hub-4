@@ -141,7 +141,7 @@ app.get("/employee/:id", async (req, res) => {
   try {
     const userId = req.params.id;
     if (!userId) {
-      return res.status(400).json({ error: "Invalid user ID" });
+      return res.status(400).json({ error: "Invalid or missing user ID" });
     }
     const employees = await employee.find({ user: userId });
     if (employees.length > 0) {
@@ -157,7 +157,7 @@ app.get("/employee/:id", async (req, res) => {
 //add employee
 app.post("/add_employee", async (req, res) => {
   try {
-    const { name, email, password, address, salary, id } = req.body;
+    const { name, email, password, address, salary, categorys, id } = req.body;
     const existingUser = await userModel.findById(id);
     if (existingUser) {
       const newEmp = new employee({
@@ -166,6 +166,7 @@ app.post("/add_employee", async (req, res) => {
         password,
         address,
         salary,
+        categorys,
       });
       newEmp.user = existingUser._id;
       await newEmp.save();
@@ -238,40 +239,23 @@ app.get("/total_salary/:id", async (req, res) => {
     res.status(500).json({ Status: false, Error: "Internal Server Error" });
   }
 });
-// Edit employee
-app.put("/edit_employee/:id", async (req, res) => {
+//update employee
+app.put("/update_employee/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name, email, password, address, salary, categorys } = req.body;
   try {
-    const userId = req.params.id;
-    if (!userId) {
-      return res
-        .status(400)
-        .json({ Status: false, Error: "Invalid employee ID" });
+    const updatedEmployee = await employee.findByIdAndUpdate(
+      id,
+      { name, email, password, address, salary, categorys },
+      { new: true }
+    );
+    if (!updatedEmployee) {
+      return res.status(404).json({ message: "Employee not found" });
     }
-    const { name, email, password, address, salary } = req.body;
-
-    // Find the employee by ID
-    const existingEmployee = await employee.findById(userId);
-
-    if (!existingEmployee) {
-      return res
-        .status(404)
-        .json({ Status: false, Error: "Employee not found" });
-    }
-
-    // Update employee fields
-    existingEmployee.name = name || existingEmployee.name;
-    existingEmployee.email = email || existingEmployee.email;
-    existingEmployee.password = password || existingEmployee.password;
-    existingEmployee.address = address || existingEmployee.address;
-    existingEmployee.salary = salary || existingEmployee.salary;
-
-    // Save the updated employee
-    await existingEmployee.save();
-
-    res.status(200).json({ Status: true, Result: existingEmployee });
+    res.status(200).json(updatedEmployee);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ Status: false, Error: "Internal Server Error" });
+    console.error("Error updating employee:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 

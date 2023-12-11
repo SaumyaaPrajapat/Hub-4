@@ -25,14 +25,14 @@ let id = sessionStorage.getItem("id");
 const EditEmployee = () => {
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
-  const { id } = useParams(); // Get the employee ID from the URL parameter
   const [name, setUserName] = useState("");
-  const [employee, setEmployee] = useState({
+  const [employeeData, setEmployeeData] = useState({
     name: "",
     email: "",
-    salary: "",
+    password: "",
     address: "",
-    category_id: "",
+    salary: "",
+    categorys: "",
   });
 
   useEffect(() => {
@@ -67,39 +67,36 @@ const EditEmployee = () => {
   }, []);
 
   useEffect(() => {
-    axios
-      .get(`https://hub4-back.vercel.app/employee/${id}`)
-      .then((result) => {
-        if (result.data.employees && result.data.employees.length > 0) {
-          console.log(result.data.employees);
-          const empData = result.data.employees[0];
-          setEmployee({
-            name: empData.name,
-            email: empData.email,
-            salary: empData.salary,
-            address: empData.address,
-            category_id: empData.category_id,
-          });
-        } else {
-          // Handle case when no employee is found with the given ID
-          console.error("Employee not found");
-        }
-      })
-      .catch((err) => console.error(err));
+    const fetchEmployeeData = async () => {
+      try {
+        const response = await axios.get(
+          `https://hub4-back.vercel.app/employee/${id}`
+        );
+        setEmployeeData(response.data.employees[0]); // Assuming the response has the employee data
+      } catch (error) {
+        console.error("Error fetching employee data:", error);
+      }
+    };
+
+    fetchEmployeeData();
   }, [id]);
 
-  const handleSubmit = (e) => {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEmployeeData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .put("https://hub4-back.vercel.app/edit_employee/" + id)
-      .then((result) => {
-        if (result.data.Status) {
-          navigate("/home/employee");
-        } else {
-          alert(result.data.Error);
-        }
-      })
-      .catch((err) => console.log(err));
+    try {
+      await axios.put(`/update_employee/${id}`, employeeData);
+      navigate("/home/employee");
+    } catch (error) {
+      console.error("Error updating employee:", error);
+    }
   };
 
   const dispatch = useDispatch();
@@ -179,10 +176,8 @@ const EditEmployee = () => {
                 className="addemp form-control"
                 id="inputName"
                 placeholder="Enter Name"
-                value={employee.name}
-                onChange={(e) =>
-                  setEmployee({ ...employee, name: e.target.value })
-                }
+                value={employeeData.name}
+                onChange={handleInputChange}
               />
             </div>
             <div className="addempgroup">
@@ -195,10 +190,8 @@ const EditEmployee = () => {
                 id="inputEmail4"
                 placeholder="Enter Email"
                 autoComplete="off"
-                value={employee.email}
-                onChange={(e) =>
-                  setEmployee({ ...employee, email: e.target.value })
-                }
+                value={employeeData.email}
+                onChange={handleInputChange}
               />
             </div>
             <div className="addempgroup">
@@ -210,10 +203,8 @@ const EditEmployee = () => {
                 className="addemp form-control"
                 id="inputPassword4"
                 placeholder="Enter Password"
-                value={employee.password}
-                onChange={(e) =>
-                  setEmployee({ ...employee, password: e.target.value })
-                }
+                value={employeeData.password}
+                onChange={handleInputChange}
               />
             </div>
             <div className="addempgroup">
@@ -226,10 +217,8 @@ const EditEmployee = () => {
                 id="inputSalary"
                 placeholder="Enter Salary"
                 autoComplete="off"
-                value={employee.salary}
-                onChange={(e) =>
-                  setEmployee({ ...employee, salary: e.target.value })
-                }
+                value={employeeData.salary}
+                onChange={handleInputChange}
               />
             </div>
             <div className="addempgroup">
@@ -242,19 +231,27 @@ const EditEmployee = () => {
                 id="inputAddress"
                 placeholder="1234 Main St"
                 autoComplete="off"
-                value={employee.address}
-                onChange={(e) =>
-                  setEmployee({ ...employee, address: e.target.value })
-                }
+                value={employeeData.address}
+                onChange={handleInputChange}
               />
             </div>
             <div className="addempgroup">
               <label htmlFor="category" className="form-label">
                 Category
               </label>
-              <select name="category" id="category" className="form-select">
+              <select
+                name="category"
+                id="category"
+                className="form-select"
+                value={employeeData.categorys}
+                onChange={handleInputChange}
+              >
                 {category.map((c) => {
-                  return <option value={c.id}>{c.name}</option>;
+                  return (
+                    <option key={c.id} value={c.id}>
+                      {c.name}
+                    </option>
+                  );
                 })}
               </select>
             </div>

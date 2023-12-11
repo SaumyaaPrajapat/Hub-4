@@ -66,12 +66,14 @@ const AddEmployee = () => {
     const password = document.getElementById("inputPassword4").value;
     const address = document.getElementById("inputAddress").value;
     const salary = document.getElementById("inputSalary").value;
+    const categorys = document.getElementById("category").value;
     const formData = {
       name,
       email,
       password,
       address,
       salary,
+      categorys,
       id: id,
     };
 
