@@ -19,6 +19,8 @@ import "../sidenavbar/sidenavbar.css";
 import "./employee.css";
 import { useDispatch } from "react-redux/es/exports";
 import { authActions } from "../../store";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 let id = sessionStorage.getItem("id");
 const Employees = () => {
@@ -77,11 +79,14 @@ const Employees = () => {
         // If the delete operation is successful, update the employee list
         const updatedEmployees = employees.filter((e) => e._id !== employeeId);
         setEmployee(updatedEmployees);
+        toast.success("Deleted successfully!");
       } else {
         alert(response.data.Error);
+        toast.error("Error in deleting. Please try again.");
       }
     } catch (error) {
       console.error("Error deleting employee:", error);
+      toast.error("Error in deleting. Please try again.");
     }
   };
 
@@ -153,6 +158,7 @@ const Employees = () => {
       </aside>
 
       <div className="empcontainer">
+        <ToastContainer />
         <div className="empheader">
           <h3>Employee List</h3>
         </div>
@@ -165,44 +171,33 @@ const Employees = () => {
             </div>
           </div>
         </div>
-        <div className="emptable-container">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Salary</th>
-                <th>Address</th>
-                <th>Category</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {employeesList.map((e) => (
-                <tr key={e._id}>
-                  <td>{e.name}</td>
-                  <td>{e.email}</td>
-                  <td>{e.salary}</td>
-                  <td>{e.address}</td>
-                  <td>{e.categorys}</td>
-                  <td>
-                    <Link
-                      to={`/home/employee/edit/${e._id}`}
-                      className="btn btn-info btn-sm me-2"
-                    >
-                      Edit
-                    </Link>
-                    <button
-                      className="btn btn-warning btn-sm"
-                      onClick={() => deleteEmployee(e._id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="employee-card-container">
+          {employeesList.map((e) => (
+            <div className="employee-card" key={e._id}>
+              <h4>{e.name}</h4>
+              <p>Email: {e.email}</p>
+              <p>Salary: {e.salary}</p>
+              <p>Address: {e.address}</p>
+              <p>Category: {e.categorys}</p>
+              <div
+                className="employee-card-actions"
+                style={{ justifyContent: "flex-end" }}
+              >
+                <Link
+                  to={`/home/employee/edit/${e._id}`}
+                  className="customedit btn-sm me-2"
+                >
+                  Edit
+                </Link>
+                <button
+                  className="customdelete btn-sm"
+                  onClick={() => deleteEmployee(e._id)}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </main>

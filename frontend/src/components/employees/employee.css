@@ -50,32 +50,6 @@
     width: 40%;
   }
 }
-/*add employee button ends*/
-
-.info {
-  background-color: #17a2b8;
-}
-
-.warning {
-  background-color: #ffc107;
-}
-
-/* Table styles */
-.emptable-container {
-  margin-top: 20px;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table th,
-.table td {
-  padding: 8px;
-  background-color: #f0f0f0;
-  text-align: left;
-}
 
 /* Add this CSS in your existing stylesheet or create a new one */
 @media (max-width: 600px) {
@@ -88,4 +62,73 @@
   .table td:nth-child(5) {
     display: none;
   }
+}
+/* employeeCards.css */
+
+.employee-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+.employee-card {
+  flex: 0 1 calc(33.33% - 20px); /* Adjust the percentage and gap as needed */
+  background: #fff;
+  box-shadow: 5px 5px 12px #d3d3d3, -5px -5px 12px #f2f2f2;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .employee-card {
+    flex-basis: 100%;
+  }
+}
+
+.employee-card h4 {
+  margin-bottom: 8px;
+}
+
+.employee-card p {
+  margin-bottom: 16px;
+}
+
+.employee-card-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.employee-card-actions button {
+  padding: 8px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.customedit {
+  background-color: #13aad8;
+  color: #fff;
+  border: 1px solid #13aad8;
+  padding: 8px 16px;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.customedit:hover {
+  background-color: #0193c0;
+  border-color: #0193c0;
+}
+.customdelete {
+  background-color: #f10707e4;
+  color: #fff;
+  border: 1px solid #f10707e4;
+  padding: 6px 12px;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.customdelete:hover {
+  background-color: #d70303e4;
+  border-color: #d70303e4;
 }

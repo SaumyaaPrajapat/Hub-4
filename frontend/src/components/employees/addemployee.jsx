@@ -20,6 +20,8 @@ import "../sidenavbar/sidenavbar.css";
 import "./addemployee.css";
 import { useDispatch } from "react-redux/es/exports";
 import { authActions } from "../../store";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 let id = sessionStorage.getItem("id");
 const AddEmployee = () => {
@@ -83,10 +85,12 @@ const AddEmployee = () => {
         formData
       );
       console.log(response.data); // Log the response from the server
+      toast.success("Added successfully!");
       // Optionally, you can navigate to a different page or update the UI based on the response.
       navigate("/home/employee");
     } catch (error) {
       console.error("Error");
+      toast.error("Error in adding. Please try again.");
       navigate("/home/employee");
     }
   };
@@ -155,6 +159,7 @@ const AddEmployee = () => {
         </nav>
       </aside>
 
+      <ToastContainer />
       <div className="addempcontainer">
         <div className="addempcontent rounded border">
           <h3 className="text-center">Add Employee</h3>

@@ -158,7 +158,17 @@ main {
     margin: calc(var(--header-height) + 1rem) 0 0 0;
   }
 }
-
+@media (max-width: 768px) {
+  /* Hide the Email, Address, Salary, and Category columns on screens with a width of 768px or less */
+  .table th:nth-child(2),
+  .table td:nth-child(2),
+  .table th:nth-child(4),
+  .table td:nth-child(4),
+  .table th:nth-child(5),
+  .table td:nth-child(5) {
+    display: none;
+  }
+}
 /*dashboard styling*/
 .container {
   padding: 20px;
@@ -185,7 +195,27 @@ main {
   text-align: center;
   padding-bottom: 5px;
 }
-
+.custom-headings {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  padding-bottom: 5px;
+}
+.circles {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.adminprofile {
+  color: #5cb8d4;
+  height: 60px;
+  width: 60px;
+}
 .custom-section {
   padding-top: 40px;
   box-sizing: border-box;

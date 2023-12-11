@@ -19,12 +19,15 @@ import "./sidenavbar.css";
 import { useDispatch } from "react-redux/es/exports";
 import { authActions } from "../../store";
 
+let id = sessionStorage.getItem("id");
 const SideNavbar = () => {
   const [show, setShow] = useState(true);
   const [userId, setUserId] = useState(null); // Declare userId state
   const [adminTotal, setAdminTotal] = useState(0);
   const [admins, setAdmins] = useState([]);
+  const [employees, setEmployee] = useState([]);
   const [name, setUserName] = useState("");
+  const [allEmployees, setAllEmployees] = useState(null);
   const [employeeTotal, setEmployeeTotal] = useState(0);
   const [salaryTotal, setSalaryTotal] = useState(0);
 
@@ -128,6 +131,29 @@ const SideNavbar = () => {
     });
   };
 
+  //get employee
+  const fetchEmployee = async () => {
+    try {
+      const response = await axios.get(
+        `https://hub4-back.vercel.app/employee/${id}`
+      );
+      if (response.data.employees && response.data.employees.length > 0) {
+        setAllEmployees(response.data.employees);
+        setEmployee(response.data.employees);
+      } else {
+        console.log("No employees found or empty response.");
+      }
+    } catch (error) {
+      console.error("Error");
+    }
+  };
+
+  useEffect(() => {
+    fetchEmployee();
+  }, [allEmployees]);
+  // Check if employees is defined before mapping
+  const employeesList = employees || [];
+
   const dispatch = useDispatch();
   const logout = () => {
     sessionStorage.clear("id");
@@ -196,13 +222,16 @@ const SideNavbar = () => {
         <div className="container">
           <div className="flex-container">
             <div className="custom-box">
-              <div className="custom-heading">
+              <div className="custom-headings">
+                <div className="circles">
+                  <FaUserCircle className="adminprofile" />
+                </div>
                 <h4>Admin</h4>
               </div>
               <hr />
               <div className="flex-row">
-                <h5>Total:</h5>
-                <h5>{adminTotal}</h5>
+                <h5>Name:</h5>
+                <h5>{name || "user"}</h5>
               </div>
             </div>
 
@@ -229,39 +258,34 @@ const SideNavbar = () => {
             </div>
           </div>
 
-          <div className="mt-4 custom-section">
-            <h3>List of Admins</h3>
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {admins.map((a) => (
+          <div className="empcontainer">
+            <div className="mt-4 custom-section">
+              <h3>List of Employees</h3>
+            </div>
+            <div className="emptable-container">
+              <table className="table">
+                <thead>
                   <tr>
-                    <td>{a.name}</td>
-                    <td>{a.email}</td>
-                    <td>
-                      <Link
-                        to="/home/profile"
-                        className="btn btn-info btn-sm me-2"
-                      >
-                        View
-                      </Link>
-                      <button
-                        className="btn btn-warning btn-sm"
-                        onClick={() => deleteAdmin(a._id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Salary</th>
+                    <th>Address</th>
+                    <th>Category</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {employeesList.map((e) => (
+                    <tr key={e._id}>
+                      <td>{e.name}</td>
+                      <td>{e.email}</td>
+                      <td>{e.salary}</td>
+                      <td>{e.address}</td>
+                      <td>{e.categorys}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
