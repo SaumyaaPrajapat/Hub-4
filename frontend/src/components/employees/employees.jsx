@@ -187,7 +187,7 @@ const Employees = () => {
                   <td>{e.categorys}</td>
                   <td>
                     <Link
-                      to={`/home/employee/edit/` + e._id}
+                      to={`/home/employee/edit/${e._id}`}
                       className="btn btn-info btn-sm me-2"
                     >
                       Edit

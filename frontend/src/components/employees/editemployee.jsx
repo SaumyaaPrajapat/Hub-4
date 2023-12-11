@@ -21,7 +21,6 @@ import "./addemployee.css";
 import { useDispatch } from "react-redux/es/exports";
 import { authActions } from "../../store";
 
-let id = sessionStorage.getItem("id");
 const EditEmployee = () => {
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
@@ -34,6 +33,8 @@ const EditEmployee = () => {
     salary: "",
     categorys: "",
   });
+
+  let employeeId = String(sessionStorage.getItem("id"));
 
   useEffect(() => {
     const storedName = sessionStorage.getItem("name");
@@ -70,16 +71,20 @@ const EditEmployee = () => {
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `https://hub4-back.vercel.app/employee/${id}`
+          `https://hub4-back.vercel.app/employee/${employeeId}`
         );
-        setEmployeeData(response.data.employees[0]); // Assuming the response has the employee data
+        if (response.data) {
+          setEmployeeData(response.data);
+        } else {
+          console.error("Employee not found");
+        }
       } catch (error) {
         console.error("Error fetching employee data:", error);
       }
     };
 
     fetchEmployeeData();
-  }, [id]);
+  }, [employeeId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -92,7 +97,10 @@ const EditEmployee = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/update_employee/${id}`, employeeData);
+      await axios.put(
+        `https://hub4-back.vercel.app/update_employee/${employeeId}`,
+        employeeData
+      );
       navigate("/home/employee");
     } catch (error) {
       console.error("Error updating employee:", error);
