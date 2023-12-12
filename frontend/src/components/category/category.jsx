@@ -20,6 +20,8 @@ import "../sidenavbar/sidenavbar.css";
 import "./category.css";
 import { useDispatch } from "react-redux/es/exports";
 import { authActions } from "../../store";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Category = () => {
   const [show, setShow] = useState(true);
@@ -65,16 +67,18 @@ const Category = () => {
       );
 
       if (response.data.Status) {
-        // Reload categories after deletion
         const updatedCategories = categories.filter(
           (category) => category._id !== categoryId
         );
         setCategories(updatedCategories);
+        toast.success("Deleted successfully!");
       } else {
         console.error("Failed to delete category");
+        toast.error("Error in deleting. Please try again.");
       }
     } catch (error) {
       console.error(error);
+      toast.error("Error in deleting. Please try again.");
     }
   };
 
@@ -144,6 +148,7 @@ const Category = () => {
 
       <div>
         <div class="custom-container">
+          <ToastContainer />
           <div className="catheader">
             <h3>Category List</h3>
           </div>
