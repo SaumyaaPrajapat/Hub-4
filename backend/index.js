@@ -300,17 +300,11 @@ app.put("/update_employee/:id", async (req, res) => {
 });
 
 //category
-//get category based on user ID
+// Get categories based on user ID
 app.get("/category/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
-
-    if (!userId) {
-      return res.status(400).json({ Status: false, Error: "Invalid user ID" });
-    }
-
     const categories = await category.find({ user: userId });
-
     if (categories.length > 0) {
       return res.json({ Status: true, Result: categories });
     } else {
@@ -325,6 +319,7 @@ app.get("/category/:userId", async (req, res) => {
       .json({ Status: false, Error: "Internal Server Error" });
   }
 });
+
 //add category
 app.post("/add_category", async (req, res) => {
   try {

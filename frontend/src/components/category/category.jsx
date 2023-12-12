@@ -45,20 +45,33 @@ const Category = () => {
     return str.charAt(0).toUpperCase();
   };
 
+  const [userId, setUserId] = useState("");
+
+  useEffect(() => {
+    const storedUserId = sessionStorage.getItem("userId");
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+  }, []);
+
   useEffect(() => {
     const fetchCategories = async () => {
-      try {
-        const response = await axios.get(
-          "https://hub4-back.vercel.app/category/${userId}"
-        );
-        setCategories(response.data.Result);
-      } catch (error) {
-        console.error(error);
+      if (userId) {
+        try {
+          const response = await axios.get(
+            `https://hub4-back.vercel.app/category/${userId}`
+          );
+          setCategories(response.data.Result);
+        } catch (error) {
+          console.error("Error fetching categories:", error);
+        }
       }
     };
 
-    fetchCategories();
-  }, []);
+    if (userId) {
+      fetchCategories();
+    }
+  }, [userId]);
 
   const handleDelete = async (categoryId) => {
     try {
