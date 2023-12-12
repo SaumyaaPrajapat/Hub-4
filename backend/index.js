@@ -319,7 +319,6 @@ app.get("/category/:userId", async (req, res) => {
       .json({ Status: false, Error: "Internal Server Error" });
   }
 });
-
 //add category
 app.post("/add_category", async (req, res) => {
   try {
