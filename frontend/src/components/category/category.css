@@ -81,3 +81,25 @@
 .task-card p {
   margin: 0;
 }
+
+.button-container {
+  padding-top: 10px;
+  gap: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button-container button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 7px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  display: flex;
+}
+
+.button-container button:hover {
+  background-color: #5eaee3;
+}

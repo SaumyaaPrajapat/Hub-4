@@ -305,6 +305,27 @@ app.post("/add_category", async (req, res) => {
       .json({ Status: false, Error: "Internal Server Error" });
   }
 });
+// Delete a category
+app.delete("/delete_category/:categoryId", async (req, res) => {
+  try {
+    const deletedCategory = await category.findByIdAndDelete(
+      req.params.categoryId
+    );
+
+    if (!deletedCategory) {
+      return res
+        .status(404)
+        .json({ Status: false, Error: "Category not found" });
+    }
+
+    return res.json({ Status: true, Result: deletedCategory });
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ Status: false, Error: "Internal Server Error" });
+  }
+});
 
 app.listen(4001, () => {
   console.log("Server is connected and running");

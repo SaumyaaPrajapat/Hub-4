@@ -13,6 +13,7 @@ import {
   FaHome,
   FaSignOutAlt,
 } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Logo from "../img/Logo.png";
 import "../sidenavbar/sidenavbar.css";
@@ -56,6 +57,26 @@ const Category = () => {
 
     fetchCategories();
   }, []);
+
+  const handleDelete = async (categoryId) => {
+    try {
+      const response = await axios.delete(
+        `https://hub4-back.vercel.app/delete_category/${categoryId}`
+      );
+
+      if (response.data.Status) {
+        // Reload categories after deletion
+        const updatedCategories = categories.filter(
+          (category) => category._id !== categoryId
+        );
+        setCategories(updatedCategories);
+      } else {
+        console.error("Failed to delete category");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const dispatch = useDispatch();
   const logout = () => {
@@ -139,6 +160,14 @@ const Category = () => {
                     <div className="task-card" key={category._id}>
                       <h3>{category.name}</h3>
                       <p>{category.description}</p>
+                      <div className="button-container">
+                        <button
+                          title="Delete"
+                          onClick={() => handleDelete(category._id)}
+                        >
+                          <MdDeleteForever />
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
