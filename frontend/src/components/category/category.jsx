@@ -49,7 +49,7 @@ const Category = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          "https://hub4-back.vercel.app/category"
+          "https://hub4-back.vercel.app/category/${userId}"
         );
         setCategories(response.data.Result);
       } catch (error) {

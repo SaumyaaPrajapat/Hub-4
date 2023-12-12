@@ -194,7 +194,6 @@ app.get("/employee_s/:userId/:employeeId", async (req, res) => {
       .json({ error: "Internal Server Error", details: error.message });
   }
 });
-
 //add employee
 app.post("/add_employee", async (req, res) => {
   try {
@@ -301,11 +300,24 @@ app.put("/update_employee/:id", async (req, res) => {
 });
 
 //category
-//get category
-app.get("/category", async (req, res) => {
+//get category based on user ID
+app.get("/category/:userId", async (req, res) => {
   try {
-    const categories = await category.find({});
-    return res.json({ Status: true, Result: categories });
+    const userId = req.params.userId;
+
+    if (!userId) {
+      return res.status(400).json({ Status: false, Error: "Invalid user ID" });
+    }
+
+    const categories = await category.find({ user: userId });
+
+    if (categories.length > 0) {
+      return res.json({ Status: true, Result: categories });
+    } else {
+      return res
+        .status(404)
+        .json({ Status: false, Error: "No categories found for this user" });
+    }
   } catch (err) {
     console.error(err);
     return res
