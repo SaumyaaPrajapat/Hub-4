@@ -84,11 +84,11 @@ const EditEmployee = () => {
     fetchEmployeeData();
   }, [employeeId]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleInputChange = (e, fieldName) => {
+    const { value } = e.target;
     setEmployeeData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [fieldName]: value,
     }));
   };
 
@@ -102,7 +102,6 @@ const EditEmployee = () => {
       navigate("/home/employee");
     } catch (error) {
       console.error("Error updating employee:", error);
-      navigate("/home/employee");
     }
   };
 
@@ -184,7 +183,7 @@ const EditEmployee = () => {
                 id="inputName"
                 placeholder="Enter Name"
                 value={employeeData.name}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "name")}
               />
             </div>
             <div className="addempgroup">
@@ -198,7 +197,7 @@ const EditEmployee = () => {
                 placeholder="Enter Email"
                 autoComplete="off"
                 value={employeeData.email}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "email")}
               />
             </div>
             <div className="addempgroup">
@@ -211,7 +210,7 @@ const EditEmployee = () => {
                 id="inputPassword4"
                 placeholder="Enter Password"
                 value={employeeData.password}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "password")}
               />
             </div>
             <div className="addempgroup">
@@ -225,7 +224,7 @@ const EditEmployee = () => {
                 placeholder="Enter Salary"
                 autoComplete="off"
                 value={employeeData.salary}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "salary")}
               />
             </div>
             <div className="addempgroup">
@@ -239,7 +238,7 @@ const EditEmployee = () => {
                 placeholder="1234 Main St"
                 autoComplete="off"
                 value={employeeData.address}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "address")}
               />
             </div>
             <div className="addempgroup">
@@ -251,7 +250,7 @@ const EditEmployee = () => {
                 id="category"
                 className="form-select"
                 value={employeeData.categorys}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "categorys")}
               >
                 {category.map((c) => {
                   return (
