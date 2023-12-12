@@ -34,7 +34,7 @@ const EditEmployee = () => {
     categorys: "",
   });
 
-  let employeeId = String(sessionStorage.getItem("id"));
+  const { employeeId } = useParams();
 
   useEffect(() => {
     const storedName = sessionStorage.getItem("name");
