@@ -71,7 +71,9 @@ const EditEmployee = () => {
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `https://hub4-back.vercel.app/employee_s/${employeeId}`
+          `https://hub4-back.vercel.app/employee_s/${sessionStorage.getItem(
+            "id"
+          )}/${employeeId}`
         );
         setEmployeeData(response.data);
       } catch (error) {

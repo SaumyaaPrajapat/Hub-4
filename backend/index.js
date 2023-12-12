@@ -155,14 +155,24 @@ app.get("/employee/:id", async (req, res) => {
   }
 });
 // Endpoint to get a single employee by ID
-app.get("/employee_s/:id", async (req, res) => {
+// Endpoint to get a single employee by user ID and employee ID
+app.get("/employee_s/:userId/:employeeId", async (req, res) => {
   try {
-    const employeeId = req.params.id;
-    const emp = await employee.findById(employeeId);
+    const userId = req.params.userId;
+    const employeeId = req.params.employeeId;
+
+    if (!userId || !employeeId) {
+      return res
+        .status(400)
+        .json({ error: "Invalid or missing user or employee ID" });
+    }
+
+    const emp = await employee.findOne({ _id: employeeId, user: userId });
+
     if (emp) {
       res.status(200).json(emp); // Return the single employee object
     } else {
-      res.status(404).json({ message: "Employee not found" });
+      res.status(404).json({ message: "Employee not found for this user" });
     }
   } catch (error) {
     console.error("Error fetching employee:", error);
@@ -171,6 +181,7 @@ app.get("/employee_s/:id", async (req, res) => {
       .json({ error: "Internal Server Error", details: error.message });
   }
 });
+
 //add employee
 app.post("/add_employee", async (req, res) => {
   try {
@@ -305,7 +316,7 @@ app.post("/add_category", async (req, res) => {
       .json({ Status: false, Error: "Internal Server Error" });
   }
 });
-// Delete a category
+//delete category
 app.delete("/delete_category/:categoryId", async (req, res) => {
   try {
     const deletedCategory = await category.findByIdAndDelete(
