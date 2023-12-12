@@ -167,11 +167,24 @@ app.get("/employee_s/:userId/:employeeId", async (req, res) => {
         .json({ error: "Invalid or missing user or employee ID" });
     }
 
+    console.log(
+      "Fetching employee data for userId:",
+      userId,
+      "employeeId:",
+      employeeId
+    );
+
     const emp = await employee.findOne({ _id: employeeId, user: userId });
 
     if (emp) {
       res.status(200).json(emp); // Return the single employee object
     } else {
+      console.log(
+        "Employee not found for userId:",
+        userId,
+        "employeeId:",
+        employeeId
+      );
       res.status(404).json({ message: "Employee not found for this user" });
     }
   } catch (error) {
