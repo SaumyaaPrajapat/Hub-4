@@ -96,6 +96,9 @@ const Category = () => {
     dispatch(authActions.logout());
   };
 
+  // Check if categories is defined before mapping
+  const categoryList = categories || [];
+
   return (
     <main className={show ? "space-toggle" : null}>
       <header className={`header ${show ? "space-toggle" : null}`}>
@@ -169,7 +172,7 @@ const Category = () => {
               </div>
               <div className="task-cards-container">
                 <div className="task-cards">
-                  {categories.map((category) => (
+                  {categoryList.map((category) => (
                     <div className="task-card" key={category._id}>
                       <h3>{category.name}</h3>
                       <p>{category.description}</p>
