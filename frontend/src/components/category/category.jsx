@@ -28,6 +28,7 @@ const Category = () => {
   const [show, setShow] = useState(true);
   const [categories, setCategories] = useState([]);
   const [name, setUserName] = useState("");
+  const [allCategorys, setAllCategorys] = useState(null);
 
   useEffect(() => {
     const storedName = sessionStorage.getItem("name");
@@ -46,20 +47,26 @@ const Category = () => {
     return str.charAt(0).toUpperCase();
   };
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(
-          "https://hub4-back.vercel.app/category"
-        );
-        setCategories(response.data.Result);
-      } catch (error) {
-        console.error(error);
+  //get category
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(
+        `https://hub4-back.vercel.app/category/${id}`
+      );
+      if (response.data.categories && response.data.categories.length > 0) {
+        setAllCategorys(response.data.categories);
+        setCategories(response.data.categories);
+      } else {
+        console.log("No category.");
       }
-    };
+    } catch (error) {
+      console.error("Error");
+    }
+  };
 
+  useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [allCategorys]);
 
   const handleDelete = async (categoryId) => {
     try {

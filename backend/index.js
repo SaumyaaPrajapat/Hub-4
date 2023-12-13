@@ -299,18 +299,25 @@ app.put("/update_employee/:id", async (req, res) => {
 });
 
 //category
-//get categories
-app.get("/category", async (req, res) => {
+//get categories for same user
+app.get("/category/:id", async (req, res) => {
   try {
-    const categories = await category.find({});
-    return res.json({ Status: true, Result: categories });
-  } catch (err) {
-    console.error(err);
-    return res
-      .status(500)
-      .json({ Status: false, Error: "Internal Server Error" });
+    const userId = req.params.id;
+    if (!userId) {
+      return res.status(400).json({ error: "Invalid or missing user ID" });
+    }
+    const categories = await category.find({ user: userId });
+    if (categories.length > 0) {
+      res.status(200).json({ categories });
+    } else {
+      res.status(404).json({ message: "No categories found for this user" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 //add category
 app.post("/add_category", async (req, res) => {
   try {
