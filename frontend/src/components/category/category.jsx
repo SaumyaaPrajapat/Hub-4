@@ -23,22 +23,17 @@ import { authActions } from "../../store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-let userId = sessionStorage.getItem("id");
+let id = sessionStorage.getItem("id");
 const Category = () => {
   const [show, setShow] = useState(true);
   const [categories, setCategories] = useState([]);
   const [name, setUserName] = useState("");
-  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     const storedName = sessionStorage.getItem("name");
 
     if (storedName) {
       setUserName(capitalizeFirstLetter(storedName));
-    }
-    const storedUserId = sessionStorage.getItem("id");
-    if (storedUserId) {
-      setUserId(storedUserId);
     }
   }, []);
 
@@ -53,23 +48,18 @@ const Category = () => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      if (userId) {
-        try {
-          console.log("Fetching categories for userId:", userId);
-          const response = await axios.get(
-            `https://hub4-back.vercel.app/category/${userId}`
-          );
-          setCategories(response.data.Result);
-        } catch (error) {
-          console.error("Error fetching categories:", error);
-        }
+      try {
+        const response = await axios.get(
+          "https://hub4-back.vercel.app/category"
+        );
+        setCategories(response.data.Result);
+      } catch (error) {
+        console.error(error);
       }
     };
 
-    if (userId) {
-      fetchCategories();
-    }
-  }, [userId]);
+    fetchCategories();
+  }, []);
 
   const handleDelete = async (categoryId) => {
     try {

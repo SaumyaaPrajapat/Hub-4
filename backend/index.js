@@ -299,15 +299,16 @@ app.put("/update_employee/:id", async (req, res) => {
 });
 
 //category
-//get categories by userId
-app.get("/category/:userId", async (req, res) => {
+//get categories
+app.get("/category", async (req, res) => {
   try {
-    const userId = req.params.userId;
-    const categories = await category.find({ userId: userId });
-    res.status(200).json({ Status: true, Result: categories });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ Status: false, Error: "Internal Server Error" });
+    const categories = await category.find({});
+    return res.json({ Status: true, Result: categories });
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ Status: false, Error: "Internal Server Error" });
   }
 });
 //add category
