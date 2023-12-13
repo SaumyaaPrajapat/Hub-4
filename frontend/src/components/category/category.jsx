@@ -60,7 +60,7 @@ const Category = () => {
         console.log("No category.");
       }
     } catch (error) {
-      console.error("Error");
+      console.error("Error fetching categories:", error);
     }
   };
 
