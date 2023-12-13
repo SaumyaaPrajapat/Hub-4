@@ -53,11 +53,14 @@ const Category = () => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get("/categories");
-      console.log(response.data); // Log the response data
-      if (Array.isArray(response.data.Result)) {
+      console.log(response); // Log the entire response
+      if (response.data && Array.isArray(response.data.Result)) {
         setCategories(response.data.Result);
       } else {
-        console.error("Expected an array but received", response.data.Result);
+        console.error(
+          "Expected an array but received",
+          response.data ? response.data.Result : "undefined"
+        );
       }
     } catch (err) {
       console.error(err);
