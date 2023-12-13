@@ -300,9 +300,10 @@ app.put("/update_employee/:id", async (req, res) => {
 
 //category
 //get categories
-app.get("/category", async (req, res) => {
+app.get("/category/:userId", async (req, res) => {
   try {
-    const categories = await category.find({});
+    const userId = req.params.userId;
+    const categories = await category.find({ userId });
     return res.json({ Status: true, Result: categories });
   } catch (err) {
     console.error(err);

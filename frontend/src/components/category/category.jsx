@@ -49,8 +49,9 @@ const Category = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
+        let userId = sessionStorage.getItem("id");
         const response = await axios.get(
-          "https://hub4-back.vercel.app/category"
+          `https://hub4-back.vercel.app/category/${userId}`
         );
         setCategories(response.data.Result);
       } catch (error) {
