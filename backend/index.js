@@ -154,8 +154,7 @@ app.get("/employee/:id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-// Endpoint to get a single employee by ID
-// Endpoint to get a single employee by user ID and employee ID
+//get a single employee by user ID and employee ID
 app.get("/employee_s/:userId/:employeeId", async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -300,18 +299,11 @@ app.put("/update_employee/:id", async (req, res) => {
 });
 
 //category
-// Get categories based on user ID
-app.get("/category/:userId", async (req, res) => {
+//get categories by userId
+app.get("/categories", async (req, res) => {
   try {
-    const userId = req.params.userId;
-    const categories = await category.find({ user: userId });
-    if (categories.length > 0) {
-      return res.json({ Status: true, Result: categories });
-    } else {
-      return res
-        .status(404)
-        .json({ Status: false, Error: "No categories found for this user" });
-    }
+    const categories = await category.find({ userId: req.user._id });
+    return res.json({ Status: true, Result: categories });
   } catch (err) {
     console.error(err);
     return res

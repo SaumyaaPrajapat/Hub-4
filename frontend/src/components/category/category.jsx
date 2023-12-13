@@ -47,23 +47,19 @@ const Category = () => {
   };
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      if (userId) {
-        try {
-          const response = await axios.get(
-            `https://hub4-back.vercel.app/category/${userId}`
-          );
-          setCategories(response.data.Result);
-        } catch (error) {
-          console.error("Error fetching categories:", error);
-        }
-      }
-    };
-
-    if (userId) {
-      fetchCategories();
+    // Fetch categories when component mounts
+    fetchCategories();
+  }, []);
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get("/categories", {
+        withCredentials: true,
+      });
+      setCategories(response.data.Result);
+    } catch (err) {
+      console.error(err);
     }
-  }, [userId]);
+  };
 
   const handleDelete = async (categoryId) => {
     try {
