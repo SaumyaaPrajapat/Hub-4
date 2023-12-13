@@ -23,6 +23,7 @@ import { authActions } from "../../store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+let userId = sessionStorage.getItem("id");
 const Category = () => {
   const [show, setShow] = useState(true);
   const [categories, setCategories] = useState([]);
@@ -34,6 +35,10 @@ const Category = () => {
 
     if (storedName) {
       setUserName(capitalizeFirstLetter(storedName));
+    }
+    const storedUserId = sessionStorage.getItem("id");
+    if (storedUserId) {
+      setUserId(storedUserId);
     }
   }, []);
 
