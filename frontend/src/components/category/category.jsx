@@ -28,7 +28,6 @@ const Category = () => {
   const [show, setShow] = useState(true);
   const [categories, setCategories] = useState([]);
   const [name, setUserName] = useState("");
-  const [allCategorys, setAllCategorys] = useState(null);
 
   useEffect(() => {
     const storedName = sessionStorage.getItem("name");
@@ -47,26 +46,20 @@ const Category = () => {
     return str.charAt(0).toUpperCase();
   };
 
-  //get category
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get(
-        `https://hub4-back.vercel.app/category/${id}`
-      );
-      if (response.data.categories && response.data.categories.length > 0) {
-        setAllCategorys(response.data.categories);
-        setCategories(response.data.categories);
-      } else {
-        console.log("No category.");
-      }
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
-
   useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          "https://hub4-back.vercel.app/category"
+        );
+        setCategories(response.data.Result);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchCategories();
-  }, [allCategorys]);
+  }, []);
 
   const handleDelete = async (categoryId) => {
     try {
@@ -95,9 +88,6 @@ const Category = () => {
     sessionStorage.clear("id");
     dispatch(authActions.logout());
   };
-
-  // Check if categories is defined before mapping
-  const categoryList = categories || [];
 
   return (
     <main className={show ? "space-toggle" : null}>
@@ -172,7 +162,7 @@ const Category = () => {
               </div>
               <div className="task-cards-container">
                 <div className="task-cards">
-                  {categoryList.map((category) => (
+                  {categories.map((category) => (
                     <div className="task-card" key={category._id}>
                       <h3>{category.name}</h3>
                       <p>{category.description}</p>
