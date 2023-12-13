@@ -20,8 +20,10 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     const id = sessionStorage.getItem("id");
-    dispatch(authActions.login());
-  }, []);
+    if (id) {
+      dispatch(authActions.login(id));
+    }
+  }, [dispatch]);
   return (
     <BrowserRouter>
       <Routes>
