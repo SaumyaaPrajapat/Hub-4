@@ -52,10 +52,13 @@ const Category = () => {
   }, []);
   const fetchCategories = async () => {
     try {
-      const response = await axios.get("/categories", {
-        withCredentials: true,
-      });
-      setCategories(response.data.Result);
+      const response = await axios.get("/categories");
+      console.log(response.data); // Log the response data
+      if (Array.isArray(response.data.Result)) {
+        setCategories(response.data.Result);
+      } else {
+        console.error("Expected an array but received", response.data.Result);
+      }
     } catch (err) {
       console.error(err);
     }
