@@ -64,6 +64,19 @@
 .back2 {
   width: 400px;
 }
+.hubcontainer {
+  background: linear-gradient(
+      35deg,
+      rgb(171, 220, 247) 0%,
+      rgba(32, 155, 201, 0.74) 50%
+    ),
+    linear-gradient(145deg, rgb(171, 220, 247) 50%, rgba(32, 176, 201, 0.74) 0%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* 100% of the viewport height */
+}
+
 .containerStyle {
   background: linear-gradient(
       35deg,

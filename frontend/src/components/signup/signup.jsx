@@ -201,6 +201,7 @@ function Signup() {
                   //placeholder="Enter Password"
                   name="password"
                   className="inputStyle form-control rounded-3"
+                  style={{ fontWeight: "520" }}
                   required
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -225,6 +226,7 @@ function Signup() {
                   //placeholder="Confirm Password"
                   name="confirmp"
                   className="inputStyle form-control rounded-3"
+                  style={{ fontWeight: "520" }}
                   required
                   onChange={(e) => setConfPass(e.target.value)}
                 />

@@ -180,6 +180,7 @@ function Login() {
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
+                  style={{ fontWeight: "520" }}
                   className="inputStyle form-control rounded-3"
                   onChange={(e) => setPassword(e.target.value)}
                 />
