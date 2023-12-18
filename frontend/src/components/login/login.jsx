@@ -44,21 +44,18 @@ function Login() {
       const data = response.data;
       console.log("Login response:", data);
       // Check for success or any specific criteria in your response
-      if (data && data.others && data.others._id) {
+      if (data && data.success) {
         console.log("Logged in Successfully");
-        sessionStorage.setItem("id", data.others._id);
-        sessionStorage.setItem("name", data.others.name);
-        sessionStorage.setItem("email", data.others.email);
-        console.log("Login response:", data);
+        sessionStorage.setItem("token", data.data);
         dispatch(authActions.login());
         navigate("/home");
         window.location.reload();
       } else {
-        setError("Login failed. Please try again.");
+        setError(data.message);
       }
     } catch (err) {
       if (err.response && err.response.data) {
-        setError(err.response.data.error);
+        setError(err.response.data.message);
       } else {
         setError("Login failed. Please try again.");
       }
