@@ -158,6 +158,7 @@ const SideNavbar = () => {
   const logout = () => {
     sessionStorage.clear("id");
     dispatch(authActions.logout());
+    window.location.href = "/login";
   };
 
   return (
