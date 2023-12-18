@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const navigate = useNavigate();
-
+  const [suc, setSuc] = useState();
   useEffect(() => {
     axios
       .get("https://hub4-back.vercel.app/home")
@@ -23,6 +23,7 @@ const App = () => {
   return (
     <div>
       <SideNavbar />
+      <p>{suc}</p>
     </div>
   );
 };
