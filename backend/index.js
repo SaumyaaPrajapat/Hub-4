@@ -42,41 +42,35 @@ app.get("/home", verifyUser, (req, res) => {
 
 //login
 app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
   try {
-    // check if user exists
-    const user = await userModel.findOne({ email: req.body.email });
+    const user = await userModel.findOne({ email });
     if (!user) {
-      return res
-        .status(200)
-        .send({ message: "User does not exist", success: false });
+      return res.status(401).json({ error: "User Does Not Exist" });
     }
-
-    // check password
-    const validPassword = await bcrypt.compare(
-      req.body.password,
-      user.password
-    );
-    if (!validPassword) {
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (passwordMatch) {
+      const { password, ...others } = user._doc;
+      const token = jwt.sign(
+        { email: user.email, role: user.role },
+        "jwt-secret-key",
+        {
+          expiresIn: "1d",
+        }
+      );
+      res.send({
+        message: "User logged in successfully",
+        success: true,
+        data: token,
+      });
+      return res.status(200).json({ others });
+    } else {
       return res
-        .status(200)
-        .send({ message: "Invalid password", success: false });
+        .status(401)
+        .json({ error: "The password is incorrect. Try Again!" });
     }
-
-    const token = jwt.sign({ userId: user._id }, "jwt-secret-key", {
-      expiresIn: "1d",
-    });
-
-    res.send({
-      message: "User logged in successfully",
-      success: true,
-      data: token,
-    });
   } catch (error) {
-    res.status(500).send({
-      message: error.message,
-      data: error,
-      success: false,
-    });
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
