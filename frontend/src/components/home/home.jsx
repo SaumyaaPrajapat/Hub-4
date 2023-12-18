@@ -5,13 +5,15 @@ import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const navigate = useNavigate();
-
+  const [suc, setSuc] = useState();
   useEffect(() => {
     axios
       .get("https://hub4-back.vercel.app/home", { withCredentials: true })
       .then((result) => {
         console.log(result);
         if (result.data !== "Success") {
+          setSuc("Successded OK");
+        } else {
           navigate("/login");
         }
       })
@@ -21,6 +23,7 @@ const App = () => {
   return (
     <div>
       <SideNavbar />
+      <p>{suc}</p>
     </div>
   );
 };
