@@ -10,9 +10,11 @@ const App = () => {
     axios
       .get("https://hub4-back.vercel.app/home")
       .then((result) => {
-        console.log(result);
+        console.log(result.data);
         if (result.data !== "Success") {
-          //navigate("/login");
+          setSuc("Successded OK");
+        } else {
+          navigate("/login");
         }
       })
       .catch((err) => console.log(err));

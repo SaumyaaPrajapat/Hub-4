@@ -1,10 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const userModel = require("./model/signups");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const userModel = require("./model/signups");
 const employee = require("./model/employee");
 const category = require("./model/category");
 
@@ -22,9 +22,16 @@ const verifyUser = (req, res, next) => {
   if (!token) {
     return res.json("The token was not available");
   } else {
-    jwt.verify(token, "jwt-secrete-key", (err, decoded) => {
-      if (err) return res.json("Token is wrong");
-      next();
+    jwt.verify(token, "jwt-secret-key", (err, decoded) => {
+      if (err) {
+        return res.json("Error with token");
+      } else {
+        if (decoded.role === "admin") {
+          next();
+        } else {
+          return res.json("not admin");
+        }
+      }
     });
   }
 };
@@ -34,29 +41,34 @@ app.get("/home", verifyUser, (req, res) => {
 });
 
 //login
-app.post("/login", async (req, res) => {
+app.post("/login", (req, res) => {
   const { email, password } = req.body;
-  try {
-    const user = await userModel.findOne({ email });
-    if (!user) {
-      return res.status(401).json({ error: "User Does Not Exist" });
-    }
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (passwordMatch) {
-      const { password, ...others } = user._doc;
-      const token = jwt.sign({ email: user.email }, "jwt-secrete-key", {
-        expiresIn: "1d",
-      });
-      res.cookie("token", token);
-      return res.status(200).json({ others });
-    } else {
-      return res
-        .status(401)
-        .json({ error: "The password is incorrect. Try Again!" });
-    }
-  } catch (error) {
-    return res.status(500).json({ error: "Internal Server Error" });
-  }
+  userModel
+    .findOne({ email: email })
+    .then((user) => {
+      if (user) {
+        bcrypt.compare(password, user.password, (err, passwordMatch) => {
+          if (passwordMatch) {
+            const token = jwt.sign(
+              { email: user.email, role: user.role },
+              "jwt-secret-key",
+              {
+                expiresIn: "1d",
+              }
+            );
+            res.cookie("token", token);
+            return res.json({ Status: "Success", role: user.role });
+          } else {
+            return res.json("The password is incorrect");
+          }
+        });
+      } else {
+        return res.json("No record existed");
+      }
+    })
+    .catch((error) => {
+      return res.status(500).json({ error: "Internal Server Error" });
+    });
 });
 
 //register
