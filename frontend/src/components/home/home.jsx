@@ -8,11 +8,11 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get("https://hub4-back.vercel.app/home")
+      .get("https://hub4-back.vercel.app/home", { withCredentials: true })
       .then((result) => {
         console.log(result);
         if (result.data !== "Success") {
-          //navigate("/login");
+          navigate("/login");
         }
       })
       .catch((err) => console.log(err));
