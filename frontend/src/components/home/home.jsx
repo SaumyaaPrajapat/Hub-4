@@ -8,9 +8,9 @@ const App = () => {
   const [suc, setSuc] = useState();
   useEffect(() => {
     axios
-      .get("https://hub4-back.vercel.app/home", { withCredentials: true })
+      .get("https://hub4-back.vercel.app/home")
       .then((result) => {
-        console.log(result);
+        console.log(result.data);
         if (result.data !== "Success") {
           setSuc("Successded OK");
         } else {
