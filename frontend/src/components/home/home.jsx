@@ -14,7 +14,7 @@ const App = () => {
         if (result.data !== "Success") {
           setSuc("Successded OK");
         } else {
-          navigate("/login");
+          //navigate("/login");
         }
       })
       .catch((err) => console.log(err));
