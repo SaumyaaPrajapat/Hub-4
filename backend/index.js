@@ -23,14 +23,21 @@ const verifyUser = (req, res, next) => {
     return res.json("The token was not available");
   } else {
     jwt.verify(token, "jwt-secret-key", (err, decoded) => {
-      if (err) return res.json("Token is wrong");
-      next();
+      if (err) {
+        return res.json("Error with token");
+      } else {
+        if (decoded.role === "admin") {
+          next();
+        } else {
+          return res.json("not admin");
+        }
+      }
     });
   }
 };
 
 app.get("/home", verifyUser, (req, res) => {
-  return res.json("Success");
+  res.json("Success");
 });
 
 //login
