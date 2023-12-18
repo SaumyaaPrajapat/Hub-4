@@ -41,34 +41,43 @@ app.get("/home", verifyUser, (req, res) => {
 });
 
 //login
-app.post("/login", (req, res) => {
-  const { email, password } = req.body;
-  userModel
-    .findOne({ email: email })
-    .then((user) => {
-      if (user) {
-        bcrypt.compare(password, user.password, (err, passwordMatch) => {
-          if (passwordMatch) {
-            const token = jwt.sign(
-              { email: user.email, role: user.role },
-              "jwt-secret-key",
-              {
-                expiresIn: "1d",
-              }
-            );
-            res.cookie("token", token);
-            return res.json({ Status: "Success", role: user.role });
-          } else {
-            return res.json("The password is incorrect");
-          }
-        });
-      } else {
-        return res.json("No record existed");
-      }
-    })
-    .catch((error) => {
-      return res.status(500).json({ error: "Internal Server Error" });
+app.post("/login", async (req, res) => {
+  try {
+    // check if user exists
+    const user = await userModel.findOne({ email: req.body.email });
+    if (!user) {
+      return res
+        .status(200)
+        .send({ message: "User does not exist", success: false });
+    }
+
+    // check password
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+    if (!validPassword) {
+      return res
+        .status(200)
+        .send({ message: "Invalid password", success: false });
+    }
+
+    const token = jwt.sign({ userId: user._id }, "jwt-secret-key", {
+      expiresIn: "1d",
     });
+
+    res.send({
+      message: "User logged in successfully",
+      success: true,
+      data: token,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+      data: error,
+      success: false,
+    });
+  }
 });
 
 //register
