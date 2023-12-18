@@ -4,25 +4,26 @@ const cors = require("cors");
 const userModel = require("./model/signups");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const cookieParser = require("cookie-parser");
 const employee = require("./model/employee");
 const category = require("./model/category");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use(cookieParser());
 
 mongoose.connect(
   "mongodb+srv://saumyaa:soma2029@cluster0.w38dndu.mongodb.net/admindata?retryWrites=true&w=majority"
 );
 
+const jwtSecretKey = process.env.JWT_SECRET_KEY || "defaultSecretKey";
+
 const verifyUser = (req, res, next) => {
-  const token = req.cookies.token;
-  if (!token) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
     return res.json("The token was not available");
   } else {
-    jwt.verify(token, "jwt-secret-key", (err, decoded) => {
+    const token = authHeader.split(" ")[1]; // Bearer <token>
+    jwt.verify(token, jwtSecretKey, (err, decoded) => {
       if (err) {
         return res.json("Error with token");
       } else {
@@ -51,11 +52,11 @@ app.post("/login", async (req, res) => {
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (passwordMatch) {
       const { password, ...others } = user._doc;
-      const token = jwt.sign({ email: user.email }, "jwt-secret-key", {
+      const token = jwt.sign({ email: user.email }, jwtSecretKey, {
         expiresIn: "1d",
       });
-      res.cookie("token", token);
-      return res.status(200).json({ others });
+      // Send token in response body
+      return res.status(200).json({ token, others });
     } else {
       return res
         .status(401)

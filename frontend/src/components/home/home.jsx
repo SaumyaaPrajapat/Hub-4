@@ -7,17 +7,24 @@ const App = () => {
   const navigate = useNavigate();
   const [suc, setSuc] = useState();
   useEffect(() => {
-    axios
-      .get("https://hub4-back.vercel.app/home")
-      .then((result) => {
-        console.log(result.data);
-        if (result.data !== "Success") {
-          setSuc("Successded OK");
-        } else {
-          navigate("/login");
-        }
-      })
-      .catch((err) => console.log(err));
+    const token = sessionStorage.getItem("token"); // get token from sessionStorage
+    if (token) {
+      axios
+        .get("https://hub4-back.vercel.app/home", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((result) => {
+          console.log(result);
+          if (result.data === "Success") {
+            setSuc("Successded OK");
+          } else {
+            navigate("/login");
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      console.log("Token not available");
+    }
   }, []);
 
   return (
