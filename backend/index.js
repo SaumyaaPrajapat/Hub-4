@@ -1,14 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const userModel = require("./model/signups");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-const userModel = require("./model/signups");
 const employee = require("./model/employee");
 const category = require("./model/category");
 
 const app = express();
+require("dotenv").config();
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
@@ -23,15 +24,8 @@ const verifyUser = (req, res, next) => {
     return res.json("The token was not available");
   } else {
     jwt.verify(token, "jwt-secret-key", (err, decoded) => {
-      if (err) {
-        return res.json("Error with token");
-      } else {
-        if (decoded.role === "admin") {
-          next();
-        } else {
-          return res.json("not admin");
-        }
-      }
+      if (err) return res.json("Token is wrong");
+      next();
     });
   }
 };
@@ -51,18 +45,10 @@ app.post("/login", async (req, res) => {
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (passwordMatch) {
       const { password, ...others } = user._doc;
-      const token = jwt.sign(
-        { email: user.email, role: user.role },
-        "jwt-secret-key",
-        {
-          expiresIn: "1d",
-        }
-      );
-      res.send({
-        message: "User logged in successfully",
-        success: true,
-        data: token,
+      const token = jwt.sign({ email: user.email }, "jwt-secret-key", {
+        expiresIn: "1d",
       });
+      res.send("token", token);
       return res.status(200).json({ others });
     } else {
       return res
