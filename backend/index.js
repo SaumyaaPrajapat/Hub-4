@@ -10,13 +10,7 @@ const category = require("./model/category");
 
 const app = express();
 app.use(express.json());
-app.use(
-  cors({
-    origin: "https://hub4.vercel.app", // replace with your client app URL
-    credentials: true,
-    methods: "GET,HEAD,PUT,POST,DELETE",
-  })
-);
+app.use(cors());
 app.use(cookieParser());
 
 mongoose.connect(

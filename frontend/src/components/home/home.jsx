@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const navigate = useNavigate();
-  axios.defaults.withCredentials = true;
   useEffect(() => {
     axios
       .get("https://hub4-back.vercel.app/home")
