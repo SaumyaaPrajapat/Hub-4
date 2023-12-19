@@ -55,7 +55,7 @@ app.post("/login", async (req, res) => {
         }
       );
       res.cookie("token", token);
-      return res.status(200).json("Success", { others, token });
+      return res.status(200).json({ others, token });
     } else {
       return res
         .status(401)
