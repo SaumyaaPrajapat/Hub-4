@@ -4,41 +4,36 @@ const cors = require("cors");
 const userModel = require("./model/signups");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const employee = require("./model/employee");
 const category = require("./model/category");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 mongoose.connect(
   "mongodb+srv://saumyaa:soma2029@cluster0.w38dndu.mongodb.net/admindata?retryWrites=true&w=majority"
 );
 
-const jwtSecretKey = process.env.JWT_SECRET_KEY || "defaultSecretKey";
-
 const verifyUser = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader) {
+  const token = req.cookies.token;
+  console.log(token);
+  if (!token) {
     return res.json("The token was not available");
   } else {
-    const token = authHeader.split(" ")[1]; // Bearer <token>
-    jwt.verify(token, jwtSecretKey, (err, decoded) => {
-      if (err) {
-        return res.json("Error with token");
-      } else {
-        if (decoded.role === "admin") {
-          next();
-        } else {
-          return res.json("not admin");
-        }
-      }
+    jwt.verify(token, "jwt-secret-key", (err, decoded) => {
+      console.log(userVer);
+      if (err) return res.json("Token is wrong");
+      next();
     });
   }
 };
 
 app.get("/home", verifyUser, (req, res) => {
-  res.json("Success");
+  console.log("Token verification passed. User: ", req.user);
+  return res.json("Success");
 });
 
 //login
@@ -52,11 +47,15 @@ app.post("/login", async (req, res) => {
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (passwordMatch) {
       const { password, ...others } = user._doc;
-      const token = jwt.sign({ email: user.email }, jwtSecretKey, {
-        expiresIn: "1d",
-      });
-      // Send token in response body
-      return res.status(200).json({ token, others });
+      const token = await jwt.sign(
+        { email: user.email, userId: user._id },
+        "jwt-secret-key",
+        {
+          expiresIn: "1d",
+        }
+      );
+      res.cookie("token", token, { path: "/" });
+      return res.status(200).json("Success", { others, token });
     } else {
       return res
         .status(401)

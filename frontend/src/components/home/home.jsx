@@ -5,26 +5,17 @@ import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const navigate = useNavigate();
-  const [suc, setSuc] = useState();
+  axios.defaults.withCredentials = true;
   useEffect(() => {
-    const token = sessionStorage.getItem("token"); // get token from sessionStorage
-    if (token) {
-      axios
-        .get("https://hub4-back.vercel.app/home", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((result) => {
-          console.log(result);
-          if (result.data === "Success") {
-            setSuc("Successded OK");
-          } else {
-            navigate("/login");
-          }
-        })
-        .catch((err) => console.log(err));
-    } else {
-      console.log("Token not available");
-    }
+    axios
+      .get("https://hub4-back.vercel.app/home")
+      .then((res) => {
+        console.log(res);
+        if (res.data !== "Success") {
+          //navigate("/login");
+        }
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (
