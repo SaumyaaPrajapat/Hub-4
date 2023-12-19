@@ -54,7 +54,7 @@ app.post("/login", async (req, res) => {
           expiresIn: "1d",
         }
       );
-      res.cookie("token", token, { path: "/" });
+      res.cookie("token", token);
       return res.status(200).json("Success", { others, token });
     } else {
       return res
