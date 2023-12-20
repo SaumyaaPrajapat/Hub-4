@@ -51,7 +51,9 @@ const Category = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get(`/category/${id}`);
+        const res = await axios.get(
+          `https://hub4-back.vercel.app/category/${id}`
+        );
         setCategories(res.data);
       } catch (err) {
         console.error(err);
