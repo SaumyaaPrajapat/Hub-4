@@ -24,7 +24,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 let id = sessionStorage.getItem("id");
-const Category = () => {
+const Category = ({ userId }) => {
   const [show, setShow] = useState(true);
   const [categories, setCategories] = useState([]);
   const [allcategories, setAllCategories] = useState(null);
@@ -48,29 +48,18 @@ const Category = () => {
   };
 
   //get categories
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get(
-        `https://hub4-back.vercel.app/category/${id}`
-      );
-      console.log("Response:", response.data);
-      console.log(response.data.categories);
-      if (response.data.categories && response.data.categories.length > 0) {
-        setAllCategories(response.data.categories);
-        setCategories(response.data.categories);
-      } else {
-        console.log("No category found or empty response.");
-      }
-    } catch (error) {
-      console.error("Error");
-    }
-  };
-
   useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get(`/categories/${userId}`);
+        setCategories(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
     fetchCategories();
-  }, [allcategories]);
-  // Check if categories is defined before mapping
-  const categoriesList = categories || [];
+  }, [userId]);
 
   const handleDelete = async (categoryId) => {
     try {
@@ -173,14 +162,14 @@ const Category = () => {
               </div>
               <div className="task-cards-container">
                 <div className="task-cards">
-                  {categoriesList.map((e) => (
-                    <div className="task-card" key={e._id}>
-                      <h3>{e.name}</h3>
-                      <p>{e.description}</p>
+                  {categories.map((category) => (
+                    <div className="task-card" key={category._id}>
+                      <h3>{category.name}</h3>
+                      <p>{category.description}</p>
                       <div className="button-container">
                         <button
                           title="Delete"
-                          onClick={() => handleDelete(e._id)}
+                          onClick={() => handleDelete(category._id)}
                         >
                           <MdDeleteForever />
                         </button>
