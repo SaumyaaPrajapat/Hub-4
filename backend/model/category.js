@@ -9,6 +9,10 @@ const categorySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "signups",
+  },
 });
 
 const category = mongoose.model("Category", categorySchema);

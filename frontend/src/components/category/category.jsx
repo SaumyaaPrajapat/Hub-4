@@ -50,16 +50,22 @@ const Category = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          "https://hub4-back.vercel.app/category"
+          `https://hub4-back.vercel.app/category/${id}`
         );
-        setCategories(response.data.Result);
+
+        console.log(response.data.categories);
+        if (response.data.categories && response.data.categories.length > 0) {
+          setCategories(response.data.categories);
+        } else {
+          console.log("No category found or empty response.");
+        }
       } catch (error) {
-        console.error(error);
+        console.error("Error");
       }
     };
 
     fetchCategories();
-  }, []);
+  }, [categories]);
 
   const handleDelete = async (categoryId) => {
     try {
