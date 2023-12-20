@@ -169,29 +169,34 @@ function Login() {
             <div className="mb-3">
               <div
                 className="mb-1"
-                style={{ color: "#262626", fontWeight: "550" }}
+                style={{
+                  color: "#262626",
+                  fontWeight: "550",
+                  display: "flex",
+                  gap: "60px",
+                }}
               >
                 <label className="formLabel" htmlFor="email">
                   Password
                 </label>
-              </div>
-              <div className="showpass">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  style={{ fontWeight: "520" }}
-                  className="inputStyle form-control rounded-3"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <div className="eyeicon">
-                  <button
-                    className="passbut"
-                    onClick={(event) => handleShowPassword(event)}
-                  >
-                    {showPassword ? <FiEye /> : <FiEyeOff />}
-                  </button>
+                <div className="showpass">
+                  <div className="eyeicon">
+                    <button
+                      className="passbut"
+                      onClick={(event) => handleShowPassword(event)}
+                    >
+                      {showPassword ? <FiEye /> : <FiEyeOff />}
+                    </button>
+                  </div>
                 </div>
               </div>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                style={{ fontWeight: "520" }}
+                className="inputStyle form-control rounded-3"
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
             {error && <p className="text-white">{error}</p>}
             <div className="d-flex justify-content-center">

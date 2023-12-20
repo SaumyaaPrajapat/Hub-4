@@ -9,6 +9,7 @@ const employee = require("./model/employee");
 const category = require("./model/category");
 
 const app = express();
+const PORT = 4001;
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
@@ -26,6 +27,7 @@ const verifyUser = (req, res, next) => {
     jwt.verify(token, "jwt-secret-key", (err, decoded) => {
       console.log(userVer);
       if (err) return res.json("Token is wrong");
+      req.user = decoded;
       next();
     });
   }
@@ -33,7 +35,7 @@ const verifyUser = (req, res, next) => {
 
 app.get("/home", verifyUser, (req, res) => {
   console.log("Token verification passed. User: ", req.user);
-  return res.json("Success");
+  return res.status(200).json("Success");
 });
 
 //login
@@ -356,6 +358,6 @@ app.delete("/delete_category/:categoryId", async (req, res) => {
   }
 });
 
-app.listen(4001, () => {
-  console.log("Server is connected and running");
+app.listen(PORT, () => {
+  console.log(`Server is connected and running on port ${PORT}`);
 });

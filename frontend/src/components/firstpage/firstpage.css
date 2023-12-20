@@ -74,7 +74,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* 100% of the viewport height */
+  min-height: 100vh;
+  background-size: 100%;
 }
 
 .containerStyle {
@@ -150,9 +151,9 @@
     font-size: 2rem;
     width: 90%;
   }
-  .back1 {
+  .back2 {
     top: 0;
-    width: 370px;
+    width: 330px;
   }
   .otherStyle {
     font-size: 1rem;

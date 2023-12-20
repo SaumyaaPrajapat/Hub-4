@@ -186,7 +186,7 @@ function Signup() {
               />
             </div>
             <div className="mb-3">
-              <div className="mb-1">
+              <div className="mb-1" style={{ display: "flex", gap: "60px" }}>
                 <label
                   className="formLabel"
                   htmlFor="password"
@@ -194,24 +194,24 @@ function Signup() {
                 >
                   Password
                 </label>
+                <div className="showpass">
+                  <button onClick={(event) => handleShowPassword(event)}>
+                    {showPassword ? <FiEye /> : <FiEyeOff />}
+                  </button>
+                </div>
               </div>
-              <div className="showpass">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  //placeholder="Enter Password"
-                  name="password"
-                  className="inputStyle form-control rounded-3"
-                  style={{ fontWeight: "520" }}
-                  required
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <button onClick={(event) => handleShowPassword(event)}>
-                  {showPassword ? <FiEye /> : <FiEyeOff />}
-                </button>
-              </div>
+              <input
+                type={showPassword ? "text" : "password"}
+                //placeholder="Enter Password"
+                name="password"
+                className="inputStyle form-control rounded-3"
+                style={{ fontWeight: "520" }}
+                required
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
             <div className="mb-3">
-              <div className="mb-1">
+              <div className="mb-1" style={{ display: "flex", gap: "60px" }}>
                 <label
                   className="formLabel"
                   htmlFor="confirmp"
@@ -219,21 +219,21 @@ function Signup() {
                 >
                   Confirm Password
                 </label>
+                <div className="showpass">
+                  <button onClick={(event) => handleShowConfirmPassword(event)}>
+                    {showConfirmPassword ? <FiEye /> : <FiEyeOff />}
+                  </button>
+                </div>
               </div>
-              <div className="showpass">
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  //placeholder="Confirm Password"
-                  name="confirmp"
-                  className="inputStyle form-control rounded-3"
-                  style={{ fontWeight: "520" }}
-                  required
-                  onChange={(e) => setConfPass(e.target.value)}
-                />
-                <button onClick={(event) => handleShowConfirmPassword(event)}>
-                  {showConfirmPassword ? <FiEye /> : <FiEyeOff />}
-                </button>
-              </div>
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                //placeholder="Confirm Password"
+                name="confirmp"
+                className="inputStyle form-control rounded-3"
+                style={{ fontWeight: "520" }}
+                required
+                onChange={(e) => setConfPass(e.target.value)}
+              />
             </div>
             <div className="mb-3">
               {error && (
