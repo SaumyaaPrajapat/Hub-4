@@ -27,6 +27,7 @@ let id = sessionStorage.getItem("id");
 const Category = () => {
   const [show, setShow] = useState(true);
   const [categories, setCategories] = useState([]);
+  const [allcategories, setAllCategories] = useState(null);
   const [name, setUserName] = useState("");
 
   useEffect(() => {
@@ -46,26 +47,30 @@ const Category = () => {
     return str.charAt(0).toUpperCase();
   };
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(
-          `https://hub4-back.vercel.app/category/${id}`
-        );
-
-        console.log(response.data.categories);
-        if (response.data.categories && response.data.categories.length > 0) {
-          setCategories(response.data.categories);
-        } else {
-          console.log("No category found or empty response.");
-        }
-      } catch (error) {
-        console.error("Error");
+  //get categories
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(
+        `https://hub4-back.vercel.app/category/${id}`
+      );
+      console.log("Response:", response.data);
+      console.log(response.data.categories);
+      if (response.data.categories && response.data.categories.length > 0) {
+        setAllCategories(response.data.categories);
+        setCategories(response.data.categories);
+      } else {
+        console.log("No category found or empty response.");
       }
-    };
+    } catch (error) {
+      console.error("Error");
+    }
+  };
 
+  useEffect(() => {
     fetchCategories();
-  }, [categories]);
+  }, [allcategories]);
+  // Check if categories is defined before mapping
+  const categoriesList = categories || [];
 
   const handleDelete = async (categoryId) => {
     try {
@@ -168,14 +173,14 @@ const Category = () => {
               </div>
               <div className="task-cards-container">
                 <div className="task-cards">
-                  {categories.map((category) => (
-                    <div className="task-card" key={category._id}>
-                      <h3>{category.name}</h3>
-                      <p>{category.description}</p>
+                  {categoriesList.map((e) => (
+                    <div className="task-card" key={e._id}>
+                      <h3>{e.name}</h3>
+                      <p>{e.description}</p>
                       <div className="button-container">
                         <button
                           title="Delete"
-                          onClick={() => handleDelete(category._id)}
+                          onClick={() => handleDelete(e._id)}
                         >
                           <MdDeleteForever />
                         </button>
