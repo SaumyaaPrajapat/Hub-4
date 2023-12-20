@@ -24,7 +24,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 let id = sessionStorage.getItem("id");
-const Category = ({ userId }) => {
+const Category = () => {
   const [show, setShow] = useState(true);
   const [categories, setCategories] = useState([]);
   const [allcategories, setAllCategories] = useState(null);
@@ -51,7 +51,7 @@ const Category = ({ userId }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get(`/categories/${userId}`);
+        const res = await axios.get(`/category/${id}`);
         setCategories(res.data);
       } catch (err) {
         console.error(err);
@@ -59,7 +59,7 @@ const Category = ({ userId }) => {
     };
 
     fetchCategories();
-  }, [userId]);
+  }, [id]);
 
   const handleDelete = async (categoryId) => {
     try {

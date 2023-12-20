@@ -309,7 +309,7 @@ app.put("/update_employee/:id", async (req, res) => {
 
 //category
 //get categories
-app.get("/categories/:userId", async (req, res) => {
+app.get("/category/:id", async (req, res) => {
   try {
     const categories = await category.find({ user: req.params.userId });
     res.json(categories);
