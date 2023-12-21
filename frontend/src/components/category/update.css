@@ -1,0 +1,118 @@
+/* Buttons styles */
+.btns2 {
+  display: flex;
+  justify-content: left; /* Adjust as needed */
+  gap: 20px;
+}
+
+.btnup,
+.btns {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+}
+
+.btnup {
+  background-color: #13aad8;
+  color: #fff;
+}
+
+.btnup:hover {
+  background-color: #0193c0;
+  transition: 0.3s;
+  color: #fff;
+}
+
+.btns {
+  background-color: #f10707e4;
+}
+
+.btns:hover {
+  background-color: #d70303e4;
+  transition: 0.3s;
+}
+
+/* Update.css styles */
+.update-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.updatetext {
+  color: black;
+}
+
+.update-content {
+  background: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.update-content input,
+.update-content textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  resize: none;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .update-content {
+    width: 90%;
+  }
+}
+
+@media (max-width: 600px) {
+  .update-content {
+    width: 80%;
+  }
+}
+/* Existing styles for light mode */
+
+.update-overlay {
+  /* Add your existing styles for light mode */
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.update-content {
+  /* Add your existing styles for light mode */
+  background: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.updatetext {
+  /* Add your existing styles for light mode */
+  color: black;
+}
+
+.todo-input,
+.todo {
+  /* Add your existing styles for light mode */
+  border: 1px solid #ccc;
+  padding: 8px;
+}

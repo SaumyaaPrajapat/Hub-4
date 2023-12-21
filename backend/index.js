@@ -311,13 +311,12 @@ app.put("/update_employee/:id", async (req, res) => {
 //get categories
 app.get("/category/:id", async (req, res) => {
   try {
-    const categories = await category.find({ user: req.params.userId });
+    const categories = await category.find({ user: req.params.id });
     res.json(categories);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
-
 //add category
 app.post("/add_category", async (req, res) => {
   try {
@@ -348,6 +347,27 @@ app.delete("/delete_category/:categoryId", async (req, res) => {
     }
 
     return res.json({ Status: true, Result: deletedCategory });
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ Status: false, Error: "Internal Server Error" });
+  }
+});
+//update category
+app.put("/update_category/:categoryId", async (req, res) => {
+  try {
+    const updatedCategory = await category.findByIdAndUpdate(
+      req.params.categoryId,
+      req.body,
+      { new: true }
+    );
+    if (!updatedCategory) {
+      return res
+        .status(404)
+        .json({ Status: false, Error: "Category not found" });
+    }
+    return res.json({ Status: true, Result: updatedCategory });
   } catch (err) {
     console.error(err);
     return res

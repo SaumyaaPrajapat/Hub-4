@@ -7,6 +7,7 @@ import {
 } from "react-icons/md";
 import {
   FaAngleRight,
+  FaRegEdit,
   FaAngleLeft,
   FaBars,
   FaUserCircle,
@@ -22,6 +23,7 @@ import { useDispatch } from "react-redux/es/exports";
 import { authActions } from "../../store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Update from "./update.jsx";
 
 let id = sessionStorage.getItem("id");
 const Category = () => {
@@ -29,6 +31,11 @@ const Category = () => {
   const [categories, setCategories] = useState([]);
   const [allcategories, setAllCategories] = useState(null);
   const [name, setUserName] = useState("");
+  // Add editingIndex state
+  const [cname, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [categoryId, setSelectedId] = useState(null);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
   useEffect(() => {
     const storedName = sessionStorage.getItem("name");
@@ -82,6 +89,39 @@ const Category = () => {
     } catch (error) {
       console.error(error);
       toast.error("Error in deleting. Please try again.");
+    }
+  };
+
+  //for update
+  const handleOpenUpdateModal = (categoryId, cname, description) => {
+    setSelectedId(categoryId);
+    setName(cname);
+    setDescription(description);
+    setIsUpdateModalOpen(true);
+  };
+
+  const handleCloseUpdateModal = () => {
+    setSelectedId(null);
+    setName("");
+    setDescription("");
+    setIsUpdateModalOpen(false);
+  };
+
+  //update
+  const handleUpdate = async () => {
+    try {
+      const res = await axios.put(
+        `https://hub4-back.vercel.app/update_category/${categoryId}`,
+        { name: cname, description: description }
+      );
+      setCategories(
+        categories.map((category) =>
+          category._id === categoryId ? res.data : category
+        )
+      );
+      setIsUpdateModalOpen(false);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -170,6 +210,18 @@ const Category = () => {
                       <p>{category.description}</p>
                       <div className="button-container">
                         <button
+                          title="Update"
+                          onClick={() =>
+                            handleOpenUpdateModal(
+                              category._id,
+                              category.name,
+                              category.description
+                            )
+                          }
+                        >
+                          <FaRegEdit />
+                        </button>
+                        <button
                           title="Delete"
                           onClick={() => handleDelete(category._id)}
                         >
@@ -178,6 +230,15 @@ const Category = () => {
                       </div>
                     </div>
                   ))}
+                  {isUpdateModalOpen && (
+                    <Update
+                      categoryId={categoryId}
+                      onClose={handleCloseUpdateModal}
+                      onUpdate={handleUpdate}
+                      cname={cname}
+                      description={description}
+                    />
+                  )}
                 </div>
               </div>
             </div>
