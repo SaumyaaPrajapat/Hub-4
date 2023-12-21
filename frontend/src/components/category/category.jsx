@@ -58,17 +58,17 @@ const Category = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get(
-          `https://hub4-back.vercel.app/category/${id}`
+        const response = await axios.get(
+          "https://hub4-back.vercel.app/category"
         );
-        setCategories(res.data);
-      } catch (err) {
-        console.error(err);
+        setCategories(response.data.Result);
+      } catch (error) {
+        console.error(error);
       }
     };
 
     fetchCategories();
-  }, [id]);
+  }, []);
 
   const handleDelete = async (categoryId) => {
     try {

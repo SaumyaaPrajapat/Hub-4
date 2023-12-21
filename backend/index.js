@@ -309,12 +309,15 @@ app.put("/update_employee/:id", async (req, res) => {
 
 //category
 //get categories
-app.get("/category/:id", async (req, res) => {
+app.get("/category", async (req, res) => {
   try {
-    const categories = await category.find({ user: req.params.id });
-    res.json(categories);
+    const categories = await category.find({});
+    return res.json({ Status: true, Result: categories });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error(err);
+    return res
+      .status(500)
+      .json({ Status: false, Error: "Internal Server Error" });
   }
 });
 //add category
