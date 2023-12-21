@@ -212,7 +212,7 @@ const Category = () => {
               </div>
               <div className="task-cards-container">
                 <div className="task-cards">
-                  {categories.map((category) => (
+                  {categoriesList.map((category) => (
                     <div className="task-card" key={category._id}>
                       <h3>{category.name}</h3>
                       <p>{category.description}</p>
