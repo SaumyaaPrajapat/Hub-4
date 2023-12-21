@@ -11,7 +11,7 @@ const signupSchema = new mongoose.Schema({
   list: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "List",
+      ref: "category",
     },
   ],
 });

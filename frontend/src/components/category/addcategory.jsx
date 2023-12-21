@@ -22,6 +22,7 @@ import "./addcategory.css";
 import { useDispatch } from "react-redux/es/exports";
 import { authActions } from "../../store";
 
+let id = sessionStorage.getItem("id");
 const AddCategory = () => {
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
@@ -54,12 +55,14 @@ const AddCategory = () => {
         {
           name: categoryName,
           description: categoryDescription,
+          id: id,
         }
       );
       console.log(response.data);
       navigate("/home/category");
     } catch (error) {
       console.error(error);
+      navigate("/home/category");
     }
   };
 
