@@ -28,8 +28,9 @@ import Update from "./update.jsx";
 let id = sessionStorage.getItem("id");
 const Category = () => {
   const [show, setShow] = useState(true);
+  const [userId, setUserId] = useState(null);
   const [categories, setCategories] = useState([]);
-  const [allcategories, setAllCategories] = useState(null);
+  const [allCategories, setAllCategories] = useState(null);
   const [name, setUserName] = useState("");
   // Add editingIndex state
   const [cname, setName] = useState("");
@@ -55,20 +56,27 @@ const Category = () => {
   };
 
   //get categories
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(
-          "https://hub4-back.vercel.app/category"
-        );
-        setCategories(response.data.Result);
-      } catch (error) {
-        console.error(error);
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(
+        `https://hub4-back.vercel.app/category/${id}`
+      );
+      if (response.data.categories && response.data.categories.length > 0) {
+        setAllCategories(response.data.categories);
+        setCategories(response.data.categories);
+      } else {
+        console.log("No categories found or empty response.");
       }
-    };
+    } catch (error) {
+      console.error("Error");
+    }
+  };
 
+  useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [allCategories]);
+  // Check if categories is defined before mapping
+  const categoriesList = categories || [];
 
   const handleDelete = async (categoryId) => {
     try {

@@ -22,7 +22,7 @@ import { authActions } from "../../store";
 let id = sessionStorage.getItem("id");
 const SideNavbar = () => {
   const [show, setShow] = useState(true);
-  const [userId, setUserId] = useState(null); // Declare userId state
+  const [userId, setUserId] = useState(null);
   const [adminTotal, setAdminTotal] = useState(0);
   const [admins, setAdmins] = useState([]);
   const [employees, setEmployee] = useState([]);
