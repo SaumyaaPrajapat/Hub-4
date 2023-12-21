@@ -21,6 +21,7 @@ import "./addemployee.css";
 import { useDispatch } from "react-redux/es/exports";
 import { authActions } from "../../store";
 
+let id = sessionStorage.getItem("id");
 const EditEmployee = () => {
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
@@ -53,27 +54,36 @@ const EditEmployee = () => {
     return str.charAt(0).toUpperCase();
   };
 
-  const [category, setCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [allCategories, setAllCategories] = useState(null);
+  //get categories
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(
+        `https://hub4-back.vercel.app/category/${id}`
+      );
+      if (response.data.categories && response.data.categories.length > 0) {
+        setAllCategories(response.data.categories);
+        setCategories(response.data.categories);
+      } else {
+        console.log("No categories found or empty response.");
+      }
+    } catch (error) {
+      console.error("Error");
+    }
+  };
+
   useEffect(() => {
-    axios
-      .get("https://hub4-back.vercel.app/category")
-      .then((result) => {
-        if (result.data.Status) {
-          setCategory(result.data.Result);
-        } else {
-          alert(result.data.Error);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    fetchCategories();
+  }, [allCategories]);
+  // Check if categories is defined before mapping
+  const categoriesList = categories || [];
 
   useEffect(() => {
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `https://hub4-back.vercel.app/employee_s/${sessionStorage.getItem(
-            "id"
-          )}/${employeeId}`
+          `https://hub4-back.vercel.app/employee_s/${id}/${employeeId}`
         );
         setEmployeeData(response.data);
       } catch (error) {
@@ -252,7 +262,7 @@ const EditEmployee = () => {
                 value={employeeData.categorys}
                 onChange={(e) => handleInputChange(e, "categorys")}
               >
-                {category.map((c) => {
+                {categoriesList.map((c) => {
                   return (
                     <option key={c.id} value={c.id}>
                       {c.name}
