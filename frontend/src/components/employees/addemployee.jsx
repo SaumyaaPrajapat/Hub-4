@@ -46,19 +46,30 @@ const AddEmployee = () => {
     return str.charAt(0).toUpperCase();
   };
 
-  const [category, setCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [allCategories, setAllCategories] = useState(null);
+  //get categories
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(
+        `https://hub4-back.vercel.app/category/${id}`
+      );
+      if (response.data.categories && response.data.categories.length > 0) {
+        setAllCategories(response.data.categories);
+        setCategories(response.data.categories);
+      } else {
+        console.log("No categories found or empty response.");
+      }
+    } catch (error) {
+      console.error("Error");
+    }
+  };
+
   useEffect(() => {
-    axios
-      .get("https://hub4-back.vercel.app/category")
-      .then((result) => {
-        if (result.data.Status) {
-          setCategory(result.data.Result);
-        } else {
-          alert(result.data.Error);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    fetchCategories();
+  }, [allCategories]);
+  // Check if categories is defined before mapping
+  const categoriesList = categories || [];
 
   //add employee
   const submitForm = async (e) => {
@@ -227,7 +238,7 @@ const AddEmployee = () => {
                 Category
               </label>
               <select name="category" id="category" className="form-select">
-                {category.map((c) => {
+                {categoriesList.map((c) => {
                   return <option value={c.id}>{c.name}</option>;
                 })}
               </select>
