@@ -121,7 +121,6 @@ const Category = () => {
     updatedCatName,
     updatedDescription
   ) => {
-    console.log(categoryId);
     try {
       const response = await axios.put(
         `https://hub4-back.vercel.app/update_category/${categoryId}`,
