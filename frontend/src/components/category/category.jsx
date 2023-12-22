@@ -125,7 +125,8 @@ const Category = () => {
           description: description,
         }
       );
-      if (response.data.Status) {
+      if (response.data._id) {
+        // Check if the response has an _id property
         // Update the categories state
         const updatedCategories = categories.map((category) =>
           category._id === categoryId
