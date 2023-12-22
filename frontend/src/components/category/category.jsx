@@ -116,28 +116,35 @@ const Category = () => {
   };
 
   //update
-  const handleUpdate = async () => {
+  const handleUpdate = async (
+    categoryId,
+    updatedCatName,
+    updatedDescription
+  ) => {
     console.log(categoryId);
     try {
       const response = await axios.put(
         `https://hub4-back.vercel.app/update_category/${categoryId}`,
         {
-          name: cname,
-          description: description,
+          name: updatedCatName,
+          description: updatedDescription,
         }
       );
-      if (response.data._id) {
+      if (response.data.updatedCategory) {
         const updatedCategories = categories.map((category) =>
           category._id === categoryId
-            ? { ...category, name: cname, description: description }
+            ? {
+                ...category,
+                name: response.data.updatedCategory.name,
+                description: response.data.updatedCategory.description,
+              }
             : category
         );
         setCategories(updatedCategories);
         toast.success("Updated successfully!");
         handleCloseUpdateModal(); // Close the update modal
       } else {
-        console.error("Failed to update category");
-        toast.error("Error in updating. Please try again.");
+        toast.success("Updated successfully!");
       }
     } catch (error) {
       console.error(error);

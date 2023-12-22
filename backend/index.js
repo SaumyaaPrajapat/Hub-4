@@ -379,8 +379,8 @@ app.put("/update_category/:id", async (req, res) => {
   try {
     const updatedCategory = await category.findByIdAndUpdate(
       id,
-      { $set: { name, description } }, // Using $set to update specific fields
-      { new: true, useFindAndModify: false } // Ensure you get the updated document
+      { name, description },
+      { new: true }
     );
 
     if (!updatedCategory) {
