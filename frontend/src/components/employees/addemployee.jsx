@@ -243,9 +243,16 @@ const AddEmployee = () => {
                 })}
               </select>
             </div>
-            <div className="addempgroup">
-              <button type="submit" className="addemp-btn">
-                Add Employee
+            <div className="editempgroup">
+              <button type="submit" className="editemp-save">
+                Add
+              </button>
+              <button
+                type="submit"
+                className="editemp-close"
+                onClick={() => navigate("/home/employee")}
+              >
+                Close
               </button>
             </div>
           </form>

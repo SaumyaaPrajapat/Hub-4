@@ -57,11 +57,15 @@
   box-shadow: 0 0 0 0.2rem rgba(0, 157, 255, 0.25);
 }
 
-.addemp-btn {
-  display: block;
-  margin: auto;
-  width: 40%;
-  padding: 0.75rem;
+.editempgroup {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.editemp-save {
+  padding: 8px 22px;
   background-color: #03a6d8;
   color: #ffffff;
   border: none;
@@ -70,8 +74,21 @@
   transition: background-color 0.3s ease;
 }
 
-.addemp-btn:hover {
+.editemp-save:hover {
   background-color: #0185ad;
+}
+.editemp-close {
+  padding: 8px 22px;
+  background-color: #f10707e4;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.editemp-close:hover {
+  background-color: #d70303e4;
 }
 
 @media (max-width: 800px) {
@@ -80,9 +97,6 @@
   }
   .addempcontent {
     width: 80%;
-  }
-  .addemp-btn {
-    width: 60%;
   }
 }
 @media (max-width: 600px) {

@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import Logo from "../img/Logo.png";
 import "../sidenavbar/sidenavbar.css";
 import "./addemployee.css";
+import "./editemployee.css";
 import { useDispatch } from "react-redux/es/exports";
 import { authActions } from "../../store";
 
@@ -271,9 +272,16 @@ const EditEmployee = () => {
                 })}
               </select>
             </div>
-            <div className="addempgroup">
-              <button type="submit" className="addemp-btn">
-                Edit Employee
+            <div className="editempgroup">
+              <button type="submit" className="editemp-save">
+                Save
+              </button>
+              <button
+                type="submit"
+                className="editemp-close"
+                onClick={() => navigate("/home/employee")}
+              >
+                Close
               </button>
             </div>
           </form>

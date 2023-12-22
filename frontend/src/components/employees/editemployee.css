@@ -1,0 +1,33 @@
+.editempgroup {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.editemp-save {
+  padding: 8px 30px;
+  background-color: #03a6d8;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.editemp-save:hover {
+  background-color: #0185ad;
+}
+.editemp-close {
+  padding: 8px 30px;
+  background-color: #f10707e4;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.editemp-close:hover {
+  background-color: #d70303e4;
+}
