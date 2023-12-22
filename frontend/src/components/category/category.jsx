@@ -117,17 +117,16 @@ const Category = () => {
 
   //update
   const handleUpdate = async () => {
+    console.log(categoryId);
     try {
       const response = await axios.put(
         `https://hub4-back.vercel.app/update_category/${categoryId}`,
         {
-          name: cname, // Use the current state values
+          name: cname,
           description: description,
         }
       );
       if (response.data._id) {
-        // Check if the response has an _id property
-        // Update the categories state
         const updatedCategories = categories.map((category) =>
           category._id === categoryId
             ? { ...category, name: cname, description: description }

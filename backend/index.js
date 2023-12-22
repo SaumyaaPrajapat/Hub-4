@@ -375,15 +375,18 @@ app.delete("/delete_category/:categoryId", async (req, res) => {
 app.put("/update_category/:id", async (req, res) => {
   const { id } = req.params;
   const { name, description } = req.body;
+
   try {
     const updatedCategory = await category.findByIdAndUpdate(
       id,
-      { name, description },
-      { new: true }
+      { $set: { name, description } }, // Using $set to update specific fields
+      { new: true, useFindAndModify: false } // Ensure you get the updated document
     );
+
     if (!updatedCategory) {
       return res.status(404).json({ message: "Category not found" });
     }
+
     res.status(200).json(updatedCategory);
   } catch (error) {
     console.error("Error updating category:", error);
