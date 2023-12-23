@@ -18,19 +18,24 @@ import Logo from "../img/Logo.png";
 import "./sidenavbar.css";
 import { useDispatch } from "react-redux/es/exports";
 import { authActions } from "../../store";
+import { PieChart } from "@mui/x-charts/PieChart";
 
 let id = sessionStorage.getItem("id");
 const SideNavbar = () => {
   const [show, setShow] = useState(true);
   const [userId, setUserId] = useState(null);
-  const [adminTotal, setAdminTotal] = useState(0);
-  const [admins, setAdmins] = useState([]);
   const [employees, setEmployee] = useState([]);
   const [name, setUserName] = useState("");
   const [allEmployees, setAllEmployees] = useState(null);
   const [employeeTotal, setEmployeeTotal] = useState(0);
   const [salaryTotal, setSalaryTotal] = useState(0);
+  const [categoryTotal, setCategoryTotal] = useState(0);
   const navigate = useNavigate();
+  const data = [
+    { id: 0, value: 10, label: "series A" },
+    { id: 1, value: 15, label: "series B" },
+    { id: 2, value: 20, label: "series C" },
+  ];
 
   const employeeCount = (id) => {
     axios
@@ -62,6 +67,21 @@ const SideNavbar = () => {
       });
   };
 
+  const categoryCount = (id) => {
+    axios
+      .get(`https://hub4-back.vercel.app/category_count/${id}`)
+      .then((response) => {
+        if (response.data.Status) {
+          setCategoryTotal(response.data.Result);
+        } else {
+          console.error("Failed to fetch category count:", response.data.Error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching category count:", error);
+      });
+  };
+
   useEffect(() => {
     const storedUserId = sessionStorage.getItem("id");
     const storedName = sessionStorage.getItem("name");
@@ -86,51 +106,10 @@ const SideNavbar = () => {
   };
 
   useEffect(() => {
-    adminCount();
     employeeCount();
-    AdminRecords();
     fetchSalaryTotal();
-  }, []);
-
-  const AdminRecords = () => {
-    axios.get("https://hub4-back.vercel.app/admin_records").then((result) => {
-      if (result.data.Status) {
-        setAdmins(result.data.Result);
-      } else {
-        alert(result.data.Error);
-      }
-    });
-  };
-
-  function deleteAdmin(id) {
-    fetch(`https://hub4-back.vercel.app/admin/${id}`, {
-      method: "DELETE",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.Status) {
-          // Remove the deleted admin from the state
-          setAdmins(admins.filter((admin) => admin._id !== id));
-          // Decrement the adminTotal by one
-          setAdminTotal((prevTotal) => prevTotal - 1);
-        } else {
-          console.error("Failed to delete the admin:", data.Error);
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
-
-  const adminCount = () => {
-    axios.get("https://hub4-back.vercel.app/admin_count").then((result) => {
-      if (result.data.Status) {
-        setAdminTotal(result.data.Result);
-      } else {
-        console.error("Unexpected API response", result.data);
-      }
-    });
-  };
+    categoryCount(id);
+  }, [id]);
 
   //get employee
   const fetchEmployee = async () => {

@@ -158,7 +158,7 @@ main {
     margin: calc(var(--header-height) + 1rem) 0 0 0;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   /* Hide the Email, Address, Salary, and Category columns on screens with a width of 768px or less */
   .table th:nth-child(2),
   .table td:nth-child(2),
@@ -179,7 +179,9 @@ main {
 
 .flex-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
+  gap: 20px;
 }
 
 .custom-box {
@@ -190,7 +192,20 @@ main {
   padding: 30px;
   box-sizing: border-box;
 }
-
+.custom-box-graph {
+  background: #ffffff;
+  box-shadow: 5px 5px 12px #d3d3d3, -5px -5px 12px #f2f2f2;
+  border-radius: 10px;
+  width: 65%;
+  height: 300px;
+  box-sizing: border-box;
+}
+.custom-graph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
 .custom-heading {
   text-align: center;
   padding-bottom: 5px;
@@ -264,12 +279,8 @@ main {
     width: 100%;
     padding: 30px;
   }
-}
-
-@media (max-width: 600px) {
-  .table th:nth-child(2),
-  .table td:nth-child(2) {
-    display: none;
+  .custom-box-graph {
+    width: 100%;
   }
 }
 
