@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const employee = require("../model/employee");
+const userModel = require("../model/signups");
 
 //employee
 //get employees for same user

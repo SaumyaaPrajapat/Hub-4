@@ -37,10 +37,13 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("https://hub4-back.vercel.app/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://hub4-back.vercel.app/auth/login",
+        {
+          email,
+          password,
+        }
+      );
       const data = response.data;
       console.log("Login response:", data);
       // Check for success or any specific criteria in your response

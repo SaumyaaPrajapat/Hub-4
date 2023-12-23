@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const category = require("../model/category");
+const userModel = require("../model/signups");
 
 //category
 //get categories

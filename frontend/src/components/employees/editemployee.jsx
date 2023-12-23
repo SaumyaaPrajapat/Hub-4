@@ -68,7 +68,7 @@ const EditEmployee = () => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        `https://hub4-back.vercel.app/category/${id}`
+        `https://hub4-back.vercel.app/category/category/${id}`
       );
       if (response.data.categories && response.data.categories.length > 0) {
         setAllCategories(response.data.categories);
@@ -91,7 +91,7 @@ const EditEmployee = () => {
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
-          `https://hub4-back.vercel.app/employee_s/${id}/${employeeId}`
+          `https://hub4-back.vercel.app/employee/employee_s/${id}/${employeeId}`
         );
         setEmployeeData(response.data);
       } catch (error) {
@@ -114,7 +114,7 @@ const EditEmployee = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `https://hub4-back.vercel.app/update_employee/${employeeId}`,
+        `https://hub4-back.vercel.app/employee/update_employee/${employeeId}`,
         employeeData
       );
       navigate("/home/employee");
