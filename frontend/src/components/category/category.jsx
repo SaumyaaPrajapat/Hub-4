@@ -15,7 +15,7 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../img/Logo.png";
 import "../sidenavbar/sidenavbar.css";
 import "./category.css";
@@ -32,6 +32,7 @@ const Category = () => {
   const [categories, setCategories] = useState([]);
   const [allCategories, setAllCategories] = useState(null);
   const [name, setUserName] = useState("");
+  const navigate = useNavigate();
   // Add editingIndex state
   const [cname, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -167,7 +168,10 @@ const Category = () => {
             <FaAngleRight className="react-icon" />
           )}
         </div>
-        <div className="usercontainer">
+        <div
+          className="usercontainer"
+          onClick={() => navigate("/home/profile")}
+        >
           <h3 className="proname">{name || "user"}</h3>
           <div className="userc">
             <span>{getFirstLetter(name) || "."}</span>

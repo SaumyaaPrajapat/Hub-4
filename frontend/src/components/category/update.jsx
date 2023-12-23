@@ -17,7 +17,7 @@ const Update = ({ onClose, onUpdate, categoryId, cname, description }) => {
   return (
     <div className="update-overlay">
       <div className="update-content">
-        <h3 className="updatetext">Update Your Category</h3>
+        <h3 className="updatetext">Update Category</h3>
         <input
           type="text"
           className="todo-input"

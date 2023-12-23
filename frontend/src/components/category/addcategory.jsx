@@ -82,7 +82,10 @@ const AddCategory = () => {
             <FaAngleRight className="react-icon" />
           )}
         </div>
-        <div className="usercontainer">
+        <div
+          className="usercontainer"
+          onClick={() => navigate("/home/profile")}
+        >
           <h3 className="proname">{name || "user"}</h3>
           <div className="userc">
             <span>{getFirstLetter(name) || "."}</span>
@@ -143,6 +146,7 @@ const AddCategory = () => {
                 className="addcat form-control"
                 id="name"
                 placeholder="Name"
+                required
                 value={categoryName}
                 onChange={(e) => setCategoryName(e.target.value)}
               />
@@ -153,16 +157,24 @@ const AddCategory = () => {
               </label>
               <textarea
                 id="description"
-                className="addcat form-control"
+                className="addcat form-control custom-scrollbar"
                 placeholder="Category Description"
+                required
                 value={categoryDescription}
                 onChange={(e) => setCategoryDescription(e.target.value)}
                 style={{ resize: "none" }}
               />
             </div>
-            <div className="addcatgroup">
-              <button type="submit" className="addcat-btn">
-                Add Category
+            <div className="addcatbtngroup">
+              <button type="submit" className="cat-save">
+                Add
+              </button>
+              <button
+                type="submit"
+                className="cat-close"
+                onClick={() => navigate("/home/category")}
+              >
+                Close
               </button>
             </div>
           </form>

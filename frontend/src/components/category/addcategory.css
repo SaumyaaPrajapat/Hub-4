@@ -48,11 +48,15 @@
   margin-bottom: 1rem;
 }
 
-.addcat-btn {
-  display: block;
-  margin: auto;
-  width: 40%;
-  padding: 0.75rem;
+.addcatbtngroup {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.cat-save {
+  padding: 8px 22px;
   background-color: #03a6d8;
   color: #ffffff;
   border: none;
@@ -61,8 +65,21 @@
   transition: background-color 0.3s ease;
 }
 
-.addcat-btn:hover {
+.cat-save:hover {
   background-color: #0185ad;
+}
+.cat-close {
+  padding: 8px 22px;
+  background-color: #f10707e4;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cat-close:hover {
+  background-color: #d70303e4;
 }
 
 @media (max-width: 800px) {
@@ -71,9 +88,6 @@
   }
   .addcatcontent {
     width: 80%;
-  }
-  .addcat-btn {
-    width: 60%;
   }
 }
 @media (max-width: 600px) {

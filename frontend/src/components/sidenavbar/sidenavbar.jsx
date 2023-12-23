@@ -13,7 +13,7 @@ import {
   FaHome,
   FaSignOutAlt,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../img/Logo.png";
 import "./sidenavbar.css";
 import { useDispatch } from "react-redux/es/exports";
@@ -30,6 +30,7 @@ const SideNavbar = () => {
   const [allEmployees, setAllEmployees] = useState(null);
   const [employeeTotal, setEmployeeTotal] = useState(0);
   const [salaryTotal, setSalaryTotal] = useState(0);
+  const navigate = useNavigate();
 
   const employeeCount = (id) => {
     axios
@@ -170,7 +171,10 @@ const SideNavbar = () => {
             <FaAngleRight className="react-icon" />
           )}
         </div>
-        <div className="usercontainer">
+        <div
+          className="usercontainer"
+          onClick={() => navigate("/home/profile")}
+        >
           <h3 className="proname">{name || "user"}</h3>
           <div className="userc">
             <span>{getFirstLetter(name) || "."}</span>

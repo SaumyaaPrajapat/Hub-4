@@ -200,6 +200,7 @@ const EditEmployee = () => {
                 className="addemp form-control"
                 id="inputName"
                 placeholder="Enter Name"
+                required
                 value={employeeData.name}
                 onChange={(e) => handleInputChange(e, "name")}
               />
@@ -213,6 +214,7 @@ const EditEmployee = () => {
                 className="addemp form-control"
                 id="inputEmail4"
                 placeholder="Enter Email"
+                required
                 autoComplete="off"
                 value={employeeData.email}
                 onChange={(e) => handleInputChange(e, "email")}
@@ -234,6 +236,7 @@ const EditEmployee = () => {
                 className="addemp form-control"
                 id="inputPassword4"
                 placeholder="Enter Password"
+                required
                 value={employeeData.password}
                 onChange={(e) => handleInputChange(e, "password")}
               />
@@ -247,6 +250,7 @@ const EditEmployee = () => {
                 className="addemp form-control"
                 id="inputSalary"
                 placeholder="Enter Salary"
+                required
                 autoComplete="off"
                 value={employeeData.salary}
                 onChange={(e) => handleInputChange(e, "salary")}
@@ -260,7 +264,8 @@ const EditEmployee = () => {
                 type="text"
                 className="addemp form-control"
                 id="inputAddress"
-                placeholder="1234 Main St"
+                placeholder="ABC Apartments"
+                required
                 autoComplete="off"
                 value={employeeData.address}
                 onChange={(e) => handleInputChange(e, "address")}

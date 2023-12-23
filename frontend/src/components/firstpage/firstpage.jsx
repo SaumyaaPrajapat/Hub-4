@@ -5,6 +5,7 @@ import blogo from "../img/Logo.png";
 import back2 from "../img/back2.png";
 import "./firstpage.css";
 import HashLoader from "react-spinners/HashLoader";
+import Footer from "../footer/footer";
 
 const FirstPage = () => {
   const [isHoveredSignUp, setIsHoveredSignUp] = useState(false);
@@ -33,13 +34,15 @@ const FirstPage = () => {
   return (
     <div className="hubcontainer">
       {loading ? (
-        <HashLoader
-          color={"#ffffff"}
-          loading={loading}
-          size={60}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <div className="loader-container">
+          <HashLoader
+            color={"#ffffff"}
+            loading={loading}
+            size={60}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
       ) : (
         <div className="containerStyle">
           <nav
@@ -93,7 +96,6 @@ const FirstPage = () => {
           </nav>
           <div className="groupedSectionStyle">
             <div className="newBox">
-              {/* Div 1 */}
               <div className="tex">
                 Salary & Employee Management with
                 <span className="textbox"> Hub4</span>
@@ -110,6 +112,9 @@ const FirstPage = () => {
                 <img className="back2" src={back2} alt="back1" />
               </div>
             </div>
+          </div>
+          <div>
+            <Footer />
           </div>
         </div>
       )}

@@ -28,6 +28,7 @@ const Employees = () => {
   const [employees, setEmployee] = useState([]);
   const [name, setUserName] = useState("");
   const [allEmployees, setAllEmployees] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedName = sessionStorage.getItem("name");
@@ -109,7 +110,10 @@ const Employees = () => {
             <FaAngleRight className="react-icon" />
           )}
         </div>
-        <div className="usercontainer">
+        <div
+          className="usercontainer"
+          onClick={() => navigate("/home/profile")}
+        >
           <h3 className="proname">{name || "user"}</h3>
           <div className="userc">
             <span>{getFirstLetter(name) || "."}</span>

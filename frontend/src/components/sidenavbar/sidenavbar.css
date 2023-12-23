@@ -286,6 +286,7 @@ main {
   max-width: 100%;
   transition: 0.3s;
   margin-top: 7px;
+  cursor: pointer;
 }
 
 .userc {
@@ -299,4 +300,38 @@ main {
   font-size: 18px;
   color: #fff;
   transition: 0.3s;
+  cursor: pointer;
+}
+
+/*Scrollbar*/
+::-webkit-scrollbar {
+  width: 5px; /* Adjust scrollbar width as needed */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #b7b7b7;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f4f4f4;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #e5e5e5 #f4f4f4;
+}
+
+/* For Internet Explorer and Edge */
+* {
+  -ms-overflow-style: none;
+}
+
+*::-ms-scrollbar-thumb {
+  background-color: #e5e5e5;
+}
+
+*::-ms-scrollbar-track {
+  background-color: #f4f4f4;
 }

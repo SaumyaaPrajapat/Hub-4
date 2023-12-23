@@ -50,7 +50,6 @@
   justify-content: center;
   justify-content: center;
   align-items: center;
-
   margin: auto;
   position: relative;
   padding-bottom: 30px;
@@ -72,6 +71,42 @@
   background: #fff;
   box-shadow: 5px 5px 12px #d3d3d3, -5px -5px 12px #f2f2f2;
   overflow: auto;
+  height: 180px;
+  /* Customize the scrollbar for Webkit browsers (Chrome, Safari) */
+  scrollbar-width: thin;
+  scrollbar-color: #d3d3d3 #f4f4f4;
+  &::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #b7b7b7;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f4f4f4;
+  }
+
+  /* For Firefox */
+  & {
+    scrollbar-width: thin;
+    scrollbar-color: #e5e5e5 #f4f4f4;
+  }
+
+  /* For Internet Explorer and Edge */
+  & {
+    -ms-overflow-style: none;
+  }
+
+  &::-ms-scrollbar-thumb {
+    background-color: #e5e5e5;
+  }
+
+  &::-ms-scrollbar-track {
+    background-color: #f4f4f4;
+  }
 }
 
 .task-card h3 {

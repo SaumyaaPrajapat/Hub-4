@@ -129,7 +129,10 @@ const AddEmployee = () => {
             <FaAngleRight className="react-icon" />
           )}
         </div>
-        <div className="usercontainer">
+        <div
+          className="usercontainer"
+          onClick={() => navigate("/home/profile")}
+        >
           <h3 className="proname">{name || "user"}</h3>
           <div className="userc">
             <span>{getFirstLetter(name) || "."}</span>
@@ -191,6 +194,7 @@ const AddEmployee = () => {
                 className="addemp form-control"
                 id="inputName"
                 placeholder="Enter Name"
+                required
               />
             </div>
             <div className="addempgroup">
@@ -202,6 +206,7 @@ const AddEmployee = () => {
                 className="addemp form-control"
                 id="inputEmail4"
                 placeholder="Enter Email"
+                required
                 autoComplete="off"
               />
             </div>
@@ -221,6 +226,7 @@ const AddEmployee = () => {
                 className="addemp form-control"
                 id="inputPassword4"
                 placeholder="Enter Password"
+                required
               />
             </div>
             <div className="addempgroup">
@@ -232,6 +238,7 @@ const AddEmployee = () => {
                 className="addemp form-control"
                 id="inputSalary"
                 placeholder="Enter Salary"
+                required
                 autoComplete="off"
               />
             </div>
@@ -243,7 +250,8 @@ const AddEmployee = () => {
                 type="text"
                 className="addemp form-control"
                 id="inputAddress"
-                placeholder="1234 Main St"
+                placeholder="ABC Apartments"
+                required
                 autoComplete="off"
               />
             </div>
