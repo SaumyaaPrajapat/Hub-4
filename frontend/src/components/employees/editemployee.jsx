@@ -21,11 +21,18 @@ import "./addemployee.css";
 import "./editemployee.css";
 import { useDispatch } from "react-redux/es/exports";
 import { authActions } from "../../store";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 let id = sessionStorage.getItem("id");
 const EditEmployee = () => {
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShowPassword = (event) => {
+    event.preventDefault();
+    setShowPassword(!showPassword);
+  };
   const [name, setUserName] = useState("");
   const [employeeData, setEmployeeData] = useState({
     name: "",
@@ -212,11 +219,18 @@ const EditEmployee = () => {
               />
             </div>
             <div className="addempgroup">
-              <label htmlFor="inputPassword4" className="form-label">
-                Password
-              </label>
+              <div className="passwords">
+                <label htmlFor="inputPassword4" className="form-label">
+                  Password
+                </label>
+                <div className="showpassword">
+                  <button onClick={(event) => handleShowPassword(event)}>
+                    {showPassword ? <FiEye /> : <FiEyeOff />}
+                  </button>
+                </div>
+              </div>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 className="addemp form-control"
                 id="inputPassword4"
                 placeholder="Enter Password"

@@ -22,12 +22,19 @@ import { useDispatch } from "react-redux/es/exports";
 import { authActions } from "../../store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 let id = sessionStorage.getItem("id");
 const AddEmployee = () => {
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
   const [name, setUserName] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShowPassword = (event) => {
+    event.preventDefault();
+    setShowPassword(!showPassword);
+  };
 
   useEffect(() => {
     const storedName = sessionStorage.getItem("name");
@@ -199,11 +206,18 @@ const AddEmployee = () => {
               />
             </div>
             <div className="addempgroup">
-              <label htmlFor="inputPassword4" className="form-label">
-                Password
-              </label>
+              <div className="passwords">
+                <label htmlFor="inputPassword4" className="form-label">
+                  Password
+                </label>
+                <div className="showpassword">
+                  <button onClick={(event) => handleShowPassword(event)}>
+                    {showPassword ? <FiEye /> : <FiEyeOff />}
+                  </button>
+                </div>
+              </div>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 className="addemp form-control"
                 id="inputPassword4"
                 placeholder="Enter Password"

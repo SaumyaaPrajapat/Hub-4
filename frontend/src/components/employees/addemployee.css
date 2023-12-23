@@ -52,6 +52,17 @@
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.passwords {
+  display: flex;
+  gap: 20px;
+}
+
+.showpassword button {
+  background: none;
+  border: none;
+  color: #3131314e;
+}
+
 .addemp:focus {
   border-color: #80bdff;
   box-shadow: 0 0 0 0.2rem rgba(0, 157, 255, 0.25);
