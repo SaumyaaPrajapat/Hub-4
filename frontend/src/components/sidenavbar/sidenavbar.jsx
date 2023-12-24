@@ -18,7 +18,6 @@ import Logo from "../img/Logo.png";
 import "./sidenavbar.css";
 import { useDispatch } from "react-redux/es/exports";
 import { authActions } from "../../store";
-import { PieChart } from "@mui/x-charts/PieChart";
 
 let id = sessionStorage.getItem("id");
 const SideNavbar = () => {
@@ -29,14 +28,7 @@ const SideNavbar = () => {
   const [allEmployees, setAllEmployees] = useState(null);
   const [employeeTotal, setEmployeeTotal] = useState(0);
   const [salaryTotal, setSalaryTotal] = useState(0);
-  const [categoryTotal, setCategoryTotal] = useState(0);
   const navigate = useNavigate();
-  const data = [
-    { id: 0, value: 10, label: "series A" },
-    { id: 1, value: 15, label: "series B" },
-    { id: 2, value: 20, label: "series C" },
-  ];
-
   const employeeCount = (id) => {
     axios
       .get(`https://hub4-back.vercel.app/employee/employee_count/${id}`)
@@ -67,21 +59,6 @@ const SideNavbar = () => {
       });
   };
 
-  const categoryCount = (id) => {
-    axios
-      .get(`https://hub4-back.vercel.app/category/category_count/${id}`)
-      .then((response) => {
-        if (response.data.Status) {
-          setCategoryTotal(response.data.Result);
-        } else {
-          console.error("Failed to fetch category count:", response.data.Error);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching category count:", error);
-      });
-  };
-
   useEffect(() => {
     const storedUserId = sessionStorage.getItem("id");
     const storedName = sessionStorage.getItem("name");
@@ -108,8 +85,7 @@ const SideNavbar = () => {
   useEffect(() => {
     employeeCount();
     fetchSalaryTotal();
-    categoryCount(id);
-  }, [id]);
+  }, []);
 
   //get employee
   const fetchEmployee = async () => {

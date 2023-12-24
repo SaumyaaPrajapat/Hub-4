@@ -89,19 +89,5 @@ router.put("/update_category/:id", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-//category count
-router.get("/category_count/:id", async (req, res) => {
-  try {
-    const userId = req.params.id;
-    if (!userId) {
-      return res.status(400).json({ Status: false, Error: "Invalid user ID" });
-    }
-    const categoryCount = await category.countDocuments({ user: userId });
-    res.json({ Status: true, Result: categoryCount });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ Status: false, Error: "Internal Server Error" });
-  }
-});
 
 module.exports = router;

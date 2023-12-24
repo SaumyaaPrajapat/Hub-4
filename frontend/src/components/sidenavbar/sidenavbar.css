@@ -192,20 +192,6 @@ main {
   padding: 30px;
   box-sizing: border-box;
 }
-.custom-box-graph {
-  background: #ffffff;
-  box-shadow: 5px 5px 12px #d3d3d3, -5px -5px 12px #f2f2f2;
-  border-radius: 10px;
-  width: 65%;
-  height: 300px;
-  box-sizing: border-box;
-}
-.custom-graph {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
 .custom-heading {
   text-align: center;
   padding-bottom: 5px;
@@ -232,7 +218,7 @@ main {
   width: 60px;
 }
 .custom-section {
-  padding-top: 40px;
+  padding-top: 20px;
   box-sizing: border-box;
 }
 
@@ -278,9 +264,6 @@ main {
   .custom-box {
     width: 100%;
     padding: 30px;
-  }
-  .custom-box-graph {
-    width: 100%;
   }
 }
 

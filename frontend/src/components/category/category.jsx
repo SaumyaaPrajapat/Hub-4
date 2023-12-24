@@ -28,7 +28,6 @@ import Update from "./update.jsx";
 let id = sessionStorage.getItem("id");
 const Category = () => {
   const [show, setShow] = useState(true);
-  const [userId, setUserId] = useState(null);
   const [categories, setCategories] = useState([]);
   const [allCategories, setAllCategories] = useState(null);
   const [name, setUserName] = useState("");
