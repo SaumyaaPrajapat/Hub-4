@@ -23,7 +23,6 @@ function Login() {
       .split(";")
       .find((item) => item.trim().startsWith("token="));
     if (token) {
-      // If a token is found, redirect to the home page
       navigate("/home");
     }
   }, [navigate]);
@@ -46,7 +45,6 @@ function Login() {
       );
       const data = response.data;
       console.log("Login response:", data);
-      // Check for success or any specific criteria in your response
       if (data && data.others && data.others._id) {
         console.log("Logged in Successfully");
         sessionStorage.setItem("id", data.others._id);

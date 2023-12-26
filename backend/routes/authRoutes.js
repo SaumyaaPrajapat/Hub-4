@@ -36,10 +36,11 @@ router.post("/login", async (req, res) => {
     if (!user) {
       return res.status(401).json({ error: "User Does Not Exist" });
     }
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = bcrypt.compare(password, user.password);
     if (passwordMatch) {
       const { password, ...others } = user._doc;
-      const token = await jwt.sign(
+      //If crednetials are valid, create a token for the user
+      const token = jwt.sign(
         { email: user.email, userId: user._id },
         "jwt-secret-key",
         {
