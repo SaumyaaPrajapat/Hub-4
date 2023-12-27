@@ -50,6 +50,7 @@ function Login() {
         sessionStorage.setItem("id", data.others._id);
         sessionStorage.setItem("name", data.others.name);
         sessionStorage.setItem("email", data.others.email);
+        sessionStorage.setItem("role", data.others.role);
         dispatch(authActions.login());
         navigate("/home");
         window.location.reload();

@@ -28,9 +28,14 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     const storedName = sessionStorage.getItem("name");
-
+    const storedRole = sessionStorage.getItem("role");
     if (storedName) {
       setUserName(capitalizeFirstLetter(storedName));
+    }
+    if (storedRole === "admin") {
+      setMenu(adminMenu);
+    } else {
+      setMenu(userMenu);
     }
   }, []);
 
@@ -48,6 +53,76 @@ const ProtectedRoute = ({ children }) => {
     sessionStorage.clear("id");
     dispatch(authActions.logout());
   };
+
+  //usermenu
+  const userMenu = [
+    {
+      title: "Employees",
+      path: "/home/employee",
+      icon: <MdPeople className="react-icon" />,
+      onClick: () => navigate("/home/employee"),
+    },
+    {
+      title: "Category",
+      path: "/home/category",
+      icon: <MdOutlineFormatListBulleted className="react-icon" />,
+      onClick: () => navigate("/home/category"),
+    },
+    {
+      title: "Profile",
+      path: "/home/profile",
+      icon: <FaUserCircle className="react-icon" />,
+      onClick: () => navigate("/home/profile"),
+    },
+    {
+      title: "Homepage",
+      path: "/",
+      icon: <FaHome className="react-icon" />,
+      onClick: logout,
+    },
+  ];
+
+  //admin menu
+  const adminMenu = [
+    {
+      title: "Dashboard",
+      path: "/home",
+      icon: <MdDashboard className="react-icon" />,
+      onClick: () => navigate("/home"),
+    },
+    {
+      title: "Users",
+      path: "/home/user",
+      icon: <FaUserPlus className="react-icon" />,
+      onClick: () => navigate("/home/user"),
+    },
+    {
+      title: "Employees",
+      path: "/home/employee",
+      icon: <MdPeople className="react-icon" />,
+      onClick: () => navigate("/home/employee"),
+    },
+    {
+      title: "Category",
+      path: "/home/category",
+      icon: <MdOutlineFormatListBulleted className="react-icon" />,
+      onClick: () => navigate("/home/category"),
+    },
+    {
+      title: "Profile",
+      path: "/home/profile",
+      icon: <FaUserCircle className="react-icon" />,
+      onClick: () => navigate("/home/profile"),
+    },
+    {
+      title: "Homepage",
+      path: "/",
+      icon: <FaHome className="react-icon" />,
+      onClick: logout,
+    },
+  ];
+
+  const [menu, setMenu] = useState(userMenu);
 
   return (
     <main className={show ? "space-toggle" : null}>
@@ -81,30 +156,16 @@ const ProtectedRoute = ({ children }) => {
               />
             </Link>
             <div className="nav-list">
-              <Link to="/home" className="snav-link">
-                <MdDashboard className="react-icon" />
-                <span className="nav-link-name">Dashboard</span>
-              </Link>
-              <Link to="/home/user" className="snav-link">
-                <FaUserPlus className="react-icon" />
-                <span className="nav-link-name">Users</span>
-              </Link>
-              <Link to="/home/employee" className="snav-link">
-                <MdPeople className="react-icon" />
-                <span className="nav-link-name">Employees</span>
-              </Link>
-              <Link to="/home/category" className="snav-link">
-                <MdOutlineFormatListBulleted className="react-icon" />
-                <span className="nav-link-name">Category</span>
-              </Link>
-              <Link to="/home/profile" className="snav-link">
-                <FaUserCircle className="react-icon" />
-                <span className="nav-link-name">Profile</span>
-              </Link>
-              <Link to="/" onClick={logout} className="snav-link">
-                <FaHome className="react-icon" />
-                <span className="nav-link-name">Homepage</span>
-              </Link>
+              {menu.map((item) => (
+                <Link
+                  to={item.path}
+                  className="snav-link"
+                  onClick={item.onClick}
+                >
+                  {item.icon}
+                  <span className="nav-link-name">{item.title}</span>
+                </Link>
+              ))}
             </div>
           </div>
           <Link to="/login" onClick={logout} className="snav-link">
