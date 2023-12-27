@@ -34,11 +34,12 @@ const AddUsers = () => {
     }
     setError("");
     axios
-      .post("https://hub4-back.vercel.app/auth/register", {
+      .post("https://hub4-back.vercel.app/auth/register_user", {
         name,
         email,
         password,
-        role, // Include the role in the request body
+        role,
+        adminId: id,
       })
       .then((result) => {
         setSuccessMessage("Registered successfully.");
