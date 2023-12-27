@@ -17,12 +17,12 @@ const signupSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ["user", "admin"],
-    default: "user",
+    default: "admin",
   },
   status: {
     type: Number,
     enum: [0, 1],
-    default: 0,
+    default: 1,
   },
 });
 
