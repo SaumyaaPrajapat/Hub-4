@@ -24,6 +24,16 @@ const signupSchema = new mongoose.Schema({
     enum: [0, 1],
     default: 1,
   },
+  parent: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "signups",
+  },
+  children: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "signups",
+    },
+  ],
 });
 
 // Middleware to automatically set the status when the role changes

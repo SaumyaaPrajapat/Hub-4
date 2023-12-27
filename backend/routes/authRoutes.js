@@ -90,6 +90,43 @@ router.post("/register", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+//register of user or admin by admin
+router.post("/register_user", async (req, res) => {
+  try {
+    // Check if the email is already registered
+    const existingUser = await userModel.findOne({ email: req.body.email });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ error: "Email is already registered. Please Login" });
+    } else {
+      // Hash the password before saving it
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      // Create a new user with the hashed password
+      const newUser = {
+        name: req.body.name,
+        email: req.body.email,
+        password: hashedPassword,
+        role: req.body.role,
+        parent: req.body.parent, // The ID of the admin who creates this user
+      };
+      // Save the user to the database
+      const createdUser = await newUser.save();
+
+      // Add the new user to the children of the admin
+      const admin = await userModel.findById(req.body.parent);
+      admin.children.push(createdUser._id);
+      await admin.save();
+
+      // Respond with the created user
+      res.json(createdUser);
+    }
+  } catch (error) {
+    // Handle errors
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 // Get all users (not admins)
 router.get("/users", async (req, res) => {
   try {

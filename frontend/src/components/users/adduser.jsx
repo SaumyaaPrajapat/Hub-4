@@ -34,11 +34,12 @@ const AddUsers = () => {
     }
     setError("");
     axios
-      .post("https://hub4-back.vercel.app/auth/register", {
+      .post("https://hub4-back.vercel.app/auth/register_user", {
         name,
         email,
         password,
         role,
+        parent: id,
       })
       .then((result) => {
         setSuccessMessage("Registered successfully.");
@@ -47,7 +48,7 @@ const AddUsers = () => {
       })
       .catch((err) => {
         if (err.response && err.response.data) {
-          setError(err.response.data.error); // Set the error message from the server response
+          setError(err.response.data.error);
         } else {
           setError("Registration failed. Please try again.");
         }
