@@ -6,17 +6,15 @@ import "react-toastify/dist/ReactToastify.css";
 let id = sessionStorage.getItem("id");
 const Users = () => {
   const [users, setUsers] = useState([]);
-  const [allUsers, setAllUsers] = useState(null);
 
   //get users
   const fetchUsers = async () => {
     try {
       const response = await axios.get(
-        `https://hub4-back.vercel.app/auth/users/${id}`
+        `https://hub4-back.vercel.app/auth/users`
       );
-      if (response.data.users && response.data.users.length > 0) {
-        setAllUsers(response.data.users);
-        setUsers(response.data.users);
+      if (response.data && response.data.length > 0) {
+        setUsers(response.data);
       } else {
         console.log("No users found or empty response.");
       }
@@ -27,9 +25,7 @@ const Users = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, [allUsers]);
-  // Check if users is defined before mapping
-  const usersList = users || [];
+  }, []);
 
   return (
     <div>
@@ -56,16 +52,20 @@ const Users = () => {
               </tr>
             </thead>
             <tbody>
-              {usersList.map((u) => (
-                <tr key={u._id}>
-                  <td>{u.name}</td>
-                  <td>{u.email}</td>
-                  <td>
-                    <button className="btn btn-info btn-sm me-2">Access</button>
-                    <button className="btn btn-warning btn-sm">Delete</button>
-                  </td>
-                </tr>
-              ))}
+              {users.map((u) => {
+                return (
+                  <tr key={u._id}>
+                    <td>{u.name}</td>
+                    <td>{u.email}</td>
+                    <td>
+                      <button className="btn btn-info btn-sm me-2">
+                        Access
+                      </button>
+                      <button className="btn btn-warning btn-sm">Delete</button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
