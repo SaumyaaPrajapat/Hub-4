@@ -1,19 +1,37 @@
 const mongoose = require("mongoose");
 
 const signupSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
   role: {
     type: String,
-    default: "admin",
+    enum: ["user", "admin"],
+    default: "user",
   },
-  list: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "category",
-    },
-  ],
+  status: {
+    type: Number,
+    enum: [0, 1],
+    default: 0,
+  },
+});
+
+// Middleware to automatically set the status when the role changes
+signupSchema.pre("save", function (next) {
+  if (this.isModified("role")) {
+    this.status = this.role === "admin" ? 1 : 0;
+  }
+  next();
 });
 
 const userModel = mongoose.model("signups", signupSchema);

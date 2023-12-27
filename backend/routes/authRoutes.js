@@ -72,22 +72,30 @@ router.post("/register", async (req, res) => {
     } else {
       // Hash the password before saving it
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
       // Create a new user with the hashed password
       const newUser = {
         name: req.body.name,
         email: req.body.email,
         password: hashedPassword,
+        role: req.body.role,
       };
-
       // Save the user to the database
       const createdUser = await userModel.create(newUser);
-
       // Respond with the created user
       res.json(createdUser);
     }
   } catch (error) {
     // Handle errors
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+// Get all users (not admins)
+router.get("/users", async (req, res) => {
+  try {
+    const users = await userModel.find({ role: "user" }).select("name -_id");
+    res.json(users);
+  } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
