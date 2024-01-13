@@ -17,16 +17,6 @@ function Login() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {
-    // Check if the user is already logged in
-    const token = document.cookie
-      .split(";")
-      .find((item) => item.trim().startsWith("token="));
-    if (token) {
-      navigate("/home");
-    }
-  }, [navigate]);
-
   const handleShowPassword = (event) => {
     event.preventDefault();
     setShowPassword(!showPassword);
@@ -44,6 +34,7 @@ function Login() {
       console.log("Login response:", data);
       if (data && data.others && data.others._id) {
         console.log("Logged in Successfully");
+        sessionStorage.setItem("token", data.token);
         sessionStorage.setItem("id", data.others._id);
         sessionStorage.setItem("name", data.others.name);
         sessionStorage.setItem("email", data.others.email);

@@ -25,6 +25,29 @@ const ProtectedRoute = ({ children }) => {
   const [show, setShow] = useState(true);
   const [name, setUserName] = useState("");
   const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+    } else {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      axios
+        .get("https://hub4-back.vercel.app/auth/home")
+        .then((res) => {
+          console.log(res);
+          if (res.status === 200) {
+            setUserData(res.data.user);
+          } else {
+            navigate("/login");
+          }
+        })
+        .catch((err) => {
+          //navigate("/login");
+        });
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const storedName = sessionStorage.getItem("name");

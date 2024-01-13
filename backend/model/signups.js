@@ -18,6 +18,7 @@ const signupSchema = new mongoose.Schema({
     type: String,
     default: "admin",
   },
+  _id: { type: mongoose.Schema.Types.ObjectId, required: true, auto: true },
 });
 
 const userModel = mongoose.model("signups", signupSchema);
