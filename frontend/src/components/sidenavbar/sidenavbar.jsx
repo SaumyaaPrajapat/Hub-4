@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaUserCircle } from "react-icons/fa";
 import "./sidenavbar.css";
+import noData from "../img/nodata.png";
 
 let id = sessionStorage.getItem("id");
 const SideNavbar = () => {
@@ -145,15 +146,29 @@ const SideNavbar = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {employeesList.map((e) => (
-                    <tr key={e._id}>
-                      <td>{e.name}</td>
-                      <td>{e.email}</td>
-                      <td>{e.salary}</td>
-                      <td>{e.address}</td>
-                      <td>{e.categorys}</td>
+                  {employeesList.length > 0 ? (
+                    employeesList.map((e) => (
+                      <tr key={e._id}>
+                        <td>{e.name}</td>
+                        <td>{e.email}</td>
+                        <td>{e.salary}</td>
+                        <td>{e.address}</td>
+                        <td>{e.categorys}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5">
+                        <div className="no-data-message">
+                          <img src={noData} alt="" className="nodata" />
+                          <p className="no-data-text">
+                            No employees found. Add new employees from employees
+                            page.
+                          </p>
+                        </div>
+                      </td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>

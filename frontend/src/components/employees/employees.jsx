@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import noData from "../img/nodata.png";
 import "./employee.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -73,34 +74,43 @@ const Employees = () => {
             </div>
           </div>
         </div>
-        <div className="employee-card-container">
-          {employeesList.map((e) => (
-            <div className="employee-card" key={e._id}>
-              <h4>{e.name}</h4>
-              <p>Email: {e.email}</p>
-              <p>Salary: {e.salary}</p>
-              <p>Address: {e.address}</p>
-              <p>Category: {e.categorys}</p>
-              <div
-                className="employee-card-actions"
-                style={{ justifyContent: "flex-end" }}
-              >
-                <Link
-                  to={`/home/employee/edit/${e._id}`}
-                  className="customedit btn-sm me-2"
+        {employeesList.length > 0 ? (
+          <div className="employee-card-container">
+            {employeesList.map((e) => (
+              <div className="employee-card" key={e._id}>
+                <h4>{e.name}</h4>
+                <p>Email: {e.email}</p>
+                <p>Salary: {e.salary}</p>
+                <p>Address: {e.address}</p>
+                <p>Category: {e.categorys}</p>
+                <div
+                  className="employee-card-actions"
+                  style={{ justifyContent: "flex-end" }}
                 >
-                  Edit
-                </Link>
-                <button
-                  className="customdelete btn-sm"
-                  onClick={() => deleteEmployee(e._id)}
-                >
-                  Delete
-                </button>
+                  <Link
+                    to={`/home/employee/edit/${e._id}`}
+                    className="customedit btn-sm me-2"
+                  >
+                    Edit
+                  </Link>
+                  <button
+                    className="customdelete btn-sm"
+                    onClick={() => deleteEmployee(e._id)}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="no-data-message">
+            <img src={noData} alt="" className="nodata" />
+            <p className="no-data-text">
+              No employees found. Add new employees to display in the list.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

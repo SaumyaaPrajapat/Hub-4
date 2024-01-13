@@ -138,3 +138,22 @@
 .button-container button:hover {
   background-color: #5eaee3;
 }
+
+.no-data-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.nodata {
+  max-width: 30%;
+  height: auto;
+}
+
+.no-data-text {
+  margin-top: 16px;
+  font-size: 18px;
+  color: #555; /* Adjust the color as needed */
+  text-align: center;
+}

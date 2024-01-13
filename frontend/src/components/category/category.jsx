@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
+import noData from "../img/nodata.png";
 import "../sidenavbar/sidenavbar.css";
 import "./category.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -131,47 +132,56 @@ const Category = () => {
                   Add Category
                 </Link>
               </div>
-              <div className="task-cards-container">
-                <div className="task-cards">
-                  {categoriesList.map((category) => (
-                    <div className="task-card" key={category._id}>
-                      <h3>{category.name}</h3>
-                      <p>{category.description}</p>
-                      <div className="button-container">
-                        <button
-                          title="Update"
-                          onClick={() =>
-                            handleOpenUpdateModal(
-                              category._id,
-                              category.name,
-                              category.description
-                            )
-                          }
-                        >
-                          <FaRegEdit />
-                        </button>
-                        <button
-                          title="Delete"
-                          onClick={() => handleDelete(category._id)}
-                        >
-                          <MdDeleteForever />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                  {isUpdateModalOpen && (
-                    <Update
-                      categoryId={categoryId}
-                      onClose={handleCloseUpdateModal}
-                      onUpdate={handleUpdate}
-                      cname={cname}
-                      description={description}
-                    />
-                  )}
-                </div>
-              </div>
             </div>
           </div>
+          {categoriesList.length > 0 ? (
+            <div className="task-cards-container">
+              <div className="task-cards">
+                {categoriesList.map((category) => (
+                  <div className="task-card" key={category._id}>
+                    <h3>{category.name}</h3>
+                    <p>{category.description}</p>
+                    <div className="button-container">
+                      <button
+                        title="Update"
+                        onClick={() =>
+                          handleOpenUpdateModal(
+                            category._id,
+                            category.name,
+                            category.description
+                          )
+                        }
+                      >
+                        <FaRegEdit />
+                      </button>
+                      <button
+                        title="Delete"
+                        onClick={() => handleDelete(category._id)}
+                      >
+                        <MdDeleteForever />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+                {isUpdateModalOpen && (
+                  <Update
+                    categoryId={categoryId}
+                    onClose={handleCloseUpdateModal}
+                    onUpdate={handleUpdate}
+                    cname={cname}
+                    description={description}
+                  />
+                )}
+              </div>
+            </div>
+          ) : (
+            <div className="no-data-message">
+              <img src={noData} alt="" className="nodata" />
+              <p className="no-data-text">
+                No categories found. Add new categories to display in the list.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
