@@ -16,22 +16,8 @@ const signupSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["user", "admin"],
     default: "admin",
   },
-  status: {
-    type: Number,
-    enum: [0, 1],
-    default: 1,
-  },
-});
-
-// Middleware to automatically set the status when the role changes
-signupSchema.pre("save", function (next) {
-  if (this.isModified("role")) {
-    this.status = this.role === "admin" ? 1 : 0;
-  }
-  next();
 });
 
 const userModel = mongoose.model("signups", signupSchema);

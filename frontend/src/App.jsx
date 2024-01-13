@@ -4,8 +4,6 @@ import FirstPage from "./components/firstpage/firstpage";
 import Signup from "./components/signup/signup";
 import Login from "./components/login/login";
 import Home from "./components/home/home";
-import Users from "./components/users/user";
-import AddUsers from "./components/users/adduser";
 import Employees from "./components/employees/employees";
 import AddEmployee from "./components/employees/addemployee";
 import EditEmployee from "./components/employees/editemployee";
@@ -36,22 +34,6 @@ function App() {
           element={
             <ProtectedRoute>
               <Home />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/home/user"
-          element={
-            <ProtectedRoute>
-              <Users />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/home/user/add"
-          element={
-            <ProtectedRoute>
-              <AddUsers />
             </ProtectedRoute>
           }
         />
