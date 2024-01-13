@@ -34,8 +34,6 @@ const ProtectedRoute = ({ children }) => {
     }
     if (storedRole === "admin") {
       setMenu(adminMenu);
-    } else {
-      setMenu(userMenu);
     }
   }, []);
 
@@ -54,34 +52,6 @@ const ProtectedRoute = ({ children }) => {
     dispatch(authActions.logout());
   };
 
-  //usermenu
-  const userMenu = [
-    {
-      title: "Employees",
-      path: "/home/employee",
-      icon: <MdPeople className="react-icon" />,
-      onClick: () => navigate("/home/employee"),
-    },
-    {
-      title: "Category",
-      path: "/home/category",
-      icon: <MdOutlineFormatListBulleted className="react-icon" />,
-      onClick: () => navigate("/home/category"),
-    },
-    {
-      title: "Profile",
-      path: "/home/profile",
-      icon: <FaUserCircle className="react-icon" />,
-      onClick: () => navigate("/home/profile"),
-    },
-    {
-      title: "Homepage",
-      path: "/",
-      icon: <FaHome className="react-icon" />,
-      onClick: logout,
-    },
-  ];
-
   //admin menu
   const adminMenu = [
     {
@@ -91,12 +61,6 @@ const ProtectedRoute = ({ children }) => {
       onClick: () => navigate("/home"),
     },
     {
-      title: "Users",
-      path: "/home/user",
-      icon: <FaUserPlus className="react-icon" />,
-      onClick: () => navigate("/home/user"),
-    },
-    {
       title: "Employees",
       path: "/home/employee",
       icon: <MdPeople className="react-icon" />,
@@ -122,7 +86,7 @@ const ProtectedRoute = ({ children }) => {
     },
   ];
 
-  const [menu, setMenu] = useState(userMenu);
+  const [menu, setMenu] = useState(adminMenu);
 
   return (
     <main className={show ? "space-toggle" : null}>
