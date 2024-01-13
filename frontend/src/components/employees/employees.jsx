@@ -14,7 +14,7 @@ const Employees = () => {
   const fetchEmployee = async () => {
     try {
       const response = await axios.get(
-        `https://hub4-back.vercel.app/employee/employee/${id}`
+        `https://hub-4.vercel.app/employee/employee/${id}`
       );
       if (response.data.employees && response.data.employees.length > 0) {
         setAllEmployees(response.data.employees);
@@ -36,7 +36,7 @@ const Employees = () => {
     try {
       // Send a delete request to the backend
       const response = await axios.delete(
-        `https://hub4-back.vercel.app/employee/delete_employee/${employeeId}`
+        `https://hub-4.vercel.app/employee/delete_employee/${employeeId}`
       );
 
       if (response.data.Status) {

@@ -7,7 +7,7 @@ const App = () => {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get("https://hub4-back.vercel.app/auth/home")
+      .get("https://hub-4.vercel.app/auth/home")
       .then((res) => {
         console.log(res);
         if (res.data !== "Success") {

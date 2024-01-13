@@ -36,13 +36,10 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "https://hub4-back.vercel.app/auth/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post("https://hub-4.vercel.app/auth/login", {
+        email,
+        password,
+      });
       const data = response.data;
       console.log("Login response:", data);
       if (data && data.others && data.others._id) {
@@ -215,14 +212,7 @@ function Login() {
               </button>
             </div>
           </form>
-          <p className="d-flex justify-content-center align-items-center mt-3">
-            <Link
-              to="/forgotpass"
-              style={{ color: "#FFF", textDecoration: "none" }}
-            >
-              Forgot Password
-            </Link>
-          </p>
+          <p></p>
         </div>
       </div>
     </div>

@@ -22,7 +22,7 @@ const AddEmployee = () => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        `https://hub4-back.vercel.app/category/category/${id}`
+        `https://hub-4.vercel.app/category/category/${id}`
       );
       if (response.data.categories && response.data.categories.length > 0) {
         setAllCategories(response.data.categories);
@@ -62,7 +62,7 @@ const AddEmployee = () => {
 
     try {
       const response = await axios.post(
-        "https://hub4-back.vercel.app/employee/add_employee",
+        "https://hub-4.vercel.app/employee/add_employee",
         formData
       );
       console.log(response.data); // Log the response from the server

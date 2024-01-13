@@ -24,7 +24,7 @@ const Category = () => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        `https://hub4-back.vercel.app/category/category/${id}`
+        `https://hub-4.vercel.app/category/category/${id}`
       );
       if (response.data.categories && response.data.categories.length > 0) {
         setAllCategories(response.data.categories);
@@ -46,7 +46,7 @@ const Category = () => {
   const handleDelete = async (categoryId) => {
     try {
       const response = await axios.delete(
-        `https://hub4-back.vercel.app/category/delete_category/${categoryId}`
+        `https://hub-4.vercel.app/category/delete_category/${categoryId}`
       );
 
       if (response.data.Status) {
@@ -88,7 +88,7 @@ const Category = () => {
   ) => {
     try {
       const response = await axios.put(
-        `https://hub4-back.vercel.app/category/update_category/${categoryId}`,
+        `https://hub-4.vercel.app/category/update_category/${categoryId}`,
         {
           name: updatedCatName,
           description: updatedDescription,

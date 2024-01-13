@@ -13,7 +13,7 @@ const SideNavbar = () => {
   const [salaryTotal, setSalaryTotal] = useState(0);
   const employeeCount = (id) => {
     axios
-      .get(`https://hub4-back.vercel.app/employee/employee_count/${id}`)
+      .get(`https://hub-4.vercel.app/employee/employee_count/${id}`)
       .then((response) => {
         if (response.data.Status) {
           setEmployeeTotal(response.data.Result);
@@ -28,7 +28,7 @@ const SideNavbar = () => {
 
   const fetchSalaryTotal = (id) => {
     axios
-      .get(`https://hub4-back.vercel.app/employee/total_salary/${id}`)
+      .get(`https://hub-4.vercel.app/employee/total_salary/${id}`)
       .then((response) => {
         if (response.data.Status) {
           setSalaryTotal(Number(response.data.Result));
@@ -68,7 +68,7 @@ const SideNavbar = () => {
   const fetchEmployee = async () => {
     try {
       const response = await axios.get(
-        `https://hub4-back.vercel.app/employee/employee/${id}`
+        `https://hub-4.vercel.app/employee/employee/${id}`
       );
       if (response.data.employees && response.data.employees.length > 0) {
         setAllEmployees(response.data.employees);

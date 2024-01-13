@@ -16,7 +16,7 @@ const AddCategory = () => {
 
     try {
       const response = await axios.post(
-        "https://hub4-back.vercel.app/category/add_category",
+        "https://hub-4.vercel.app/category/add_category",
         {
           name: categoryName,
           description: categoryDescription,
