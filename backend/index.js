@@ -15,7 +15,7 @@ app.use("/employee", employeeRoutes);
 app.use("/category", categoryRoutes);
 
 mongoose.connect(
-  "mongodb+srv://saumyaa:soma2029@cluster0.hhni3ik.mongodb.net/hub-4?retryWrites=true&w=majority"
+  "mongodb+srv://saumyaa:soma2029@cluster0.hhni3ik.mongodb.net/hub-4?retryWrites=true&w=majority&appName=Cluster0"
 );
 
 app.listen(PORT, () => {
